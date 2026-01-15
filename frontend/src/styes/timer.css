@@ -1,0 +1,53 @@
+.timerContainer {
+  background-color: rgba(238, 172, 172, 0.2);
+  margin-top: 30px;
+  width: 470px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 340px;
+  border-radius: 5px;
+  padding: 20px;
+}
+.timerButt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background-color: rgba(74, 37, 37, 0.2);
+  margin: 5px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.timerHeader {
+  display: flex;
+}
+.clock {
+  font-size: 120px;
+  cursor: default;
+}
+.timerBot {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+}
+.pause {
+  background-color: white;
+  color: rgb(175 77 77);
+  padding: 5px;
+  width: 200px;
+  font-size: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.arrowButt {
+  width: 20px;
+  font-size: 40px;
+  margin-right: 40px;
+}
+.timerBotNone {
+  width: 20px;
+  margin-left: 40px;
+}
