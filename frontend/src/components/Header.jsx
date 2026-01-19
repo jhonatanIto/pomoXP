@@ -2,12 +2,11 @@ const Header = () => {
   return (
     <div className="header">
       <div className="middleHeader">
-        <div className="headerTitle">POMOFOCUS</div>
+        <div className="headerTitle">PomoXP</div>
         <div className="buttContainer">
-          <button>report</button>
+          <button>Report</button>
           <button>Setting</button>
-          <button>Sign In</button>
-          <button>.</button>
+          <button>Sign Up</button>
         </div>
       </div>
     </div>
