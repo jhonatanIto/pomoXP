@@ -1,17 +1,85 @@
 import { useContext, useEffect, useState } from "react";
 import "../styes/timer.css";
 import { FaArrowRight } from "react-icons/fa";
-import { GoalContext } from "../context/Goal";
+import { UserContext } from "../context/UserContext";
 
-const Timer = () => {
-  const [selectedTime, setSelectedTime] = useState(120);
-  const [time, setTime] = useState(selectedTime * 60); // 2hours
+const Timer = (props) => {
+  const { focusTime, shortBreak, longBreak } = props;
+  const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
-  const [mode, setMode] = useState("focus");
   const [selectedTab, setSelectedTab] = useState("Pomodoro");
-  const [cycles, setCycles] = useState(0);
 
-  const { setGoal } = useContext(GoalContext);
+  const { token, user } = useContext(UserContext);
+
+  useEffect(() => {
+    if (selectedTab === "Pomodoro") {
+      setTime(focusTime * 60);
+    } else if (selectedTab === "Short Break") {
+      setTime(shortBreak * 60);
+    } else {
+      setTime(longBreak * 60);
+    }
+  }, [focusTime, shortBreak, longBreak, selectedTab]);
+
+  async function postCard() {
+    try {
+      const minutes = Number(focusTime);
+      if (!Number.isFinite(minutes) || minutes <= 0) return;
+
+      const now = new Date();
+      const localTime = new Date(
+        now.getTime() - now.getTimezoneOffset() * 60000,
+      );
+
+      const res = await fetch("http://localhost:3000/api/cards", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          minutes: minutes,
+          created_at: localTime,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.message || "Request failed");
+      }
+
+      console.log(data);
+
+      return data;
+    } catch (error) {
+      console.error(error.message);
+    }
+  }
+  const changeButts = (tab, time) => {
+    setIsRunnig(false);
+    setTime(time * 60);
+    setSelectedTab(tab);
+  };
+
+  const handleTimerEnd = () => {
+    setIsRunnig(false);
+
+    if (selectedTab === "Pomodoro") {
+      if (user) postCard();
+      changeButts("Short Break", shortBreak); // set time to short break mode
+    } else if (selectedTab === "Short Break") {
+      changeButts("Pomodoro", focusTime); // back to work
+    }
+  };
+
+  useEffect(() => {
+    selectedTab === "Pomodoro"
+      ? (document.body.style.backgroundColor = "rgb(175 77 77)")
+      : selectedTab === "Short Break"
+        ? (document.body.style.backgroundColor = "rgb(47 124 129)")
+        : (document.body.style.backgroundColor = "rgb(53 106 146)");
+  }, [selectedTab]);
 
   useEffect(() => {
     let timer;
@@ -20,14 +88,6 @@ const Timer = () => {
         setTime((prev) => {
           if (prev === 1) {
             handleTimerEnd();
-            if (selectedTab === "Pomodoro") {
-              setGoal((prev) => ({
-                ...prev,
-                goal: selectedTime,
-                times: (prev.times || 0) + 1,
-                date: new Date().toLocaleDateString(),
-              }));
-            }
 
             return 0;
           }
@@ -37,24 +97,6 @@ const Timer = () => {
     }
     return () => clearInterval(timer);
   }, [isRunning]);
-
-  const changeButts = (tab, time) => {
-    setIsRunnig(false);
-    setTime(time * 60);
-    setSelectedTab(tab);
-  };
-
-  const handleTimerEnd = () => {
-    setIsRunnig(false);
-    if (mode === "focus") {
-      setMode("break");
-      setTime(15 * 60); // 15 minutes break
-    } else {
-      setMode("focus");
-      setTime(120 * 60); // back to work
-      setCycles((c) => c * 1);
-    }
-  };
 
   const formatTime = () => {
     const mins = Math.floor(time / 60)
@@ -69,8 +111,7 @@ const Timer = () => {
       <div className="timerHeader">
         <button
           onClick={() => {
-            changeButts("Pomodoro", 120);
-            document.body.style.backgroundColor = "rgb(175 77 77)";
+            changeButts("Pomodoro", focusTime);
           }}
           className={`timerButt ${
             selectedTab === "Pomodoro" ? "timerButtBg" : ""
@@ -80,8 +121,7 @@ const Timer = () => {
         </button>
         <button
           onClick={() => {
-            changeButts("Short Break", 15);
-            document.body.style.backgroundColor = "rgb(47 124 129)";
+            changeButts("Short Break", shortBreak);
           }}
           className={`timerButt ${
             selectedTab === "Short Break" ? "timerButtBg" : ""
@@ -91,8 +131,7 @@ const Timer = () => {
         </button>
         <button
           onClick={() => {
-            changeButts("Long Break", 60);
-            document.body.style.backgroundColor = "rgb(53 106 146)";
+            changeButts("Long Break", longBreak);
           }}
           className={`timerButt ${
             selectedTab === "Long Break" ? "timerButtBg" : ""
@@ -111,8 +150,8 @@ const Timer = () => {
               selectedTab === "Pomodoro"
                 ? "rgb(175 77 77)"
                 : selectedTab === "Short Break"
-                ? "rgb(47 124 129)"
-                : "rgb(53 106 146)",
+                  ? "rgb(47 124 129)"
+                  : "rgb(53 106 146)",
           }}
         >
           {isRunning ? "PAUSE" : "START"}
@@ -122,8 +161,8 @@ const Timer = () => {
           className="arrowButt"
           onClick={() => {
             selectedTab === "Pomodoro"
-              ? changeButts("Short Break", 15)
-              : changeButts("Pomodoro", 120);
+              ? changeButts("Short Break", shortBreak)
+              : changeButts("Pomodoro", focusTime);
           }}
         >
           <FaArrowRight />

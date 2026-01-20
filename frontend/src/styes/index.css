@@ -17,6 +17,8 @@ body {
   width: 100%;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 .headerTitle {
   font-size: 30px;
@@ -29,16 +31,27 @@ body {
   border-bottom: 2px solid rgba(139, 70, 70, 0.4);
   padding: 5px;
 }
+.buttContainer {
+  display: flex;
+}
 .buttContainer button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: rgba(231, 231, 231, 0.2);
   border-radius: 5px;
   margin: 5px;
   padding: 4px;
   width: 80px;
+  cursor: pointer;
+  color: rgb(255, 255, 255, 0.8);
+}
+.buttContainer button:hover {
+  color: white;
 }
 .mainContainer {
   display: flex;
   justify-content: space-between;
-  width: 90%;
+  width: 100%;
   margin-top: 30px;
 }

@@ -1,0 +1,77 @@
+.loginBody {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+}
+.loginBox {
+  margin-top: 200px;
+  background-color: rgb(39, 39, 39);
+  width: 420px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  padding: 30px;
+}
+.loginTitle {
+  font-size: 28px;
+  color: rgb(211, 211, 211);
+}
+.loginInputContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.loginInputContainer input {
+  background-color: rgb(61, 66, 70);
+  margin-top: 20px;
+  padding: 8px;
+  font-size: 17px;
+  border-radius: 5px;
+  width: 100%;
+  outline: none;
+  transition: 0.3s;
+}
+.loginInputContainer input:focus {
+  background-color: rgb(66, 81, 95);
+}
+.loginInputContainer input:hover {
+  background-color: rgb(66, 81, 95);
+}
+.loginInputContainer button {
+  background-color: rgb(19, 115, 200);
+  margin-top: 20px;
+  padding: 8px;
+  font-size: 17px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.loginInputContainer button:hover {
+  background-color: rgb(15, 91, 158);
+}
+.loginWords {
+  align-items: end;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  color: rgb(185, 185, 185);
+}
+.loginWords span {
+  margin-left: 10px;
+  font-size: 20px;
+  color: rgb(230, 230, 230);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.loginWords span:hover {
+  color: rgb(15, 91, 158);
+}

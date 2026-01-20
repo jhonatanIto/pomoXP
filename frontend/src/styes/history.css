@@ -1,20 +1,36 @@
 .historyContainer {
-  width: 500px;
-  height: 500px;
+  height: 600px;
+  width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-y: scroll;
+  margin-top: 30px;
+}
+.historyContainer::-webkit-scrollbar {
+  display: none;
 }
 .historyCard {
-  background-color: aliceblue;
-  color: black;
   font-size: 20px;
+  background-color: rgba(207, 207, 207, 0.2);
   display: flex;
   justify-content: space-between;
-  border: 1px solid white;
+  align-items: center;
   margin-top: 20px;
   border-radius: 10px;
-  padding: 5px;
-  width: 420px;
+  padding: 6px;
+  min-width: 550px;
+  max-width: 550px;
+  height: 70px;
   cursor: default;
+  overflow-y: hidden;
+}
+.historyCardDate {
+  width: 140px;
+}
+.historyCard::-webkit-scrollbar {
+  display: none;
+}
+.medals {
+  width: 60px;
 }

@@ -1,13 +1,10 @@
 import express from "express";
-import { cards } from "../schema.js";
-import { postCards } from "../controllers/cardsControllers.js";
-import { db } from "../db.js";
+import { postCards } from "../controllers/postCardControllers.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
+import { getCard } from "../controllers/getCardController.js";
 
 export const route = express.Router();
 
-route.get("/", async (req, res) => {
-  const data = await db.select().from(cards);
-  res.json(data);
-});
-
+route.use(authMiddleware);
+route.get("/", getCard);
 route.post("/", postCards);
