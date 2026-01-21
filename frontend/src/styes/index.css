@@ -5,7 +5,6 @@ body {
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   color: #fff;
   width: 100vw;
-  transition: 0.4s;
 }
 .containerAlpha {
   display: flex;

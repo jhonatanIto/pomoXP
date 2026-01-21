@@ -5,9 +5,7 @@ import "./styes/index.css";
 import App from "./App.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <UserProvider>
-      <App />
-    </UserProvider>
-  </StrictMode>,
+  <UserProvider>
+    <App />
+  </UserProvider>,
 );

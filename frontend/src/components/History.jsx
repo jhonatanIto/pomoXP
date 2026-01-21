@@ -62,16 +62,21 @@ const History = () => {
   return (
     <div className="historyContainer">
       {user
-        ? Object.entries(groupedCards).map(([date, minutesList]) => (
-            <div className="historyCard" key={date}>
-              <div className="historyCardDate">{date}</div>
-              <div className="flex">
-                {minutesList.map((min, index) => (
-                  <img key={index} className="medals" src={medals(min)} />
-                ))}
+        ? Object.entries(groupedCards).map((groupedCar) => {
+            const date = groupedCar[0];
+            const minutesList = groupedCar[1];
+
+            return (
+              <div className="historyCard" key={date}>
+                <div className="historyCardDate">{date}</div>
+                <div className="flex">
+                  {minutesList.map((min, index) => (
+                    <img key={index} className="medals" src={medals(min)} />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))
+            );
+          })
         : ""}
     </div>
   );
