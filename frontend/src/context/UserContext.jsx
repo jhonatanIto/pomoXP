@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { refreshUser } from "../utilities/fetchData";
 
 export const UserContext = createContext(null);
 
@@ -13,8 +14,6 @@ const UserProvider = ({ children }) => {
 
     if (storedUser) setUser(JSON.parse(storedUser));
     if (storedToken) setToken(storedToken);
-
-    setToken(localStorage.getItem("token") || null);
   }, []);
 
   const login = (userData, jwt) => {
@@ -31,9 +30,21 @@ const UserProvider = ({ children }) => {
     localStorage.removeItem("token");
   };
 
+  const fetchUserData = async () => {
+    if (!token) return;
+    try {
+      const data = await refreshUser(token);
+      setUser(data);
+
+      localStorage.setItem("user", JSON.stringify(data));
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <UserContext.Provider
-      value={{ user, token, login, logout, cards, setCards }}
+      value={{ user, token, login, logout, cards, setCards, fetchUserData }}
     >
       {children}
     </UserContext.Provider>

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import "../styes/setting.css";
 import { FaClock } from "react-icons/fa";
 const Setting = (props) => {
@@ -13,6 +13,20 @@ const Setting = (props) => {
     setLongBreak,
   } = props;
 
+  useEffect(() => {
+    const timeSetting = JSON.parse(localStorage.getItem("timeSetting"));
+    setFocusTime(timeSetting.focusTime);
+    setShortBreak(timeSetting.shortBreak);
+    setLongBreak(timeSetting.longBreak);
+  }, []);
+
+  function saveTimeSettings() {
+    localStorage.setItem(
+      "timeSetting",
+      JSON.stringify({ focusTime, shortBreak, longBreak }),
+    );
+  }
+
   const boxRef = useRef();
   const handleOverlayClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -23,7 +37,10 @@ const Setting = (props) => {
     <div
       style={{ display: displayModal }}
       className="settingContainer"
-      onMouseDown={handleOverlayClick}
+      onMouseDown={(e) => {
+        handleOverlayClick(e);
+        saveTimeSettings();
+      }}
     >
       <div className="settingBox" ref={boxRef}>
         <div className="settingTitle">SETTING</div>
@@ -64,6 +81,7 @@ const Setting = (props) => {
         <button
           onClick={() => {
             setDisplayModal("none");
+            saveTimeSettings();
           }}
           className="settingSave"
         >

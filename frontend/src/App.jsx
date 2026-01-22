@@ -7,11 +7,12 @@ import Timer from "./components/Timer";
 import Login from "./components/Login";
 
 const App = () => {
-  const [focusTime, setFocusTime] = useState(1);
-  const [shortBreak, setShortBreak] = useState(15);
+  const [focusTime, setFocusTime] = useState(25);
+  const [shortBreak, setShortBreak] = useState(10);
   const [longBreak, setLongBreak] = useState(60);
   const [displayModal, setDisplayModal] = useState("none");
   const [displayLogin, setDisplayLogin] = useState("none");
+  const [targetXp, setTargetXp] = useState(0);
   return (
     <div className="containerAlpha">
       <Header
@@ -20,12 +21,15 @@ const App = () => {
       />
       <div className="mainContainer">
         <History />
+
         <Timer
           focusTime={focusTime}
           shortBreak={shortBreak}
           longBreak={longBreak}
+          setTargetXp={setTargetXp}
         />
-        <LvlBar />
+
+        <LvlBar targetXp={targetXp} setTargetXp={setTargetXp} />
       </div>
       <Setting
         displayModal={displayModal}

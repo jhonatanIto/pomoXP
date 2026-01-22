@@ -6,32 +6,25 @@ import gold from "../images/ouro.png";
 import master from "../images/master.png";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
+import { getCards } from "../utilities/fetchData.js";
+
 const History = () => {
   const { user, token, setCards, cards } = useContext(UserContext);
 
-  const getCards = async () => {
-    try {
-      if (!user) return;
-
-      const res = await fetch("http://localhost:3000/api/cards", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) throw new Error("Error to get cards");
-
-      const data = await res.json();
-      setCards(data);
-      return console.log(data);
-    } catch (error) {
-      console.error(error.message);
-    }
-  };
-
   useEffect(() => {
-    getCards();
-  }, [token]);
+    if (!user) return;
+
+    const loadCards = async () => {
+      try {
+        const data = await getCards(token);
+        setCards(data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+
+    loadCards();
+  }, [user]);
 
   function dailyTotal(cardss) {
     const grouped = {};

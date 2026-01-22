@@ -79,8 +79,6 @@ const Login = (props) => {
       if (signIn) {
         login(data.user, data.token);
         setDisplayLogin("none");
-        alert("Logged in!");
-        console.log(data.user);
         return;
       }
 

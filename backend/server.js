@@ -3,6 +3,7 @@ import cors from "cors";
 import "dotenv/config";
 import { route } from "./routes/cardsRoute.js";
 import { authRoute } from "./routes/authRoute.js";
+import { usersRoute } from "./routes/usersRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,5 +19,6 @@ app.get("/", (req, res) => {
 
 app.use("/api/cards", route);
 app.use("/api/auth", authRoute);
+app.use("/api/users", usersRoute);
 
 app.listen(PORT, () => console.log("Server is running as always"));

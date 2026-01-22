@@ -2,14 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import "../styes/timer.css";
 import { FaArrowRight } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
+import { getCards } from "../utilities/fetchData.js";
+import clickSound from "../audio/clickDefault.mp3";
+
+const playClick = () => {
+  new Audio(clickSound).play();
+};
 
 const Timer = (props) => {
-  const { focusTime, shortBreak, longBreak } = props;
+  const { focusTime, shortBreak, longBreak, setTargetXp } = props;
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Pomodoro");
 
-  const { token, user } = useContext(UserContext);
+  const { token, user, setCards, fetchUserData } = useContext(UserContext);
 
   useEffect(() => {
     if (selectedTab === "Pomodoro") {
@@ -49,7 +55,14 @@ const Timer = (props) => {
         throw new Error(data?.message || "Request failed");
       }
 
-      console.log(data);
+      setTargetXp((prev) => prev + minutes);
+
+      const updateCards = await getCards(token);
+      setCards(updateCards);
+
+      setTimeout(() => {
+        fetchUserData();
+      }, 2000);
 
       return data;
     } catch (error) {
@@ -143,7 +156,10 @@ const Timer = (props) => {
       <div className="clock">{formatTime()}</div>
       <div className="timerBot">
         <button
-          onClick={() => setIsRunnig(!isRunning)}
+          onClick={() => {
+            setIsRunnig(!isRunning);
+            playClick();
+          }}
           className="pause"
           style={{
             color:
