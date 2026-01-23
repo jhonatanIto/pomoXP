@@ -4,7 +4,8 @@ import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 
 const LvlBar = (props) => {
-  const { targetXp, setTargetXp } = props;
+  const { targetXp, setTargetXp, setOnePercent, setTargetBar, targetBar } =
+    props;
   const { user } = useContext(UserContext);
   const [neededXp, setNeededXp] = useState(60);
   const [currentXp, setCurrentXp] = useState(0);
@@ -21,12 +22,12 @@ const LvlBar = (props) => {
       const currentPercent = (user.xp - currentTotal) / onePercent;
       const pixelPercent = currentPercent * 4.9;
 
-      if (targetXp >= neededXp) return;
       setCurrentXp(currProgress);
       setNeededXp(xpTolevelUp);
       setBarPercent(pixelPercent);
-
+      setOnePercent(onePercent);
       setTargetXp(currProgress);
+      setTargetBar(pixelPercent);
 
       return pixelPercent;
     }
@@ -34,12 +35,25 @@ const LvlBar = (props) => {
 
   useEffect(() => {
     if (!user) return;
-
     calculatePercentage();
   }, [user]);
 
   useEffect(() => {
-    if (currentXp >= neededXp) return;
+    if (barPercent >= targetBar) return;
+    const barInterval = setInterval(() => {
+      setBarPercent((prev) => {
+        if (prev >= targetBar) {
+          clearInterval(barInterval);
+          return targetBar;
+        }
+        return prev + 1;
+      });
+    }, 5);
+    return () => clearInterval(barInterval);
+  }, [targetBar]);
+
+  useEffect(() => {
+    if (currentXp >= targetXp) return;
 
     const interval = setInterval(() => {
       setCurrentXp((prev) => {
@@ -49,14 +63,14 @@ const LvlBar = (props) => {
         }
         return prev + 1;
       });
-    }, 20);
+    }, 10);
 
     return () => clearInterval(interval);
   }, [targetXp]);
 
-  // useEffect(() => {
-  //   setDisplayPercent(Math.min(colorPercent, targetPercent));
-  // }, [colorPercent]);
+  useEffect(() => {
+    setTargetXp((prev) => Math.min(prev, neededXp));
+  }, [targetXp]);
 
   return (
     <div className="lvlBarContainer">

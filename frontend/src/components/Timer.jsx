@@ -10,7 +10,14 @@ const playClick = () => {
 };
 
 const Timer = (props) => {
-  const { focusTime, shortBreak, longBreak, setTargetXp } = props;
+  const {
+    focusTime,
+    shortBreak,
+    longBreak,
+    setTargetXp,
+    setTargetBar,
+    onePercent,
+  } = props;
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Pomodoro");
@@ -29,7 +36,7 @@ const Timer = (props) => {
 
   async function postCard() {
     try {
-      const minutes = Number(focusTime);
+      const minutes = Number(50);
       if (!Number.isFinite(minutes) || minutes <= 0) return;
 
       const now = new Date();
@@ -44,7 +51,7 @@ const Timer = (props) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          minutes: 50,
+          minutes: minutes,
           created_at: localTime,
         }),
       });
@@ -55,11 +62,17 @@ const Timer = (props) => {
         throw new Error(data?.message || "Request failed");
       }
 
-      setTargetXp((prev) => prev + 50);
+      setTargetXp((prev) => prev + minutes);
+
+      setTargetBar((prev) => {
+        const percent = minutes / onePercent;
+        return prev + percent * 4.9;
+      });
+      console.log(onePercent);
 
       setTimeout(() => {
         fetchUserData();
-      }, 2000);
+      }, 1000);
 
       const updateCards = await getCards(token);
       setCards(updateCards);

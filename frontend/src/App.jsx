@@ -13,7 +13,8 @@ const App = () => {
   const [displayModal, setDisplayModal] = useState("none");
   const [displayLogin, setDisplayLogin] = useState("none");
   const [targetXp, setTargetXp] = useState(0);
-  const [targetPercent, setTargetPercent] = useState(0);
+  const [targetBar, setTargetBar] = useState(0);
+  const [onePercent, setOnePercent] = useState(0);
   return (
     <div className="containerAlpha">
       <Header
@@ -28,14 +29,17 @@ const App = () => {
           shortBreak={shortBreak}
           longBreak={longBreak}
           setTargetXp={setTargetXp}
-          setTargetPercent={setTargetPercent}
+          setTargetBar={setTargetBar}
+          onePercent={onePercent}
         />
 
         <LvlBar
+          setOnePercent={setOnePercent}
+          onePercent={onePercent}
           targetXp={targetXp}
           setTargetXp={setTargetXp}
-          targetPercent={targetPercent}
-          setTargetPercent={setTargetPercent}
+          targetBar={targetBar}
+          setTargetBar={setTargetBar}
         />
       </div>
       <Setting
