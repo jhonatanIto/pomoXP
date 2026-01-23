@@ -8,8 +8,9 @@ import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 
-const History = () => {
-  const { user, token, setCards, cards } = useContext(UserContext);
+const History = (props) => {
+  const { setDisplayLogin, setSignIn } = props;
+  const { user, token, setCards, cards, visitor } = useContext(UserContext);
 
   useEffect(() => {
     if (!user) return;
@@ -49,38 +50,64 @@ const History = () => {
     if (minutes > 90) return master;
     return wood;
   }
+  console.log(visitor.cards);
 
-  const groupedCards = dailyTotal(cards);
+  const groupedCards = user
+    ? dailyTotal(cards)
+    : dailyTotal(visitor.cards.reverse());
 
   return (
     <div className="historyContainer">
-      {user
-        ? Object.entries(groupedCards).map((groupedCar) => {
-            const date = groupedCar[0];
-            const minutesList = groupedCar[1];
+      {Object.entries(groupedCards).map((groupedCar) => {
+        const date = groupedCar[0];
+        const minutesList = groupedCar[1];
 
-            return (
-              <div className="historyCard" key={date}>
-                <div className="historyCardDate">{date}</div>
-                <div
-                  onWheel={(e) => {
-                    e.currentTarget.scrollLeft += e.deltaY;
-                  }}
-                  className="medalScroll"
-                >
-                  {minutesList.map((min, index) => {
-                    return (
-                      <div key={index} className="medalContainer">
-                        <img className="medals" src={medals(min)} />
-                        <div className={"medalMin"}>{min}min</div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })
-        : ""}
+        return (
+          <div className="historyCard" key={date}>
+            <div className="historyCardDate">{date}</div>
+            <div
+              onWheel={(e) => {
+                e.currentTarget.scrollLeft += e.deltaY;
+              }}
+              className="medalScroll"
+            >
+              {minutesList.map((min, index) => {
+                return (
+                  <div key={index} className="medalContainer">
+                    <img className="medals" src={medals(min)} />
+                    <div className={"medalMin"}>{min}min</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
+      {!user ? (
+        <div className="registerBox">
+          <div>Create an Account to save your Progress!</div>
+          <div className="registerButtCont">
+            <button
+              onClick={() => {
+                setDisplayLogin("flex");
+                setSignIn(true);
+              }}
+            >
+              Sign In
+            </button>
+            <button
+              onClick={() => {
+                setDisplayLogin("flex");
+                setSignIn(false);
+              }}
+            >
+              Sign Up
+            </button>
+          </div>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 };

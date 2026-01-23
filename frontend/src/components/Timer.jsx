@@ -4,6 +4,7 @@ import { FaArrowRight } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 import clickSound from "../audio/clickDefault.mp3";
+import { convertToLevel } from "../../../backend/utils/level.js";
 
 const playClick = () => {
   new Audio(clickSound).play();
@@ -22,7 +23,12 @@ const Timer = (props) => {
   const [isRunning, setIsRunnig] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Pomodoro");
 
-  const { token, user, setCards, fetchUserData } = useContext(UserContext);
+  const { token, user, setCards, fetchUserData, setVisitor } =
+    useContext(UserContext);
+
+  const minutes = Number(70);
+  const now = new Date();
+  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
 
   useEffect(() => {
     if (selectedTab === "Pomodoro") {
@@ -36,13 +42,7 @@ const Timer = (props) => {
 
   async function postCard() {
     try {
-      const minutes = Number(50);
       if (!Number.isFinite(minutes) || minutes <= 0) return;
-
-      const now = new Date();
-      const localTime = new Date(
-        now.getTime() - now.getTimezoneOffset() * 60000,
-      );
 
       const res = await fetch("http://localhost:3000/api/cards", {
         method: "POST",
@@ -61,14 +61,6 @@ const Timer = (props) => {
       if (!res.ok) {
         throw new Error(data?.message || "Request failed");
       }
-
-      setTargetXp((prev) => prev + minutes);
-
-      setTargetBar((prev) => {
-        const percent = minutes / onePercent;
-        return prev + percent * 4.9;
-      });
-      console.log(onePercent);
 
       setTimeout(() => {
         fetchUserData();
@@ -92,7 +84,35 @@ const Timer = (props) => {
     setIsRunnig(false);
 
     if (selectedTab === "Pomodoro") {
-      if (user) postCard();
+      if (user) {
+        postCard();
+        setTargetXp((prev) => prev + minutes);
+        setTargetBar((prev) => {
+          const percent = minutes / onePercent;
+          return prev + percent * 4.9;
+        });
+      } else {
+        setTimeout(() => {
+          setVisitor((prev) => {
+            const newXp = prev.xp + minutes;
+            return {
+              ...prev,
+              level: convertToLevel(newXp),
+              xp: newXp,
+              cards: [
+                ...prev.cards,
+                { minutes: minutes, created_at: localTime.toISOString() },
+              ],
+            };
+          });
+        }, 1000);
+
+        setTargetXp((prev) => prev + minutes);
+        setTargetBar((prev) => {
+          const percent = minutes / onePercent;
+          return prev + percent * 4.9;
+        });
+      }
       changeButts("Short Break", shortBreak); // set time to short break mode
     } else if (selectedTab === "Short Break") {
       changeButts("Pomodoro", focusTime); // back to work
@@ -101,10 +121,10 @@ const Timer = (props) => {
 
   useEffect(() => {
     selectedTab === "Pomodoro"
-      ? (document.body.style.backgroundColor = "rgb(175 77 77)")
+      ? (document.body.style.backgroundColor = "rgb(47 124 129)")
       : selectedTab === "Short Break"
-        ? (document.body.style.backgroundColor = "rgb(47 124 129)")
-        : (document.body.style.backgroundColor = "rgb(53 106 146)");
+        ? (document.body.style.backgroundColor = "rgb(53 106 146)")
+        : (document.body.style.backgroundColor = "rgb(79, 79, 79)");
   }, [selectedTab]);
 
   useEffect(() => {
@@ -177,10 +197,10 @@ const Timer = (props) => {
           style={{
             color:
               selectedTab === "Pomodoro"
-                ? "rgb(175 77 77)"
+                ? "rgb(47 124 129)"
                 : selectedTab === "Short Break"
-                  ? "rgb(47 124 129)"
-                  : "rgb(53 106 146)",
+                  ? "rgb(53 106 146)"
+                  : "rgb(53, 139, 66)",
           }}
         >
           {isRunning ? "PAUSE" : "START"}

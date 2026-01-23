@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 
 const Header = (props) => {
-  const { setDisplayModal, setDisplayLogin } = props;
+  const { setDisplayModal, setDisplayLogin, setSignIn } = props;
   const { user, logout } = useContext(UserContext);
 
   return (
@@ -22,6 +22,7 @@ const Header = (props) => {
                 return;
               }
               setDisplayLogin("flex");
+              setSignIn(true);
             }}
           >
             {user ? "Logout" : "Sign In"}

@@ -6,37 +6,41 @@ import { UserContext } from "../context/UserContext";
 const LvlBar = (props) => {
   const { targetXp, setTargetXp, setOnePercent, setTargetBar, targetBar } =
     props;
-  const { user } = useContext(UserContext);
-  const [neededXp, setNeededXp] = useState(60);
+  const { user, visitor } = useContext(UserContext);
+  const [neededXp, setNeededXp] = useState(0);
   const [currentXp, setCurrentXp] = useState(0);
-
+  const [totalHours, setTotalHours] = useState(0);
   const [barPercent, setBarPercent] = useState(0);
 
-  const calculatePercentage = () => {
-    if (user) {
-      const currentTotal = Math.pow(user.level, 2) * 6;
-      const xpTolevelUp = Math.pow(user.level + 1, 2) * 6 - currentTotal;
+  const calculateAll = (user) => {
+    const currentTotal = Math.pow(user.level, 2) * 6;
+    const xpTolevelUp = Math.pow(user.level + 1, 2) * 6 - currentTotal;
 
-      const currProgress = user.xp - currentTotal;
-      const onePercent = xpTolevelUp / 100;
-      const currentPercent = (user.xp - currentTotal) / onePercent;
-      const pixelPercent = currentPercent * 4.9;
+    const currProgress = user?.xp - currentTotal;
+    const onePercent = xpTolevelUp / 100;
+    const currentPercent = (user?.xp - currentTotal) / onePercent;
+    const pixelPercent = currentPercent * 4.9;
 
-      setCurrentXp(currProgress);
-      setNeededXp(xpTolevelUp);
-      setBarPercent(pixelPercent);
-      setOnePercent(onePercent);
-      setTargetXp(currProgress);
-      setTargetBar(pixelPercent);
-
-      return pixelPercent;
-    }
+    setCurrentXp(() => {
+      if (currProgress < 0) return 0;
+      return currProgress;
+    });
+    setNeededXp(xpTolevelUp);
+    setBarPercent(pixelPercent);
+    setOnePercent(onePercent);
+    setTargetXp(currProgress);
+    setTargetBar(pixelPercent);
+    setTotalHours(user.xp / 60);
   };
 
   useEffect(() => {
-    if (!user) return;
-    calculatePercentage();
-  }, [user]);
+    if (!user && !visitor) return;
+    if (user) {
+      return calculateAll(user);
+    } else {
+      return calculateAll(visitor);
+    }
+  }, [user, visitor]);
 
   useEffect(() => {
     if (barPercent >= targetBar) return;
@@ -74,11 +78,17 @@ const LvlBar = (props) => {
 
   return (
     <div className="lvlBarContainer">
-      <div className="lvlTitle">Level {user ? user.level : 1}</div>
+      <div className="lvlTitle">
+        <div>Level {user ? user.level : visitor.level}</div>
+        <div className="totalHours">
+          Total: {totalHours.toFixed(1)} hours <br />
+          LVL100 = 1000h
+        </div>
+      </div>
+
       <div className="lvlBar">
         <div className="numberBar">
-          {user ? currentXp.toLocaleString("pt-BR") : 0}/
-          {user ? neededXp.toLocaleString("pt-BR") : 60}
+          {currentXp.toLocaleString("pt-BR")}/{neededXp.toLocaleString("pt-BR")}
         </div>
         <div
           style={{ width: `${barPercent}px` }}

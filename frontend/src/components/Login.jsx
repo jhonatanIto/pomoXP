@@ -3,9 +3,8 @@ import "../styes/login.css";
 import { UserContext } from "../context/UserContext";
 
 const Login = (props) => {
-  const { displayLogin, setDisplayLogin } = props;
+  const { displayLogin, setDisplayLogin, signIn, setSignIn } = props;
 
-  const [signIn, setSignIn] = useState(true);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [confirmEmail, setConfirmEmail] = useState("");

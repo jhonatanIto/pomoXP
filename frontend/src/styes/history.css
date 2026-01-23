@@ -60,3 +60,34 @@
 .medalScroll::-webkit-scrollbar {
   display: none;
 }
+.registerBox {
+  font-size: 20px;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 30px;
+  background-color: rgb(237, 237, 237);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  cursor: default;
+  color: rgb(70, 70, 70);
+}
+.registerBox button {
+  background-color: rgb(19, 115, 200);
+  margin-top: 20px;
+  padding: 8px;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: white;
+  box-shadow: 1px 4px 10px rgba(0, 0, 0, 0.3);
+  width: 100px;
+}
+.registerBox button:hover {
+  background-color: rgb(12, 71, 122);
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.4);
+  transform: translateY(-3px);
+}
+.registerButtCont {
+  display: flex;
+  justify-content: space-around;
+}

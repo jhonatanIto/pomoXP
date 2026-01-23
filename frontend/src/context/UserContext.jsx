@@ -7,6 +7,11 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [cards, setCards] = useState([]);
+  const [visitor, setVisitor] = useState({
+    level: 1,
+    xp: 0,
+    cards: [],
+  });
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -44,7 +49,17 @@ const UserProvider = ({ children }) => {
 
   return (
     <UserContext.Provider
-      value={{ user, token, login, logout, cards, setCards, fetchUserData }}
+      value={{
+        user,
+        token,
+        login,
+        logout,
+        cards,
+        setCards,
+        fetchUserData,
+        visitor,
+        setVisitor,
+      }}
     >
       {children}
     </UserContext.Provider>

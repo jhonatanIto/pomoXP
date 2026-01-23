@@ -15,14 +15,16 @@ const App = () => {
   const [targetXp, setTargetXp] = useState(0);
   const [targetBar, setTargetBar] = useState(0);
   const [onePercent, setOnePercent] = useState(0);
+  const [signIn, setSignIn] = useState(true);
   return (
     <div className="containerAlpha">
       <Header
         setDisplayModal={setDisplayModal}
         setDisplayLogin={setDisplayLogin}
+        setSignIn={setSignIn}
       />
       <div className="mainContainer">
-        <History />
+        <History setDisplayLogin={setDisplayLogin} setSignIn={setSignIn} />
 
         <Timer
           focusTime={focusTime}
@@ -52,7 +54,12 @@ const App = () => {
         longBreak={longBreak}
         setLongBreak={setLongBreak}
       />
-      <Login setDisplayLogin={setDisplayLogin} displayLogin={displayLogin} />
+      <Login
+        signIn={signIn}
+        setDisplayLogin={setDisplayLogin}
+        displayLogin={displayLogin}
+        setSignIn={setSignIn}
+      />
     </div>
   );
 };
