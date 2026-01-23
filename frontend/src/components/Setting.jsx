@@ -52,10 +52,16 @@ const Setting = (props) => {
           <div className="settingButt">
             Pomodoro
             <input
+              max={999}
+              min={1}
               value={focusTime}
               type="number"
               onChange={(e) => {
-                setFocusTime(e.target.value);
+                let v = Number(e.target.value);
+                if (Number.isNaN(v)) return;
+
+                v = Math.min(Math.max(v, 1), 999);
+                setFocusTime(v);
               }}
             />
           </div>
@@ -64,7 +70,13 @@ const Setting = (props) => {
             <input
               value={shortBreak}
               type="number"
-              onChange={(e) => setShortBreak(e.target.value)}
+              onChange={(e) => {
+                let v = Number(e.target.value);
+                if (Number.isNaN(v)) return;
+
+                v = Math.min(Math.max(v, 1), 999);
+                setShortBreak(v);
+              }}
             />
           </div>
           <div className="settingButt">
@@ -73,7 +85,11 @@ const Setting = (props) => {
               value={longBreak}
               type="number"
               onChange={(e) => {
-                setLongBreak(e.target.value);
+                let v = Number(e.target.value);
+                if (Number.isNaN(v)) return;
+
+                v = Math.min(Math.max(v, 1), 999);
+                setLongBreak(v);
               }}
             />
           </div>

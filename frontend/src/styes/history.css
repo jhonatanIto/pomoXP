@@ -18,19 +18,45 @@
   align-items: center;
   margin-top: 20px;
   border-radius: 5px;
-  padding: 6px;
+  padding: 10px;
   min-width: 550px;
   max-width: 550px;
   height: 70px;
   cursor: default;
-  overflow-y: hidden;
 }
 .historyCardDate {
   min-width: 110px;
+  max-width: 110px;
 }
-.historyCard::-webkit-scrollbar {
-  display: none;
+
+.medalContainer:hover .medalMin {
+  opacity: 1;
 }
+
 .medals {
-  width: 60px;
+  min-width: 60px;
+  max-width: 60px;
+}
+.medalContainer {
+  margin-top: 30px;
+}
+.medalMin {
+  background-color: rgba(196, 196, 196, 0.2);
+  padding: 5px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  border-radius: 5px;
+  width: 59px;
+  opacity: 0;
+  transition: 0.2s;
+}
+.medalScroll {
+  display: flex;
+  overflow-y: hidden;
+}
+.medalScroll::-webkit-scrollbar {
+  display: none;
 }

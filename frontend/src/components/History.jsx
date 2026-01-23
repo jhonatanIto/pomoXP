@@ -42,10 +42,10 @@ const History = () => {
   }
 
   function medals(minutes) {
-    if (minutes <= 10) return wood;
-    if (minutes <= 30) return bronze;
-    if (minutes <= 60) return silver;
-    if (minutes <= 90) return gold;
+    if (minutes < 10) return wood;
+    if (minutes < 30) return bronze;
+    if (minutes < 60) return silver;
+    if (minutes < 90) return gold;
     if (minutes > 90) return master;
     return wood;
   }
@@ -62,10 +62,20 @@ const History = () => {
             return (
               <div className="historyCard" key={date}>
                 <div className="historyCardDate">{date}</div>
-                <div className="flex">
-                  {minutesList.map((min, index) => (
-                    <img key={index} className="medals" src={medals(min)} />
-                  ))}
+                <div
+                  onWheel={(e) => {
+                    e.currentTarget.scrollLeft += e.deltaY;
+                  }}
+                  className="medalScroll"
+                >
+                  {minutesList.map((min, index) => {
+                    return (
+                      <div key={index} className="medalContainer">
+                        <img className="medals" src={medals(min)} />
+                        <div className={"medalMin"}>{min}min</div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             );

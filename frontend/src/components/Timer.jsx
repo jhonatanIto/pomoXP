@@ -44,7 +44,7 @@ const Timer = (props) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          minutes: minutes,
+          minutes: 50,
           created_at: localTime,
         }),
       });
@@ -55,14 +55,14 @@ const Timer = (props) => {
         throw new Error(data?.message || "Request failed");
       }
 
-      setTargetXp((prev) => prev + minutes);
-
-      const updateCards = await getCards(token);
-      setCards(updateCards);
+      setTargetXp((prev) => prev + 50);
 
       setTimeout(() => {
         fetchUserData();
       }, 2000);
+
+      const updateCards = await getCards(token);
+      setCards(updateCards);
 
       return data;
     } catch (error) {

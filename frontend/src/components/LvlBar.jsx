@@ -6,48 +6,70 @@ import { UserContext } from "../context/UserContext";
 const LvlBar = (props) => {
   const { targetXp, setTargetXp } = props;
   const { user } = useContext(UserContext);
-  const [xp, setXp] = useState(0);
   const [neededXp, setNeededXp] = useState(60);
-  const [percent, setPercent] = useState(xp);
+  const [currentXp, setCurrentXp] = useState(0);
+
+  const [barPercent, setBarPercent] = useState(0);
+
+  const calculatePercentage = () => {
+    if (user) {
+      const currentTotal = Math.pow(user.level, 2) * 6;
+      const xpTolevelUp = Math.pow(user.level + 1, 2) * 6 - currentTotal;
+
+      const currProgress = user.xp - currentTotal;
+      const onePercent = xpTolevelUp / 100;
+      const currentPercent = (user.xp - currentTotal) / onePercent;
+      const pixelPercent = currentPercent * 4.9;
+
+      if (targetXp >= neededXp) return;
+      setCurrentXp(currProgress);
+      setNeededXp(xpTolevelUp);
+      setBarPercent(pixelPercent);
+
+      setTargetXp(currProgress);
+
+      return pixelPercent;
+    }
+  };
 
   useEffect(() => {
     if (!user) return;
 
-    const nextLevelXp = 6 * Math.pow(user?.level + 1, 2);
-
-    setNeededXp(nextLevelXp);
-    setXp(user.xp);
-    setTargetXp(user.xp);
+    calculatePercentage();
   }, [user]);
+
   useEffect(() => {
-    if (xp >= targetXp) return;
+    if (currentXp >= neededXp) return;
 
     const interval = setInterval(() => {
-      setXp((prev) => {
+      setCurrentXp((prev) => {
         if (prev >= targetXp) {
           clearInterval(interval);
           return targetXp;
         }
         return prev + 1;
       });
-    }, 10);
+    }, 20);
 
     return () => clearInterval(interval);
-  }, [targetXp, xp]);
+  }, [targetXp]);
 
-  useEffect(() => {
-    setPercent(Math.min(xp, neededXp));
-  }, [xp, neededXp]);
+  // useEffect(() => {
+  //   setDisplayPercent(Math.min(colorPercent, targetPercent));
+  // }, [colorPercent]);
 
   return (
     <div className="lvlBarContainer">
       <div className="lvlTitle">Level {user ? user.level : 1}</div>
       <div className="lvlBar">
         <div className="numberBar">
-          {user ? percent.toLocaleString("pt-BR") : 0}/
+          {user ? currentXp.toLocaleString("pt-BR") : 0}/
           {user ? neededXp.toLocaleString("pt-BR") : 60}
         </div>
-        <div className="progressLoad" />{" "}
+        <div
+          style={{ width: `${barPercent}px` }}
+          className="progressLoad"
+        />{" "}
       </div>
 
       <img className="avatar" src={avatar} />
