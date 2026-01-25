@@ -1,13 +1,32 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../styes/timer.css";
 import { FaArrowRight } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 import clickSound from "../audio/clickDefault.mp3";
+import alarm from "../audio/alarm.mp3";
+import xpUp from "../audio/xpUp.mp3";
+import levelUp from "../audio/levelUp.mp3";
 import { convertToLevel } from "../../../backend/utils/level.js";
 
 const playClick = () => {
   new Audio(clickSound).play();
+};
+const alarmSound = () => {
+  const audio = new Audio(alarm);
+  audio.volume = 1;
+  audio.play();
+};
+const xpUpAudio = () => {
+  const audio = new Audio(xpUp);
+  audio.volume = 0.5;
+  audio.play();
+};
+
+const lvlUpSound = () => {
+  const audio = new Audio(levelUp);
+  audio.volume = 0.2;
+  audio.play();
 };
 
 const Timer = (props) => {
@@ -22,11 +41,10 @@ const Timer = (props) => {
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Pomodoro");
-
   const { token, user, setCards, fetchUserData, setVisitor } =
     useContext(UserContext);
 
-  const minutes = Number(70);
+  const minutes = Number(focusTime);
   const now = new Date();
   const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
 
@@ -39,6 +57,16 @@ const Timer = (props) => {
       setTime(longBreak * 60);
     }
   }, [focusTime, shortBreak, longBreak, selectedTab]);
+
+  const prevLevel = useRef(null);
+  useEffect(() => {
+    if (!user) return;
+
+    if (prevLevel.current !== null && user.level > prevLevel.current) {
+      lvlUpSound();
+    }
+    prevLevel.current = user.level;
+  }, [user?.level]);
 
   async function postCard() {
     try {
@@ -62,9 +90,9 @@ const Timer = (props) => {
         throw new Error(data?.message || "Request failed");
       }
 
-      setTimeout(() => {
+      setTimeout(async () => {
         fetchUserData();
-      }, 1000);
+      }, 1500);
 
       const updateCards = await getCards(token);
       setCards(updateCards);
@@ -82,15 +110,19 @@ const Timer = (props) => {
 
   const handleTimerEnd = () => {
     setIsRunnig(false);
+    alarmSound();
 
     if (selectedTab === "Pomodoro") {
       if (user) {
         postCard();
-        setTargetXp((prev) => prev + minutes);
-        setTargetBar((prev) => {
-          const percent = minutes / onePercent;
-          return prev + percent * 4.9;
-        });
+        setTimeout(() => {
+          setTargetXp((prev) => prev + minutes);
+          setTargetBar((prev) => {
+            const percent = minutes / onePercent;
+            return prev + percent * 4.9;
+          });
+          xpUpAudio();
+        }, 1100);
       } else {
         setTimeout(() => {
           setVisitor((prev) => {
@@ -149,6 +181,7 @@ const Timer = (props) => {
       .toString()
       .padStart(2, "0");
     const secs = (time % 60).toString().padStart(2, "0");
+    document.title = `${mins}:${secs} - PomoXP`;
     return `${mins}:${secs}`;
   };
 
@@ -200,7 +233,7 @@ const Timer = (props) => {
                 ? "rgb(47 124 129)"
                 : selectedTab === "Short Break"
                   ? "rgb(53 106 146)"
-                  : "rgb(53, 139, 66)",
+                  : "rgb(79, 79, 79)",
           }}
         >
           {isRunning ? "PAUSE" : "START"}

@@ -14,10 +14,8 @@ body {
 }
 
 .header {
-  width: 100%;
   display: flex;
   justify-content: center;
-  flex-direction: column;
   align-items: center;
 }
 .headerTitle {
@@ -55,9 +53,18 @@ body {
   display: flex;
   justify-content: center;
   width: 100%;
-
   margin-top: 30px;
+  flex-wrap: wrap;
 }
-.s {
-  color: rgb(86, 57, 149);
+
+@media (max-width: 600px) {
+  .buttContainer button {
+    width: 50px;
+    font-size: 13px;
+  }
+  .middleHeader {
+    width: 370px;
+    border-bottom: 1px solid rgba(255, 255, 255);
+    padding: 5px;
+  }
 }

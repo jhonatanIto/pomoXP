@@ -40,6 +40,7 @@ const UserProvider = ({ children }) => {
     try {
       const data = await refreshUser(token);
       setUser(data);
+      console.log(data);
 
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {

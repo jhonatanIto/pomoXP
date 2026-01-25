@@ -50,7 +50,6 @@ const History = (props) => {
     if (minutes > 90) return master;
     return wood;
   }
-  console.log(visitor.cards);
 
   const groupedCards = user
     ? dailyTotal(cards)
@@ -74,8 +73,10 @@ const History = (props) => {
               {minutesList.map((min, index) => {
                 return (
                   <div key={index} className="medalContainer">
-                    <img className="medals" src={medals(min)} />
-                    <div className={"medalMin"}>{min}min</div>
+                    <div className="medmed">
+                      <img className="medals" src={medals(min)} />
+                      <div className="medalMin">{min}min</div>
+                    </div>
                   </div>
                 );
               })}
