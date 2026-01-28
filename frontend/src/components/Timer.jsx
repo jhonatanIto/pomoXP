@@ -37,6 +37,7 @@ const Timer = (props) => {
     setTargetXp,
     setTargetBar,
     onePercent,
+    triggerXpPopup,
   } = props;
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
@@ -44,7 +45,7 @@ const Timer = (props) => {
   const { token, user, setCards, fetchUserData, setVisitor } =
     useContext(UserContext);
 
-  const minutes = Number(focusTime);
+  const minutes = Number(60);
   const now = new Date();
   const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
 
@@ -121,8 +122,12 @@ const Timer = (props) => {
             const percent = minutes / onePercent;
             return prev + percent * 4.9;
           });
+
           xpUpAudio();
         }, 1100);
+        setTimeout(() => {
+          triggerXpPopup();
+        }, 1200);
       } else {
         setTimeout(() => {
           setVisitor((prev) => {
@@ -137,7 +142,10 @@ const Timer = (props) => {
               ],
             };
           });
-        }, 1000);
+        }, 1100);
+        setTimeout(() => {
+          triggerXpPopup();
+        }, 1200);
 
         setTargetXp((prev) => prev + minutes);
         setTargetBar((prev) => {
@@ -153,9 +161,9 @@ const Timer = (props) => {
 
   useEffect(() => {
     selectedTab === "Pomodoro"
-      ? (document.body.style.backgroundColor = "rgb(47 124 129)")
+      ? (document.body.style.backgroundColor = "rgb(53 106 146)")
       : selectedTab === "Short Break"
-        ? (document.body.style.backgroundColor = "rgb(53 106 146)")
+        ? (document.body.style.backgroundColor = "rgb(47 124 129)")
         : (document.body.style.backgroundColor = "rgb(79, 79, 79)");
   }, [selectedTab]);
 
@@ -230,9 +238,9 @@ const Timer = (props) => {
           style={{
             color:
               selectedTab === "Pomodoro"
-                ? "rgb(47 124 129)"
+                ? "rgb(53 106 146)"
                 : selectedTab === "Short Break"
-                  ? "rgb(53 106 146)"
+                  ? "rgb(47 124 129)"
                   : "rgb(79, 79, 79)",
           }}
         >

@@ -57,33 +57,35 @@ const History = (props) => {
 
   return (
     <div className="historyContainer">
-      {Object.entries(groupedCards).map((groupedCar) => {
-        const date = groupedCar[0];
-        const minutesList = groupedCar[1];
+      <div className="historyCardContainer">
+        {Object.entries(groupedCards).map((groupedCar) => {
+          const date = groupedCar[0];
+          const minutesList = groupedCar[1];
 
-        return (
-          <div className="historyCard" key={date}>
-            <div className="historyCardDate">{date}</div>
-            <div
-              onWheel={(e) => {
-                e.currentTarget.scrollLeft += e.deltaY;
-              }}
-              className="medalScroll"
-            >
-              {minutesList.map((min, index) => {
-                return (
-                  <div key={index} className="medalContainer">
-                    <div className="medmed">
-                      <img className="medals" src={medals(min)} />
-                      <div className="medalMin">{min}min</div>
+          return (
+            <div className="historyCard" key={date}>
+              <div className="historyCardDate">{date}</div>
+              <div
+                onWheel={(e) => {
+                  e.currentTarget.scrollLeft += e.deltaY;
+                }}
+                className="medalScroll"
+              >
+                {minutesList.map((min, index) => {
+                  return (
+                    <div key={index} className="medalContainer">
+                      <div className="medmed">
+                        <img className="medals" src={medals(min)} />
+                        <div className="medalMin">{min}min</div>
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
       {!user ? (
         <div className="registerBox">
           <div>Create an Account to save your Progress!</div>

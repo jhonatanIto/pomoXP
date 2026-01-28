@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
 .lvlBarContainer {
   width: 800px;
   display: flex;
@@ -53,6 +54,22 @@
 }
 .lvlTitle:hover .totalHours {
   opacity: 1;
+}
+.xpPopup {
+  position: absolute;
+  top: 40px;
+  right: 90px;
+  font-size: 20px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  color: yellow;
+}
+.username {
+  margin-top: 10px;
+  font-size: 25px;
+  font-family: "Limelight", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 @media (max-width: 600px) {
   .lvlBarContainer {

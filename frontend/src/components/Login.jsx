@@ -1,6 +1,7 @@
 import { useContext, useRef, useState } from "react";
 import "../styes/login.css";
 import { UserContext } from "../context/UserContext";
+import google from "../images/google.png";
 
 const Login = (props) => {
   const { displayLogin, setDisplayLogin, signIn, setSignIn } = props;
@@ -88,6 +89,11 @@ const Login = (props) => {
     }
   };
 
+  const handleGoogleLogin = () => {
+    window.location.href = "http://localhost:3000/auth/google";
+    console.log("googleeee");
+  };
+
   return (
     <div
       onMouseDown={handleOverlayClick}
@@ -99,6 +105,15 @@ const Login = (props) => {
           {signIn === false ? "Sign Up" : "Sign In"}
         </div>
         <div className="loginInputContainer">
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="googleButt"
+          >
+            {" "}
+            <img className="google" src={google} />
+            {signIn === true ? "Login with Google" : "Sign up with Google"}
+          </button>
           <input
             value={name}
             onChange={(e) => {
@@ -144,7 +159,9 @@ const Login = (props) => {
             placeholder="Confirm Password"
             type="password"
           />
-          <button type="submit">Submit</button>
+          <button className="loginButt" type="submit">
+            Submit
+          </button>
           <div className="loginWords">
             Already have an account?
             <span onClick={() => toggleMode()}>

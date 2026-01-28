@@ -4,11 +4,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: scroll;
   margin-top: 30px;
 }
-.historyContainer::-webkit-scrollbar {
+.historyCardContainer::-webkit-scrollbar {
   display: none;
+}
+.historyCardContainer {
+  overflow-y: scroll;
+  height: 600px;
 }
 .historyCard {
   font-size: 20px;
@@ -58,6 +61,7 @@
 .medalScroll {
   display: flex;
   overflow-y: hidden;
+  overscroll-behavior: contain;
 }
 .medalScroll::-webkit-scrollbar {
   display: none;
@@ -71,6 +75,8 @@
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
   cursor: default;
   color: rgb(70, 70, 70);
+  width: 390px;
+  position: absolute;
 }
 .registerBox button {
   background-color: rgb(19, 115, 200);

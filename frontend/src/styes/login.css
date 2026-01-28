@@ -45,7 +45,8 @@
 .loginInputContainer input:hover {
   background-color: rgb(66, 81, 95);
 }
-.loginInputContainer button {
+
+.loginButt {
   background-color: rgb(19, 115, 200);
   margin-top: 20px;
   padding: 8px;
@@ -54,7 +55,7 @@
   cursor: pointer;
   transition: 0.3s;
 }
-.loginInputContainer button:hover {
+.loginButt:hover {
   background-color: rgb(15, 91, 158);
 }
 .loginWords {
@@ -74,4 +75,26 @@
 }
 .loginWords span:hover {
   color: rgb(15, 91, 158);
+}
+.googleButt {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: white;
+  color: rgb(81, 81, 81);
+  margin-top: 20px;
+  padding: 8px;
+  font-size: 17px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.googleButt:hover {
+  background-color: rgb(212, 212, 212);
+}
+.google {
+  width: 30px;
+  position: absolute;
+  right: 260px;
 }

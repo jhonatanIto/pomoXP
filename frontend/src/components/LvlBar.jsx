@@ -1,16 +1,35 @@
 import "../styes/lvlBar.css";
-import avatar from "../images/avatar.avif";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 
 const LvlBar = (props) => {
-  const { targetXp, setTargetXp, setOnePercent, setTargetBar, targetBar } =
-    props;
+  const {
+    targetXp,
+    setTargetXp,
+    setOnePercent,
+    setTargetBar,
+    targetBar,
+    focusTime,
+    popupTrigger,
+  } = props;
   const { user, visitor } = useContext(UserContext);
   const [neededXp, setNeededXp] = useState(0);
   const [currentXp, setCurrentXp] = useState(0);
   const [totalHours, setTotalHours] = useState(0);
   const [barPercent, setBarPercent] = useState(0);
+  const [xpPopup, setXpPopup] = useState(false);
+
+  useEffect(() => {
+    if (popupTrigger === 0) return;
+
+    setXpPopup(true);
+
+    const timeout = setTimeout(() => {
+      setXpPopup(false);
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [popupTrigger]);
 
   const calculateAll = (user) => {
     const currentTotal = Math.pow(user.level, 2) * 6;
@@ -32,6 +51,7 @@ const LvlBar = (props) => {
     setTargetBar(pixelPercent);
     setTotalHours(user.xp / 60);
   };
+  console.log();
 
   useEffect(() => {
     if (!user && !visitor) return;
@@ -86,17 +106,23 @@ const LvlBar = (props) => {
         </div>
       </div>
 
+      <div style={{ opacity: xpPopup ? 1 : 0 }} className="xpPopup">
+        +{focusTime}xp
+      </div>
+
       <div className="lvlBar">
         <div className="numberBar">
           {currentXp.toLocaleString("pt-BR")}/{neededXp.toLocaleString("pt-BR")}
         </div>
         <div
-          style={{ width: `${barPercent}px` }}
+          style={{ width: `${barPercent > 0 ? barPercent : 0}px` }}
           className="progressLoad"
         />{" "}
       </div>
-
-      <img className="avatar" src={avatar} />
+      <div className="username" style={{ display: user ? "flex" : "none" }}>
+        {user?.name}
+      </div>
+      {/* <img className="avatar" src={avatar} /> */}
     </div>
   );
 };
