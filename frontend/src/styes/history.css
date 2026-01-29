@@ -30,6 +30,7 @@
 .historyCardDate {
   min-width: 110px;
   max-width: 110px;
+  cursor: pointer;
 }
 
 .medalContainer:hover .medalMin {

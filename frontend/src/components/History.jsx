@@ -9,7 +9,7 @@ import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 
 const History = (props) => {
-  const { setDisplayLogin, setSignIn } = props;
+  const { setDisplayLogin, setSignIn, setSavedNote } = props;
   const { user, token, setCards, cards, visitor } = useContext(UserContext);
 
   useEffect(() => {
@@ -64,7 +64,12 @@ const History = (props) => {
 
           return (
             <div className="historyCard" key={date}>
-              <div className="historyCardDate">{date}</div>
+              <div
+                onClick={() => setSavedNote(true)}
+                className="historyCardDate"
+              >
+                {date}
+              </div>
               <div
                 onWheel={(e) => {
                   e.currentTarget.scrollLeft += e.deltaY;

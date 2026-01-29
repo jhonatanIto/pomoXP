@@ -8,6 +8,7 @@ import Login from "./components/Login";
 import { Route, Routes } from "react-router-dom";
 import LoginSuccess from "./utilities/LoginSuccess";
 import ProfileSetting from "./components/ProfileSetting";
+import AddNote from "./components/AddNote";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -21,6 +22,8 @@ const App = () => {
   const [signIn, setSignIn] = useState(true);
   const [popupTrigger, setPopupTrigger] = useState(0);
   const [profileEdit, setProfileEdit] = useState(false);
+  const [noteModal, setNoteModal] = useState(false);
+  const [savedNote, setSavedNote] = useState(false);
 
   const triggerXpPopup = () => {
     setPopupTrigger((prev) => prev + 1);
@@ -35,17 +38,28 @@ const App = () => {
         setProfileEdit={setProfileEdit}
       />
       <div className="mainContainer">
-        <History setDisplayLogin={setDisplayLogin} setSignIn={setSignIn} />
-
-        <Timer
-          focusTime={focusTime}
-          shortBreak={shortBreak}
-          longBreak={longBreak}
-          setTargetXp={setTargetXp}
-          setTargetBar={setTargetBar}
-          onePercent={onePercent}
-          triggerXpPopup={triggerXpPopup}
+        <History
+          setDisplayLogin={setDisplayLogin}
+          setSignIn={setSignIn}
+          setSavedNote={setSavedNote}
         />
+        <div>
+          <Timer
+            focusTime={focusTime}
+            shortBreak={shortBreak}
+            longBreak={longBreak}
+            setTargetXp={setTargetXp}
+            setTargetBar={setTargetBar}
+            onePercent={onePercent}
+            triggerXpPopup={triggerXpPopup}
+          />
+          <AddNote
+            noteModal={noteModal}
+            setNoteModal={setNoteModal}
+            setSavedNote={setSavedNote}
+            savedNote={savedNote}
+          />
+        </div>
 
         <LvlBar
           popupTrigger={popupTrigger}

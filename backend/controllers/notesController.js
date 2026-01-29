@@ -1,36 +1,59 @@
-import { eq, desc, gte, lte } from "drizzle-orm";
-import { notes } from "../schema.js";
+import { eq, desc, gte, and } from "drizzle-orm";
 import { db } from "../db.js";
+import { notes, users } from "../schema.js";
 
 export const getNotes = async (req, res) => {
   try {
-    if (!req.userId) {
-      return res.status(401).json({ message: "Unauthorized" });
+    const range = req.query.range || "week";
+
+    const userId = req.userId;
+
+    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+
+    if (!["week", "month", "year"].includes(range)) {
+      return res.status(400).json({
+        message: "Invalid range. Use week, month, or year",
+      });
     }
 
-    const { startDate, endDate } = req.query;
+    const [user] = await db.select().from(users).where(eq(users.id, userId));
 
-    if (!startDate || !endDate) {
-      return res
-        .status(400)
-        .json({ message: "startDate and endDate are required" });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const isFree = user.plan === "free";
+
+    if (isFree && range !== "week") {
+      return res.status(403).json({
+        message: "Upgrade to premium to access month/year notes",
+      });
     }
 
-    const data = await db
-      .select({
-        id: notes.id,
-        content: notes.content,
-        created_at: notes.created_at,
-      })
+    const now = new Date();
+    let startDate = new Date();
+
+    if (range === "week") {
+      startDate.setDate(now.getDate() - 7);
+    }
+
+    if (range === "month") {
+      startDate.setMonth(now.getMonth() - 1);
+    }
+
+    if (range === "year") {
+      startDate.setFullYear(now.getFullYear() - 1);
+    }
+
+    const userNotes = await db
+      .select()
       .from(notes)
-      .where(
-        eq(notes.user_id, req.userId),
-        gte(notes.created_at, startDate),
-        lte(notes.created_at, endDate),
-      )
+      .where(and(eq(notes.user_id, userId), gte(notes.created_at, startDate)))
       .orderBy(desc(notes.created_at));
 
-    res.status(200).json(data);
+    return res.json({
+      range,
+      count: userNotes.length,
+      notes: userNotes,
+    });
   } catch (error) {
     console.error("GET /notes error", error);
     res.status(500).json({ message: "Internal server error" });
@@ -39,15 +62,14 @@ export const getNotes = async (req, res) => {
 
 export const postNotes = async (req, res) => {
   try {
-    const { content, created_at } = req.body;
+    const { title, content } = req.body;
     const userId = req.userId;
 
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
-    if (!content)
-      return res.status(400).json({ message: "Note content missing" });
+    if (!content || !title)
+      return res.status(400).json({ message: "Title or content missing" });
 
-    const values = { user_id: userId, content };
-    if (created_at) values.created_at = created_at;
+    const values = { user_id: userId, content, title };
 
     const [note] = await db.insert(notes).values(values).returning();
 

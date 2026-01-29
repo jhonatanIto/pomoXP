@@ -19,6 +19,7 @@ export const users = pgTable("users", {
   created_at: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
+  plan: text("plan").default("free").notNull(),
 });
 
 export const cards = pgTable(
@@ -46,6 +47,7 @@ export const notes = pgTable(
         onDelete: "cascade",
       })
       .notNull(),
+    title: text("title").notNull(),
 
     content: text("content").notNull(),
     created_at: timestamp("created_at", { withTimezone: true })

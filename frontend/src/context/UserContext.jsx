@@ -7,6 +7,7 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   const [cards, setCards] = useState([]);
+  const [notes, setNotes] = useState([]);
   const [visitor, setVisitor] = useState({
     level: 1,
     xp: 0,
@@ -60,6 +61,8 @@ const UserProvider = ({ children }) => {
         fetchUserData,
         visitor,
         setVisitor,
+        setNotes,
+        notes,
       }}
     >
       {children}

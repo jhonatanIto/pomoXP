@@ -35,6 +35,9 @@ const ProfileSetting = (props) => {
 
   async function updateName() {
     try {
+      if (editName.length > 20) {
+        return alert("Name must be less than 20 characters");
+      }
       const res = await fetch("http://localhost:3000/api/users", {
         method: "PUT",
         headers: {

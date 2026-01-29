@@ -10,6 +10,17 @@ export const getCards = async (token) => {
   return res.json();
 };
 
+export const getNotes = async (token, range = "week") => {
+  const res = await fetch(`http://localhost:3000/api/notes?range=${range}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!res.ok) throw new Error("Error to get notes");
+
+  return res.json();
+};
+
 export const refreshUser = async (token) => {
   if (!token) {
     throw new Error("No token provided");
