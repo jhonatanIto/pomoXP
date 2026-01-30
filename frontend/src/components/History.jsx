@@ -9,7 +9,7 @@ import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 
 const History = (props) => {
-  const { setDisplayLogin, setSignIn, setSavedNote } = props;
+  const { setDisplayLogin, setSignIn, setSavedNote, setSelectedDay } = props;
   const { user, token, setCards, cards, visitor } = useContext(UserContext);
 
   useEffect(() => {
@@ -65,7 +65,10 @@ const History = (props) => {
           return (
             <div className="historyCard" key={date}>
               <div
-                onClick={() => setSavedNote(true)}
+                onClick={() => {
+                  setSavedNote(true);
+                  setSelectedDay(date);
+                }}
                 className="historyCardDate"
               >
                 {date}

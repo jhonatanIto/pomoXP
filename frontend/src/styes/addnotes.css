@@ -55,6 +55,7 @@
   font-size: 40px;
   outline: none;
 }
+
 .noteTitle:focus {
   border-bottom: 1px solid black;
 }
@@ -76,6 +77,7 @@
   left: 30px;
   font-size: 20px;
 }
+
 .noteButtCont {
   width: 300px;
   display: flex;
@@ -122,10 +124,10 @@
   justify-content: center;
 }
 .savedNotesCont {
-  margin-top: 70px;
+  margin-top: 140px;
   background-color: white;
-  width: 1200px;
-  height: 820px;
+  width: 960px;
+  height: 600px;
   display: flex;
   align-items: center;
   border-radius: 20px;
@@ -134,9 +136,88 @@
 .savedLeft {
   width: 350px;
   height: 100%;
-  border-right: 1px solid gray;
+  border-right: 1px solid rgb(192, 192, 192);
+  overflow: scroll;
+}
+.savedLeft::-webkit-scrollbar {
+  display: none;
 }
 .savedRight {
   width: 100%;
   height: 100%;
+  overflow: scroll;
+}
+.savedRight::-webkit-scrollbar {
+  display: none;
+}
+.noteDatesButt {
+  font-size: 20px;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  width: 240px;
+  box-shadow: 0px 2px 7px rgba(68, 68, 68, 0.5);
+  transition: 0.3s;
+}
+.selectedDate {
+  background-color: #0069c0;
+  color: white;
+}
+.noteDatesButt:hover {
+  transform: translateY(-3px);
+}
+.rightSideTitles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 10px;
+  margin: 20px;
+  font-size: 30px;
+  border: 1px solid rgb(197, 197, 197, 0.5);
+  min-width: 200px;
+  cursor: pointer;
+  box-shadow: 0px 2px 7px rgba(139, 139, 139, 0.5);
+}
+.selectedNote {
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+}
+.contenttt {
+  margin-top: 20px;
+  width: 100%;
+  height: 100%;
+  font-size: 25px;
+  outline: none;
+  text-align: center;
+  border-radius: 20px;
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+
+.back {
+  width: 35px;
+  position: absolute;
+  left: 30px;
+  cursor: pointer;
+}
+.editAll {
+  border: 1px solid rgb(212, 212, 212);
+}
+.editTitle {
+  border-bottom: 1px solid black;
 }

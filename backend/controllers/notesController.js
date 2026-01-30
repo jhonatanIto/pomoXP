@@ -79,3 +79,55 @@ export const postNotes = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const updateNotes = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const { id } = req.params;
+
+    const { title, content } = req.body;
+
+    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+    if (!id) return res.status(400).json({ message: "Note id is required" });
+    if (!title && !content)
+      return res.status(400).json({ message: "Nothing to update" });
+    const [updatedNote] = await db
+      .update(notes)
+      .set({
+        ...(title && { title }),
+        ...(content && { content }),
+      })
+      .where(and(eq(notes.id, id), eq(notes.user_id, userId)))
+      .returning();
+
+    if (!updatedNote)
+      return res.status(404).json({ message: "Note not found" });
+    res.status(200).json({ message: "Note updated successfully", updatedNote });
+  } catch (err) {
+    console.error("PUT/ note error", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const deleteNotes = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { id } = req.params;
+
+    if (!id) return res.status(400).json({ message: "Note id is required" });
+    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+
+    const [deletedNote] = await db
+      .delete(notes)
+      .where(and(eq(notes.id, id), eq(notes.user_id, userId)))
+      .returning();
+
+    if (!deletedNote)
+      return res.status(404).json({ message: "Note not found" });
+    res.status(200).json({ message: "Note deleted successfully", deletedNote });
+  } catch (error) {
+    console.error("DELETE/ note error", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};

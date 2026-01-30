@@ -24,7 +24,7 @@ const App = () => {
   const [profileEdit, setProfileEdit] = useState(false);
   const [noteModal, setNoteModal] = useState(false);
   const [savedNote, setSavedNote] = useState(false);
-
+  const [selectedDay, setSelectedDay] = useState("");
   const triggerXpPopup = () => {
     setPopupTrigger((prev) => prev + 1);
   };
@@ -42,6 +42,7 @@ const App = () => {
           setDisplayLogin={setDisplayLogin}
           setSignIn={setSignIn}
           setSavedNote={setSavedNote}
+          setSelectedDay={setSelectedDay}
         />
         <div>
           <Timer
@@ -58,6 +59,8 @@ const App = () => {
             setNoteModal={setNoteModal}
             setSavedNote={setSavedNote}
             savedNote={savedNote}
+            selectedDay={selectedDay}
+            setSelectedDay={setSelectedDay}
           />
         </div>
 
