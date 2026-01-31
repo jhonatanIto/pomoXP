@@ -1,7 +1,6 @@
 import express from "express";
-import { postCards } from "../controllers/postCardControllers.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
-import { getCard } from "../controllers/getCardController.js";
+import { getCard, postCards } from "../controllers/cardController.js";
 
 export const route = express.Router();
 

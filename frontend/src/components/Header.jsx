@@ -7,8 +7,16 @@ import logoutPic from "../images/logout.png";
 import deletePic from "../images/delete.png";
 
 const Header = (props) => {
-  const { setDisplayModal, setDisplayLogin, setSignIn, setProfileEdit } = props;
-  const { user, logout } = useContext(UserContext);
+  const {
+    setDisplayModal,
+    setDisplayLogin,
+    setSignIn,
+    setProfileEdit,
+    setSavedNote,
+    setNoteModal,
+    setSelectedDay,
+  } = props;
+  const { user, logout, notes } = useContext(UserContext);
   const [profileMenu, setProfileMenu] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -37,7 +45,20 @@ const Header = (props) => {
       <div className="middleHeader">
         <div className="headerTitle">PomoXP</div>
         <div className="buttContainer">
-          <button className="headerButts">Report</button>
+          <button
+            onClick={() => {
+              if (notes.length <= 0) {
+                setNoteModal(true);
+                return;
+              }
+              setSavedNote(true);
+              const today = new Date().toISOString().slice(0, 10);
+              setSelectedDay(today);
+            }}
+            className="headerButts"
+          >
+            Notes
+          </button>
           <button
             className="headerButts"
             onClick={() => setDisplayModal("flex")}

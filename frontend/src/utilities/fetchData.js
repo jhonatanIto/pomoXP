@@ -10,8 +10,11 @@ export const getCards = async (token) => {
   return res.json();
 };
 
-export const getNotes = async (token, range = "week") => {
-  const res = await fetch(`http://localhost:3000/api/notes?range=${range}`, {
+export const getNotes = async (token, range) => {
+  const url = range
+    ? `http://localhost:3000/api/notes?range=${range}`
+    : `http://localhost:3000/api/notes`;
+  const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

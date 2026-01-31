@@ -12,6 +12,7 @@ export const userData = async (req, res) => {
         photo: users.photo,
         xp: users.xp,
         level: users.level,
+        plan: users.plan,
       })
       .from(users)
       .where(eq(users.id, req.userId));

@@ -63,6 +63,7 @@ const Login = (props) => {
     }
 
     try {
+      console.log("loading...");
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

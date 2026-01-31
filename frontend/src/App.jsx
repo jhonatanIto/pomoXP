@@ -36,6 +36,9 @@ const App = () => {
         setDisplayLogin={setDisplayLogin}
         setSignIn={setSignIn}
         setProfileEdit={setProfileEdit}
+        setSavedNote={setSavedNote}
+        setNoteModal={setNoteModal}
+        setSelectedDay={setSelectedDay}
       />
       <div className="mainContainer">
         <History
@@ -43,6 +46,7 @@ const App = () => {
           setSignIn={setSignIn}
           setSavedNote={setSavedNote}
           setSelectedDay={setSelectedDay}
+          setNoteModal={setNoteModal}
         />
         <div>
           <Timer

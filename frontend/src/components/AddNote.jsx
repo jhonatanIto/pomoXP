@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import add from "../images/add.png";
 import back from "../images/return.png";
+import lock from "../images/lock.png";
 import "../styes/addnotes.css";
 import { UserContext } from "../context/UserContext";
 import { getNotes } from "../utilities/fetchData";
@@ -21,6 +22,11 @@ const AddNote = (props) => {
   const [displayNote, setDisplayNote] = useState(false);
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
+
+  const [viewMode, serViewMode] = useState("days");
+  const [selecYear, setSelecYear] = useState(null);
+  const [selecMonth, setSelecMonth] = useState(null);
+  const [selecDay, setSelecDay] = useState(null);
 
   const { token, user, setNotes, notes } = useContext(UserContext);
 
@@ -85,7 +91,9 @@ const AddNote = (props) => {
   const loadNotes = async () => {
     try {
       if (!user || !token) return;
+
       const data = await getNotes(token);
+
       setNotes(data.notes);
     } catch (error) {
       console.error(error.message);
@@ -144,7 +152,7 @@ const AddNote = (props) => {
     loadNotes();
   }, [user, token]);
 
-  function dailyTotal(array) {
+  function groupByDay(array) {
     const grouped = {};
 
     array.forEach((c) => {
@@ -158,8 +166,46 @@ const AddNote = (props) => {
 
     return grouped;
   }
+  function groupByYear(notes) {
+    const grouped = {};
 
-  const groupedCards = Object.entries(dailyTotal(notes));
+    notes.forEach((n) => {
+      const year = n.created_at.slice(0, 4);
+
+      if (!grouped[year]) grouped[year] = [];
+      grouped[year].push(n);
+    });
+
+    return grouped;
+  }
+  function groupByMonth(notes) {
+    const grouped = {};
+
+    notes.forEach((n) => {
+      const month = n.created_at.slice(0, 7);
+
+      if (!grouped[month]) grouped[month] = [];
+      grouped[month].push(n);
+    });
+
+    return grouped;
+  }
+
+  const years = Object.entries(groupByYear(notes));
+
+  const months = selecYear
+    ? Object.entries(groupByMonth(groupByYear(notes)[selecYear]))
+    : [];
+
+  const days = selecMonth
+    ? Object.entries(groupByDay(groupByMonth)(notes)[selecMonth])
+    : [];
+
+  const groupedCards = Object.entries(groupByDay(notes));
+
+  const selecIndex = groupedCards.findIndex((g) => g[0] === selectedDay);
+
+  const blocked = user?.plan === "free" && selecIndex >= 7;
 
   useEffect(() => {
     if (groupedCards.length === 0) return;
@@ -173,7 +219,7 @@ const AddNote = (props) => {
   }, [savedNote]);
 
   const filtered =
-    groupedCards.find((n) => n[0] === selectedDay) || groupedCards[0];
+    groupedCards.find((n) => n[0] === selectedDay) || groupedCards?.[0];
 
   return (
     <div className="addNoteContainer">
@@ -184,8 +230,7 @@ const AddNote = (props) => {
 
       <div
         onMouseDown={handleOverlayClick}
-        style={{ display: noteModal ? "flex" : "none" }}
-        className="noteModalBody"
+        className={`noteModalBody ${noteModal ? "active" : ""}`}
       >
         <div ref={boxRef} className="noteBox">
           <div className="noteDate">{formattedDate}</div>
@@ -223,14 +268,20 @@ const AddNote = (props) => {
         </div>
       </div>
       <div
-        style={{ display: savedNote ? "flex" : "none" }}
         onMouseDown={handleOverlayClick}
-        className="savedNotesModal"
+        className={`savedNotesModal ${savedNote ? "active" : ""}`}
       >
         <div ref={savedRef} className="savedNotesCont">
           <div className="savedLeft">
-            {groupedCards?.map((g) => {
+            <div className="filterButtCont">
+              <button className="filterButt">Recent</button>
+              <button className="filterButt">Months</button>
+              <button className="filterButt">Years</button>
+            </div>
+            {groupedCards?.map((g, index) => {
               const date = g[0];
+              const locked = user?.plan === "free" && index >= 7;
+
               return (
                 <button
                   onClick={() => {
@@ -241,6 +292,14 @@ const AddNote = (props) => {
                   key={date}
                 >
                   {date} : {g[1].length} notes
+                  <div
+                    style={{
+                      display: locked ? "flex" : "none",
+                    }}
+                    className="blockedButt"
+                  >
+                    <img className="lock" src={lock} />
+                  </div>
                 </button>
               );
             })}
@@ -252,16 +311,26 @@ const AddNote = (props) => {
                   <div
                     style={{ display: displayNote ? "none" : "flex" }}
                     onClick={() => {
-                      setNoteTitle(f.title);
-                      setNoteContent(f.content);
-                      setDisplayNote(true);
-                      setEdit(false);
-                      setId(f.id);
+                      if (!blocked) {
+                        setNoteTitle(f.title);
+                        setNoteContent(f.content);
+                        setDisplayNote(true);
+                        setEdit(false);
+                        setId(f.id);
+                      } else {
+                        alert("upgrade to premium user first");
+                      }
                     }}
                     className="rightSideTitles"
                     key={f.id}
                   >
                     {f.title}
+                    <div
+                      style={{ display: blocked ? "flex" : "none" }}
+                      className="blockedButt"
+                    >
+                      <img className="lock" src={lock} />
+                    </div>
                   </div>
                 );
               })}

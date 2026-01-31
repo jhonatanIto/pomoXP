@@ -142,6 +142,7 @@ const Timer = (props) => {
               ],
             };
           });
+          xpUpAudio();
         }, 1100);
         setTimeout(() => {
           triggerXpPopup();

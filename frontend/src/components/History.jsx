@@ -9,8 +9,15 @@ import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 
 const History = (props) => {
-  const { setDisplayLogin, setSignIn, setSavedNote, setSelectedDay } = props;
-  const { user, token, setCards, cards, visitor } = useContext(UserContext);
+  const {
+    setDisplayLogin,
+    setSignIn,
+    setSavedNote,
+    setSelectedDay,
+    setNoteModal,
+  } = props;
+  const { user, token, setCards, cards, visitor, notes } =
+    useContext(UserContext);
 
   useEffect(() => {
     if (!user) return;
@@ -66,6 +73,11 @@ const History = (props) => {
             <div className="historyCard" key={date}>
               <div
                 onClick={() => {
+                  if (notes.length <= 0) {
+                    setNoteModal(true);
+                    return;
+                  }
+
                   setSavedNote(true);
                   setSelectedDay(date);
                 }}
@@ -93,32 +105,32 @@ const History = (props) => {
             </div>
           );
         })}
-      </div>
-      {!user ? (
-        <div className="registerBox">
-          <div>Create an Account to save your Progress!</div>
-          <div className="registerButtCont">
-            <button
-              onClick={() => {
-                setDisplayLogin("flex");
-                setSignIn(true);
-              }}
-            >
-              Sign In
-            </button>
-            <button
-              onClick={() => {
-                setDisplayLogin("flex");
-                setSignIn(false);
-              }}
-            >
-              Sign Up
-            </button>
+        {!user ? (
+          <div className="registerBox">
+            <div>Create an Account to save your Progress!</div>
+            <div className="registerButtCont">
+              <button
+                onClick={() => {
+                  setDisplayLogin("flex");
+                  setSignIn(true);
+                }}
+              >
+                Sign In
+              </button>
+              <button
+                onClick={() => {
+                  setDisplayLogin("flex");
+                  setSignIn(false);
+                }}
+              >
+                Sign Up
+              </button>
+            </div>
           </div>
-        </div>
-      ) : (
-        ""
-      )}
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };

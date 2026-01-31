@@ -4,17 +4,11 @@ import { notes, users } from "../schema.js";
 
 export const getNotes = async (req, res) => {
   try {
-    const range = req.query.range || "week";
-
     const userId = req.userId;
 
-    if (!userId) return res.status(401).json({ message: "Unauthorized" });
+    let range = req.query.range;
 
-    if (!["week", "month", "year"].includes(range)) {
-      return res.status(400).json({
-        message: "Invalid range. Use week, month, or year",
-      });
-    }
+    if (!userId) return res.status(401).json({ message: "Unauthorized" });
 
     const [user] = await db.select().from(users).where(eq(users.id, userId));
 
@@ -22,32 +16,60 @@ export const getNotes = async (req, res) => {
 
     const isFree = user.plan === "free";
 
-    if (isFree && range !== "week") {
+    if (!range) {
+      range = isFree ? "default" : "all";
+    }
+
+    const allowedRanges = ["default", "week", "month", "year", "all"];
+
+    if (!allowedRanges.includes(range)) {
+      return res.status(400).json({
+        message: "Invalid range",
+      });
+    }
+
+    if (isFree && range !== "default" && range !== "week") {
       return res.status(403).json({
         message: "Upgrade to premium to access month/year notes",
       });
     }
 
+    let query = db
+      .select()
+      .from(notes)
+      .where(eq(notes.user_id, userId))
+      .orderBy(desc(notes.created_at));
+
     const now = new Date();
-    let startDate = new Date();
+    let startDate = null;
+
+    if (range === "default") {
+      startDate = new Date();
+      startDate.setDate(now.getDate() - 10);
+    }
 
     if (range === "week") {
+      startDate = new Date();
       startDate.setDate(now.getDate() - 7);
     }
 
     if (range === "month") {
+      startDate = new Date();
       startDate.setMonth(now.getMonth() - 1);
     }
 
     if (range === "year") {
+      startDate = new Date();
       startDate.setFullYear(now.getFullYear() - 1);
     }
 
-    const userNotes = await db
-      .select()
-      .from(notes)
-      .where(and(eq(notes.user_id, userId), gte(notes.created_at, startDate)))
-      .orderBy(desc(notes.created_at));
+    if (startDate) {
+      query = query.where(
+        and(eq(notes.user_id, userId), gte(notes.created_at, startDate)),
+      );
+    }
+
+    const userNotes = await query;
 
     return res.json({
       range,

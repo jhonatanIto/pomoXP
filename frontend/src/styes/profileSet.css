@@ -60,17 +60,23 @@
   font-size: 25px;
   color: rgb(90, 90, 90);
   border-bottom: 1px solid rgb(131, 131, 131, 0.6);
+  width: 200px;
   outline: none;
 }
-.emailCont {
+.nameContainer {
   display: flex;
-  margin-top: 20px;
-  cursor: default;
+  justify-content: start;
+  align-items: center;
+  margin-top: 10px;
 }
-.editEmail {
+
+.emailBorder {
+  border-bottom: 1px solid rgb(148, 148, 148);
+}
+
+.editName {
   width: 20px;
   height: 20px;
-  margin-left: 20px;
   cursor: pointer;
 }
 .profileButtCont {

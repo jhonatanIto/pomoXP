@@ -10,28 +10,43 @@ const ProfileSetting = (props) => {
   const profileBoxRef = useRef(null);
   const { user, token, fetchUserData } = useContext(UserContext);
   const [editName, setEditName] = useState("");
-  const [editPhoto, setEditPhoto] = useState("");
+  const [editUser, setEditUser] = useState(false);
+  const [email, setEmail] = useState("");
+  const nameRef = useRef(null);
 
   useEffect(() => {
     if (!user) return;
 
-    if (user?.name) {
-      setEditName(user?.name);
-    }
+    setEditName(user?.name);
+    setEmail(user?.email);
   }, [user]);
+
+  useEffect(() => {
+    if (editUser) {
+      nameRef.current.focus();
+    }
+  }, [editUser]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (profileBoxRef.current && !profileBoxRef.current.contains(e.target)) {
         setProfileEdit(false);
+        handleEmailClick(e);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleEmailClick = (e) => {
+    if (!nameRef.current.contains(e.target)) {
+      setEditUser(false);
+    }
+  };
 
   async function updateName() {
     try {
@@ -61,7 +76,11 @@ const ProfileSetting = (props) => {
       style={{ display: profileEdit ? "flex" : "none" }}
       className="profileSetBody"
     >
-      <div ref={profileBoxRef} className="profileBox">
+      <div
+        onClick={(e) => handleEmailClick(e)}
+        ref={profileBoxRef}
+        className="profileBox"
+      >
         <div className="profileHeader">
           <div className="acc">Account</div>
           <div onClick={() => setProfileEdit(false)} className="xCont">
@@ -75,15 +94,26 @@ const ProfileSetting = (props) => {
             alt=""
           />
           <div className="profileNameCont">
-            <input
-              className="profileNameInput"
-              type="text"
-              value={editName}
-              onChange={(e) => setEditName(e.target.value)}
-            />
-            <div className="emailCont">
-              jhonitojp@gmail.com <img className="editEmail" src={edit} />
+            <div className="nameContainer">
+              <input
+                ref={nameRef}
+                disabled={!editUser}
+                className="profileNameInput"
+                type="text"
+                value={editName}
+                onChange={(e) => setEditName(e.target.value)}
+              />
+              <img
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditUser(true);
+                }}
+                className="editName"
+                src={edit}
+              />
             </div>
+
+            <input style={{ pointerEvents: "none" }} value={email} />
           </div>
         </div>
         <div className="profileButtCont">
