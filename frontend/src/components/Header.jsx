@@ -16,7 +16,7 @@ const Header = (props) => {
     setNoteModal,
     setSelectedDay,
   } = props;
-  const { user, logout, notes } = useContext(UserContext);
+  const { user, logout, notes, visitor } = useContext(UserContext);
   const [profileMenu, setProfileMenu] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -47,7 +47,7 @@ const Header = (props) => {
         <div className="buttContainer">
           <button
             onClick={() => {
-              if (notes.length <= 0) {
+              if (notes.length <= 0 && visitor.notes.length <= 0) {
                 setNoteModal(true);
                 return;
               }

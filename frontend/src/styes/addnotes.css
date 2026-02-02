@@ -255,6 +255,9 @@
 .lock {
   width: 30px;
 }
+.lockFilt {
+  width: 17px;
+}
 .filterButt {
   font-size: 17px;
   background-color: #252525;
@@ -269,10 +272,22 @@
   cursor: pointer;
   width: 70px;
   transition: 0.3s;
+  position: relative;
 }
 .filterButtCont {
   display: flex;
 }
 .selecFilter {
   background-color: #0069c0;
+}
+.blockFilterButt {
+  position: absolute;
+  background: rgb(227, 227, 227, 0.5);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
 }

@@ -84,14 +84,19 @@ export const getNotes = async (req, res) => {
 
 export const postNotes = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, created_at } = req.body;
     const userId = req.userId;
 
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
     if (!content || !title)
       return res.status(400).json({ message: "Title or content missing" });
 
-    const values = { user_id: userId, content, title };
+    const values = {
+      user_id: userId,
+      content,
+      title,
+      created_at: created_at ? new Date(created_at) : undefined,
+    };
 
     const [note] = await db.insert(notes).values(values).returning();
 

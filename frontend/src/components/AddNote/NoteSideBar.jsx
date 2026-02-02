@@ -12,13 +12,14 @@ const NoteSideBar = (props) => {
     selecYear,
     selecMonth,
     selectedDay,
-    groupedCards,
     months,
     years,
     recent,
   } = props;
   const [viewMode, setViewMode] = useState("recent");
   const { user, notes } = useContext(UserContext);
+
+  const freeUser = user?.plan === "free" || !user ? true : false;
 
   return (
     <div className="savedLeft">
@@ -33,26 +34,44 @@ const NoteSideBar = (props) => {
         >
           Recent
         </button>
+
         <button
           onClick={() => {
-            setViewMode("months");
-            setSelectedDay(null);
-            setSelecMonth(months[0][0]);
+            if (!freeUser) {
+              setViewMode("months");
+              setSelectedDay(null);
+              setSelecMonth(months[0][0]);
+            }
           }}
           className={`filterButt ${viewMode === "months" ? "selecFilter" : ""}`}
         >
           Month
+          <div
+            style={{ display: freeUser ? "flex" : "none" }}
+            className="blockFilterButt"
+          >
+            <img className="lockFilt" src={lock} />
+          </div>
         </button>
+
         <button
           onClick={() => {
-            setViewMode("years");
-            setSelecMonth(null);
-            setSelectedDay(null);
-            setSelecYear(years[0][0]);
+            if (!freeUser) {
+              setViewMode("years");
+              setSelecMonth(null);
+              setSelectedDay(null);
+              setSelecYear(years[0][0]);
+            }
           }}
           className={`filterButt ${viewMode === "years" ? "selecFilter" : ""}`}
         >
           Year
+          <div
+            style={{ display: freeUser ? "flex" : "none" }}
+            className="blockFilterButt"
+          >
+            <img className="lockFilt" src={lock} />
+          </div>
         </button>
       </div>
       {viewMode === "years" &&

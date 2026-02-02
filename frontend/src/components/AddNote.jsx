@@ -7,6 +7,7 @@ import { UserContext } from "../context/UserContext";
 import { getNotes } from "../utilities/fetchData";
 import { groupByDay, groupByMonth, groupByYear } from "./AddNote/utils";
 import NoteSideBar from "./AddNote/NoteSideBar";
+import { nanoid } from "nanoid";
 
 const AddNote = (props) => {
   const {
@@ -35,7 +36,9 @@ const AddNote = (props) => {
   const [selecYear, setSelecYear] = useState(year);
   const [selecMonth, setSelecMonth] = useState("");
 
-  const { token, user, setNotes, notes } = useContext(UserContext);
+  const { token, user, setNotes, notes, setVisitor, visitor } =
+    useContext(UserContext);
+  const visitorNoteId = nanoid();
 
   const closeNote = () => {
     setNoteModal(false);
@@ -75,6 +78,7 @@ const AddNote = (props) => {
         body: JSON.stringify({
           title: noteTitle,
           content: noteContent,
+          created_at: new Date().toISOString(),
         }),
       });
 
@@ -83,7 +87,7 @@ const AddNote = (props) => {
       if (!res.ok) {
         throw new Error(data?.message || "Request failed");
       }
-      closeNote();
+
       return data;
     } catch (error) {
       console.error(error.message);
@@ -153,15 +157,17 @@ const AddNote = (props) => {
     loadNotes();
   }, [user, token]);
 
-  const years = Object.entries(groupByYear(notes || []));
+  const currNotes = user ? notes : visitor.notes;
+
+  const years = Object.entries(groupByYear(currNotes || []));
 
   const months =
-    selecYear && groupByYear(notes || [])[selecYear]
-      ? Object.entries(groupByMonth(groupByYear(notes)[selecYear]))
+    selecYear && groupByYear(currNotes || [])[selecYear]
+      ? Object.entries(groupByMonth(groupByYear(currNotes)[selecYear]))
       : [];
 
   const yearNotes =
-    notes?.filter(
+    currNotes?.filter(
       (note) => new Date(note.created_at).getFullYear() === Number(selecYear),
     ) || [];
 
@@ -181,10 +187,11 @@ const AddNote = (props) => {
     ? groupedCards.find(([date]) => date === selectedDay)?.[1] || []
     : monthNotes;
 
-  const selecIndex = groupedCards.findIndex((g) => g[0] === selectedDay);
-  const blocked = user?.plan === "free" && selecIndex >= 7;
+  const recent = Object.entries(groupByDay(currNotes));
 
-  const recent = Object.entries(groupByDay(notes));
+  const selecIndex = recent.findIndex((g) => g[0] === selectedDay);
+  const blocked =
+    (user?.plan === "free" && selecIndex >= 7) || (!user && selecIndex >= 7);
 
   useEffect(() => {
     if (groupedCards.length === 0) return;
@@ -196,8 +203,6 @@ const AddNote = (props) => {
       setSelectedDay(latest);
     }
   }, [savedNote]);
-
-  const notesForMonth = monthNotes;
 
   return (
     <div className="addNoteContainer">
@@ -235,8 +240,26 @@ const AddNote = (props) => {
             </button>
             <button
               onClick={async () => {
-                await postNotes();
-                await loadNotes();
+                if (user) {
+                  await postNotes();
+                  await loadNotes();
+                } else {
+                  setVisitor((prev) => {
+                    return {
+                      ...prev,
+                      notes: [
+                        ...prev.notes,
+                        {
+                          title: noteTitle,
+                          content: noteContent,
+                          created_at: new Date().toISOString(),
+                          id: visitorNoteId,
+                        },
+                      ],
+                    };
+                  });
+                }
+                closeNote();
               }}
               className="noteButt"
             >
@@ -262,6 +285,7 @@ const AddNote = (props) => {
             months={months}
             years={years}
             recent={recent}
+            blocked={blocked}
           />
 
           <div className="savedRight">
@@ -326,8 +350,19 @@ const AddNote = (props) => {
                   style={{ display: edit ? "block" : "none" }}
                   className="noteCancel"
                   onClick={async () => {
-                    await deleteNote();
-                    await loadNotes();
+                    if (user) {
+                      await deleteNote();
+                      await loadNotes();
+                    } else {
+                      setVisitor((prev) => {
+                        const updatedNotes = prev.notes.filter(
+                          (n) => n.id !== id,
+                        );
+
+                        return { ...prev, notes: updatedNotes };
+                      });
+                    }
+
                     setNoteModal(false);
                     setNoteTitle("");
                     setNoteContent("");
@@ -343,8 +378,25 @@ const AddNote = (props) => {
                     if (!edit) {
                       setEdit(true);
                     } else {
-                      await updateNotes();
-                      await loadNotes();
+                      if (user) {
+                        await updateNotes();
+                        await loadNotes();
+                      } else {
+                        setVisitor((prev) => {
+                          const updateNotes = prev.notes.map((n) => {
+                            if (n.id === id) {
+                              return {
+                                ...n,
+                                title: noteTitle,
+                                content: noteContent,
+                              };
+                            }
+                            return n;
+                          });
+                          return { ...prev, notes: updateNotes };
+                        });
+                      }
+
                       setEdit(false);
                     }
                   }}

@@ -73,7 +73,7 @@ const History = (props) => {
             <div className="historyCard" key={date}>
               <div
                 onClick={() => {
-                  if (notes.length <= 0) {
+                  if (notes.length <= 0 && visitor.notes.length <= 0) {
                     setNoteModal(true);
                     return;
                   }

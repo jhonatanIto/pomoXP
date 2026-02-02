@@ -12,7 +12,9 @@ const UserProvider = ({ children }) => {
     level: 1,
     xp: 0,
     cards: [],
+    notes: [],
   });
+  console.log(visitor.notes);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
