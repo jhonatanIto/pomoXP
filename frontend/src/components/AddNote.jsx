@@ -5,6 +5,8 @@ import lock from "../images/lock.png";
 import "../styes/addnotes.css";
 import { UserContext } from "../context/UserContext";
 import { getNotes } from "../utilities/fetchData";
+import { groupByDay, groupByMonth, groupByYear } from "./AddNote/utils";
+import NoteSideBar from "./AddNote/NoteSideBar";
 
 const AddNote = (props) => {
   const {
@@ -15,6 +17,13 @@ const AddNote = (props) => {
     selectedDay,
     setSelectedDay,
   } = props;
+
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  const formattedDate = `${year}-${month}-${day}`;
+
   const [noteTitle, setNoteTitle] = useState("");
   const [noteContent, setNoteContent] = useState("");
   const boxRef = useRef();
@@ -23,18 +32,10 @@ const AddNote = (props) => {
   const [edit, setEdit] = useState(false);
   const [id, setId] = useState("");
 
-  const [viewMode, serViewMode] = useState("days");
-  const [selecYear, setSelecYear] = useState(null);
-  const [selecMonth, setSelecMonth] = useState(null);
-  const [selecDay, setSelecDay] = useState(null);
+  const [selecYear, setSelecYear] = useState(year);
+  const [selecMonth, setSelecMonth] = useState("");
 
   const { token, user, setNotes, notes } = useContext(UserContext);
-
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const formattedDate = `${year}-${month}-${day}`;
 
   const closeNote = () => {
     setNoteModal(false);
@@ -152,60 +153,38 @@ const AddNote = (props) => {
     loadNotes();
   }, [user, token]);
 
-  function groupByDay(array) {
-    const grouped = {};
+  const years = Object.entries(groupByYear(notes || []));
 
-    array.forEach((c) => {
-      const date = c.created_at.slice(0, 10);
+  const months =
+    selecYear && groupByYear(notes || [])[selecYear]
+      ? Object.entries(groupByMonth(groupByYear(notes)[selecYear]))
+      : [];
 
-      if (!grouped[date]) {
-        grouped[date] = [];
-      }
-      grouped[date].push(c);
-    });
+  const yearNotes =
+    notes?.filter(
+      (note) => new Date(note.created_at).getFullYear() === Number(selecYear),
+    ) || [];
 
-    return grouped;
-  }
-  function groupByYear(notes) {
-    const grouped = {};
+  const monthNumber = selecMonth ? Number(selecMonth.split("-")[1]) : null;
 
-    notes.forEach((n) => {
-      const year = n.created_at.slice(0, 4);
+  const monthNotes =
+    monthNumber != null
+      ? yearNotes.filter(
+          (note) => new Date(note.created_at).getMonth() + 1 === monthNumber,
+        )
+      : yearNotes;
 
-      if (!grouped[year]) grouped[year] = [];
-      grouped[year].push(n);
-    });
+  const groupedByDay = groupByDay(monthNotes);
+  const groupedCards = Object.entries(groupedByDay);
 
-    return grouped;
-  }
-  function groupByMonth(notes) {
-    const grouped = {};
-
-    notes.forEach((n) => {
-      const month = n.created_at.slice(0, 7);
-
-      if (!grouped[month]) grouped[month] = [];
-      grouped[month].push(n);
-    });
-
-    return grouped;
-  }
-
-  const years = Object.entries(groupByYear(notes));
-
-  const months = selecYear
-    ? Object.entries(groupByMonth(groupByYear(notes)[selecYear]))
-    : [];
-
-  const days = selecMonth
-    ? Object.entries(groupByDay(groupByMonth)(notes)[selecMonth])
-    : [];
-
-  const groupedCards = Object.entries(groupByDay(notes));
+  const filteredNotes = selectedDay
+    ? groupedCards.find(([date]) => date === selectedDay)?.[1] || []
+    : monthNotes;
 
   const selecIndex = groupedCards.findIndex((g) => g[0] === selectedDay);
-
   const blocked = user?.plan === "free" && selecIndex >= 7;
+
+  const recent = Object.entries(groupByDay(notes));
 
   useEffect(() => {
     if (groupedCards.length === 0) return;
@@ -218,8 +197,7 @@ const AddNote = (props) => {
     }
   }, [savedNote]);
 
-  const filtered =
-    groupedCards.find((n) => n[0] === selectedDay) || groupedCards?.[0];
+  const notesForMonth = monthNotes;
 
   return (
     <div className="addNoteContainer">
@@ -272,68 +250,47 @@ const AddNote = (props) => {
         className={`savedNotesModal ${savedNote ? "active" : ""}`}
       >
         <div ref={savedRef} className="savedNotesCont">
-          <div className="savedLeft">
-            <div className="filterButtCont">
-              <button className="filterButt">Recent</button>
-              <button className="filterButt">Months</button>
-              <button className="filterButt">Years</button>
-            </div>
-            {groupedCards?.map((g, index) => {
-              const date = g[0];
-              const locked = user?.plan === "free" && index >= 7;
+          <NoteSideBar
+            setSelecYear={setSelecYear}
+            setSelecMonth={setSelecMonth}
+            setDisplayNote={setDisplayNote}
+            setSelectedDay={setSelectedDay}
+            selecYear={selecYear}
+            selecMonth={selecMonth}
+            selectedDay={selectedDay}
+            groupedCards={groupedCards}
+            months={months}
+            years={years}
+            recent={recent}
+          />
 
-              return (
-                <button
+          <div className="savedRight">
+            <div style={{ display: displayNote ? "none" : "block" }}>
+              {filteredNotes.map((f) => (
+                <div
                   onClick={() => {
-                    setDisplayNote(false);
-                    setSelectedDay(date);
+                    if (!blocked) {
+                      setNoteTitle(f.title);
+                      setNoteContent(f.content);
+                      setDisplayNote(true);
+                      setEdit(false);
+                      setId(f.id);
+                    } else {
+                      alert("upgrade to premium user first");
+                    }
                   }}
-                  className={`noteDatesButt ${selectedDay === date ? "selectedDate" : ""}`}
-                  key={date}
+                  className="rightSideTitles"
+                  key={f.id}
                 >
-                  {date} : {g[1].length} notes
+                  {f.title}
                   <div
-                    style={{
-                      display: locked ? "flex" : "none",
-                    }}
+                    style={{ display: blocked ? "flex" : "none" }}
                     className="blockedButt"
                   >
                     <img className="lock" src={lock} />
                   </div>
-                </button>
-              );
-            })}
-          </div>
-          <div className="savedRight">
-            <div style={{ display: displayNote ? "none" : "block" }}>
-              {filtered?.[1]?.map((f) => {
-                return (
-                  <div
-                    style={{ display: displayNote ? "none" : "flex" }}
-                    onClick={() => {
-                      if (!blocked) {
-                        setNoteTitle(f.title);
-                        setNoteContent(f.content);
-                        setDisplayNote(true);
-                        setEdit(false);
-                        setId(f.id);
-                      } else {
-                        alert("upgrade to premium user first");
-                      }
-                    }}
-                    className="rightSideTitles"
-                    key={f.id}
-                  >
-                    {f.title}
-                    <div
-                      style={{ display: blocked ? "flex" : "none" }}
-                      className="blockedButt"
-                    >
-                      <img className="lock" src={lock} />
-                    </div>
-                  </div>
-                );
-              })}
+                </div>
+              ))}
             </div>
             <div
               style={{ display: displayNote ? "flex" : "none" }}

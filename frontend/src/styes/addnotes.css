@@ -273,3 +273,6 @@
 .filterButtCont {
   display: flex;
 }
+.selecFilter {
+  background-color: #0069c0;
+}
