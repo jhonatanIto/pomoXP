@@ -123,6 +123,7 @@ const NoteSideBar = (props) => {
               onClick={() => {
                 setDisplayNote(false);
                 setSelectedDay(date);
+                setSelecYear(date.slice(0, 4));
               }}
               className={`noteDatesButt ${selectedDay === date ? "selectedDate" : ""}`}
               key={date}
