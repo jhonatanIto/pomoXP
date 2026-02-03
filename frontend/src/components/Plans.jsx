@@ -29,7 +29,7 @@ const Plans = (props) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Athorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
 
         body: JSON.stringify({ plan }),

@@ -35,8 +35,8 @@ export const stripeController = async (req, res) => {
         plan,
       },
 
-      success_url: "http://localhost:5173/success",
-      cancel_url: "http://localhost:5173/cancel",
+      success_url: "https://pomoxp-production.up.railway.app/success",
+      cancel_url: "https://pomoxp-production.up.railway.app/cancel",
     });
 
     res.json({ url: session.url });
