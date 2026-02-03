@@ -151,7 +151,7 @@ const AddNote = (props) => {
 
       if (!res.ok) throw Error(data?.message || "Request failed");
 
-      successNotification("Note Deleted Successfully!");
+      successNotification("Note Deleted");
       return data;
     } catch (error) {
       console.error(error.message);

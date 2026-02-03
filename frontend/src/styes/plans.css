@@ -1,0 +1,141 @@
+.plansBody {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
+.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.plansContainer {
+  margin-top: 140px;
+  background-color: white;
+  width: 960px;
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  color: #363636;
+}
+.planHeader {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  padding: 20px;
+}
+.planTitle {
+  font-size: 40px;
+  display: flex;
+}
+.planxButt {
+  font-size: 35px;
+}
+.xSquare {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.xSquare:hover {
+  background-color: #e9e9e9;
+}
+.premiumIcon {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+}
+.planMainCont {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+.planMoreF {
+  font-size: 20px;
+  color: #9e9e9e;
+}
+.moreCont {
+  padding-left: 20px;
+  min-width: 250px;
+}
+.planCheck {
+  font-size: 30px;
+  color: rgb(53 106 146);
+  margin-right: 10px;
+}
+.planListItems {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  margin-top: 12px;
+}
+.planBoxesCont {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+.planBox {
+  border: 3px solid rgb(190, 190, 190, 0.5);
+  height: 200px;
+  width: 200px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.selectedPlan {
+  border-color: #2357dc;
+  background-color: rgb(59, 125, 248, 0.2);
+}
+.selecValue {
+  color: #2357dc;
+}
+.planBoxTitle {
+  font-size: 25px;
+}
+.planValue {
+  font-size: 50px;
+}
+.valueSmall {
+  font-size: 17px;
+}
+.planWarning {
+  font-size: 17px;
+  background-color: #f1f1f1;
+  width: fit-content;
+  margin: 20px;
+  color: #7b7b7b;
+  padding: 10px;
+  border-radius: 10px;
+}
+.planPurchase {
+  background-color: rgb(0, 106, 211);
+  color: white;
+  padding: 10px;
+  width: 200px;
+  border-radius: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.planPurchase:hover {
+  background-color: rgb(42, 148, 255);
+}

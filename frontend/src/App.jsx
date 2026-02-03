@@ -10,22 +10,29 @@ import LoginSuccess from "./utilities/LoginSuccess";
 import ProfileSetting from "./components/ProfileSetting";
 import AddNote from "./components/AddNote";
 import Loading from "./components/Loading";
+import Plans from "./components/Plans";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
   const [shortBreak, setShortBreak] = useState(10);
   const [longBreak, setLongBreak] = useState(60);
+
   const [displayModal, setDisplayModal] = useState("none");
   const [displayLogin, setDisplayLogin] = useState("none");
+
   const [targetXp, setTargetXp] = useState(0);
   const [targetBar, setTargetBar] = useState(0);
   const [onePercent, setOnePercent] = useState(0);
+
   const [signIn, setSignIn] = useState(true);
   const [popupTrigger, setPopupTrigger] = useState(0);
   const [profileEdit, setProfileEdit] = useState(false);
+
   const [noteModal, setNoteModal] = useState(false);
   const [savedNote, setSavedNote] = useState(false);
   const [selectedDay, setSelectedDay] = useState("");
+
+  const [plansPage, setPlansPage] = useState(false);
   const triggerXpPopup = () => {
     setPopupTrigger((prev) => prev + 1);
   };
@@ -41,6 +48,7 @@ const App = () => {
         setSavedNote={setSavedNote}
         setNoteModal={setNoteModal}
         setSelectedDay={setSelectedDay}
+        setPlansPage={setPlansPage}
       />
       <div className="mainContainer">
         <History
@@ -101,6 +109,7 @@ const App = () => {
         setProfileEdit={setProfileEdit}
         profileEdit={profileEdit}
       />
+      <Plans plansPage={plansPage} setPlansPage={setPlansPage} />
     </div>
   );
   return (

@@ -5,17 +5,6 @@ export const NotificationContext = createContext(null);
 
 const NotificationProvider = ({ children }) => {
   const toastStyle = {
-    position: "bottom-right",
-    autoClose: 2500,
-    hideProgressBar: true,
-    closeOnClick: false,
-    pauseOnHover: true,
-    draggable: true,
-    progress: undefined,
-    theme: "light",
-    transition: Bounce,
-  };
-  const errorStyle = {
     position: "top-right",
     autoClose: 2500,
     hideProgressBar: true,
@@ -27,7 +16,7 @@ const NotificationProvider = ({ children }) => {
     transition: Bounce,
   };
 
-  const errorNotification = (message) => toast.error(message, errorStyle);
+  const errorNotification = (message) => toast.error(message, toastStyle);
 
   const successNotification = (message) => toast.success(message, toastStyle);
 

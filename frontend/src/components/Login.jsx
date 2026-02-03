@@ -87,7 +87,7 @@ const Login = (props) => {
         return;
       }
 
-      alert("Account created!");
+      successNotification("Account created!");
       toggleMode();
       setLoading(false);
     } catch (err) {

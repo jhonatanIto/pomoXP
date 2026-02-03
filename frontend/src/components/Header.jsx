@@ -15,6 +15,7 @@ const Header = (props) => {
     setSavedNote,
     setNoteModal,
     setSelectedDay,
+    setPlansPage,
   } = props;
   const { user, logout, notes, visitor } = useContext(UserContext);
   const [profileMenu, setProfileMenu] = useState(false);
@@ -59,6 +60,7 @@ const Header = (props) => {
           >
             Notes
           </button>
+          <button className="headerButts">Report</button>
           <button
             className="headerButts"
             onClick={() => setDisplayModal("flex")}
@@ -100,7 +102,12 @@ const Header = (props) => {
           <img className="menuPic" src={userPic} />
           Account
         </button>
-        <button>
+        <button
+          onClick={() => {
+            setPlansPage(true);
+            setProfileMenu(false);
+          }}
+        >
           {" "}
           <img className="menuPic" src={crownPic} />
           Premium

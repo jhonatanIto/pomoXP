@@ -8,16 +8,20 @@ import { googleRoute } from "./routes/googleRoute.js";
 import passport from "passport";
 import "./config/passport.js";
 import { notesRouter } from "./routes/notesRoute.js";
+import { stripeRoute } from ".//routes/stripeRoute.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-app.use(express.json());
 
 app.use(
   cors({
     origin: "http://localhost:5173",
   }),
 );
+
+app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
+
+app.use(express.json());
 
 app.use((req, res, next) => {
   console.log("Request:", req.method, req.url);
@@ -36,5 +40,6 @@ app.use("/api/users", usersRoute);
 app.use("/api/notes", notesRouter);
 
 app.use("/auth/google", googleRoute);
+app.use("/api/stripe", stripeRoute);
 
 app.listen(PORT, () => console.log("Server is running as always"));

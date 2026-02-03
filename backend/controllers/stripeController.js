@@ -1,0 +1,85 @@
+import Stripe from "stripe";
+import { db } from "../db.js";
+import { users } from "../schema.js";
+import { eq } from "drizzle-orm";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+const priceMap = {
+  monthly: process.env.PRICE_MONTHLY,
+  yearly: process.env.PRICE_YEARLY,
+  lifetime: process.env.PRICE_LIFETIME,
+};
+
+export const stripeController = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const { plan } = req.body;
+
+    const priceId = priceMap[plan];
+
+    if (!priceId) return res.status(400).json({ error: "Invalid plan" });
+
+    const mode = plan === "lifetime" ? "payment" : "subscription";
+
+    const session = await stripe.checkout.sessions.create({
+      mode,
+
+      payment_method_types: ["card"],
+
+      line_items: [{ price: priceId, quantity: 1 }],
+
+      metadata: {
+        userId: String(userId),
+        plan,
+      },
+
+      success_url: "http://localhost:5173/success",
+      cancel_url: "http://localhost:5173/cancel",
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error("Stripe error:", error);
+    res.status(500).json({ error: "Stripe session failed" });
+  }
+};
+
+export const stripeWebhookController = async (req, res) => {
+  const sig = req.headers["stripe-signature"];
+
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+  } catch (error) {
+    console.log("webhook signature failed:", error.message);
+    return res.status(400).send(`Webhook Error: ${error.message}`);
+  }
+
+  console.log("Stipe Event>:", event.type);
+
+  if (event.type === "checkout.session.completed") {
+    const session = event.data.object;
+
+    const userId = session.metadata.userId;
+    const plan = session.metadata.plan;
+
+    console.log("Payment confirmed!");
+    console.log("User:", userId);
+    console.log("Plan:", plan);
+
+    await db
+      .update(users)
+      .set({ plan: "premium" })
+      .where(eq(users.id, Number(userId)));
+
+    console.log("User upgraded to premium!");
+  }
+  res.json({ received: true });
+};
