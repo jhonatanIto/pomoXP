@@ -14,10 +14,12 @@ const Setting = (props) => {
   } = props;
 
   useEffect(() => {
-    const timeSetting = JSON.parse(localStorage.getItem("timeSetting"));
-    setFocusTime(timeSetting.focusTime);
-    setShortBreak(timeSetting.shortBreak);
-    setLongBreak(timeSetting.longBreak);
+    if (localStorage.getItem("timeSetting")) {
+      const timeSetting = JSON.parse(localStorage.getItem("timeSetting"));
+      setFocusTime(timeSetting.focusTime);
+      setShortBreak(timeSetting.shortBreak);
+      setLongBreak(timeSetting.longBreak);
+    }
   }, []);
 
   function saveTimeSettings() {
