@@ -17,6 +17,8 @@ googleRoute.get(
   (req, res) => {
     const { token } = req.user;
 
-    res.redirect(`http://localhost:5173/login/success?token=${token}`);
+    res.redirect(
+      `https://pomoxp-production.up.railway.app/login/success?token=${token}`,
+    );
   },
 );
