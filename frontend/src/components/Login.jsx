@@ -37,8 +37,8 @@ const Login = (props) => {
     e.preventDefault();
 
     const url = signIn
-      ? "http://localhost:3000/api/auth/login"
-      : "http://localhost:3000/api/auth/register";
+      ? "https://pomoxp-production.up.railway.app/api/auth/login"
+      : "https://pomoxp-production.up.railway.app/api/auth/register";
 
     const body = signIn ? { email, password } : { name, email, password };
 
@@ -77,6 +77,7 @@ const Login = (props) => {
       const data = await res.json();
 
       if (!res.ok) {
+        setLoading(false);
         alert(data.message);
         return;
       }
@@ -97,7 +98,8 @@ const Login = (props) => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:3000/auth/google";
+    window.location.href =
+      "https://pomoxp-production.up.railway.app/auth/google";
   };
 
   return (

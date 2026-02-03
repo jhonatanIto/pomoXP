@@ -24,7 +24,7 @@ const Plans = (props) => {
 
   const handleCheckout = async (plan) => {
     const res = await fetch(
-      "http://localhost:3000/api/stripe/create-checkout-session",
+      "https://pomoxp-production.up.railway.app/api/stripe/create-checkout-session",
       {
         method: "POST",
         headers: {

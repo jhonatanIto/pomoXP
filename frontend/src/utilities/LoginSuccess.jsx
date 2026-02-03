@@ -12,7 +12,7 @@ const LoginSuccess = () => {
 
     if (!token) return;
 
-    fetch("http://localhost:3000/api/users", {
+    fetch("https://pomoxp-production.up.railway.app/api/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },

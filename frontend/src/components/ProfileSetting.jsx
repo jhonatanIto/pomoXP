@@ -53,16 +53,19 @@ const ProfileSetting = (props) => {
       if (editName.length > 20) {
         return alert("Name must be less than 20 characters");
       }
-      const res = await fetch("http://localhost:3000/api/users", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/users",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name: editName,
+          }),
         },
-        body: JSON.stringify({
-          name: editName,
-        }),
-      });
+      );
 
       const data = await res.json();
       console.log(data);

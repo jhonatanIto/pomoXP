@@ -1,9 +1,12 @@
 export const getCards = async (token) => {
-  const res = await fetch("http://localhost:3000/api/cards", {
-    headers: {
-      Authorization: `Bearer ${token}`,
+  const res = await fetch(
+    "https://pomoxp-production.up.railway.app/api/cards",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 
   if (!res.ok) throw new Error("Error to get cards");
 
@@ -12,8 +15,8 @@ export const getCards = async (token) => {
 
 export const getNotes = async (token, range) => {
   const url = range
-    ? `http://localhost:3000/api/notes?range=${range}`
-    : `http://localhost:3000/api/notes`;
+    ? `https://pomoxp-production.up.railway.app/api/notes?range=${range}`
+    : `https://pomoxp-production.up.railway.app/api/notes`;
   const res = await fetch(url, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -30,11 +33,14 @@ export const refreshUser = async (token) => {
   }
 
   try {
-    const res = await fetch("http://localhost:3000/api/users", {
-      headers: {
-        Authorization: `Bearer ${token}`,
+    const res = await fetch(
+      "https://pomoxp-production.up.railway.app/api/users",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       },
-    });
+    );
 
     if (!res.ok) throw new Error("Failed to refresh user");
 

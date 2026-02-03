@@ -73,18 +73,21 @@ const AddNote = (props) => {
         return;
       }
 
-      const res = await fetch("http://localhost:3000/api/notes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/notes",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: noteTitle,
+            content: noteContent,
+            created_at: new Date().toISOString(),
+          }),
         },
-        body: JSON.stringify({
-          title: noteTitle,
-          content: noteContent,
-          created_at: new Date().toISOString(),
-        }),
-      });
+      );
 
       const data = await res.json();
 
@@ -113,17 +116,20 @@ const AddNote = (props) => {
     try {
       if (!id) return console.log("Id is missing");
 
-      const res = await fetch(`http://localhost:3000/api/notes/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `https://pomoxp-production.up.railway.app/api/notes/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            title: noteTitle,
+            content: noteContent,
+          }),
         },
-        body: JSON.stringify({
-          title: noteTitle,
-          content: noteContent,
-        }),
-      });
+      );
 
       const data = await res.json();
 
@@ -140,13 +146,16 @@ const AddNote = (props) => {
     try {
       if (!id) return console.log("Id is missing");
 
-      const res = await fetch(`http://localhost:3000/api/notes/${id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `https://pomoxp-production.up.railway.app/api/notes/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
       const data = await res.json();
 
       if (!res.ok) throw Error(data?.message || "Request failed");

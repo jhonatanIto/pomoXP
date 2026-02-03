@@ -73,17 +73,20 @@ const Timer = (props) => {
     try {
       if (!Number.isFinite(minutes) || minutes <= 0) return;
 
-      const res = await fetch("http://localhost:3000/api/cards", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/cards",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            minutes: minutes,
+            created_at: localTime,
+          }),
         },
-        body: JSON.stringify({
-          minutes: minutes,
-          created_at: localTime,
-        }),
-      });
+      );
 
       const data = await res.json();
 
