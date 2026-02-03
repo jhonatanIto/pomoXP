@@ -50,13 +50,14 @@ export const stripeWebhookController = async (req, res) => {
   const sig = req.headers["stripe-signature"];
 
   let event;
+  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!endpointSecret) {
+    console.warn("STRIPE_WEBHOOK_SECRET nao definido, webhook desativado");
+  }
 
   try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET,
-    );
+    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
   } catch (error) {
     console.log("webhook signature failed:", error.message);
     return res.status(400).send(`Webhook Error: ${error.message}`);
