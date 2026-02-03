@@ -4,6 +4,7 @@ import back from "../images/return.png";
 import lock from "../images/lock.png";
 import "../styes/addnotes.css";
 import { UserContext } from "../context/UserContext";
+import { NotificationContext } from "../context/NotificationContext";
 import { getNotes } from "../utilities/fetchData";
 import { groupByDay, groupByMonth, groupByYear } from "./AddNote/utils";
 import NoteSideBar from "./AddNote/NoteSideBar";
@@ -18,6 +19,9 @@ const AddNote = (props) => {
     selectedDay,
     setSelectedDay,
   } = props;
+
+  const { successNotification, errorNotification } =
+    useContext(NotificationContext);
 
   const now = new Date();
   const year = now.getFullYear();
@@ -61,7 +65,7 @@ const AddNote = (props) => {
   const postNotes = async () => {
     try {
       if (!noteTitle.trim() || !noteContent.trim()) {
-        alert("Must insert Title and  Note");
+        errorNotification("Must insert Title and Note");
         return;
       }
       if (!token) {
@@ -87,7 +91,8 @@ const AddNote = (props) => {
       if (!res.ok) {
         throw new Error(data?.message || "Request failed");
       }
-
+      closeNote();
+      successNotification("Note Added!");
       return data;
     } catch (error) {
       console.error(error.message);
@@ -124,7 +129,7 @@ const AddNote = (props) => {
 
       if (!res.ok) throw Error(data?.message || "Request failed");
 
-      console.log("Updated successfully");
+      successNotification("Note Updated!");
       return data;
     } catch (error) {
       console.error(error.message);
@@ -146,7 +151,7 @@ const AddNote = (props) => {
 
       if (!res.ok) throw Error(data?.message || "Request failed");
 
-      console.log("Deleted successfully");
+      successNotification("Note Deleted Successfully!");
       return data;
     } catch (error) {
       console.error(error.message);
@@ -258,8 +263,8 @@ const AddNote = (props) => {
                       ],
                     };
                   });
+                  closeNote();
                 }
-                closeNote();
               }}
               className="noteButt"
             >

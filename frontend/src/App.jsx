@@ -9,6 +9,7 @@ import { Route, Routes } from "react-router-dom";
 import LoginSuccess from "./utilities/LoginSuccess";
 import ProfileSetting from "./components/ProfileSetting";
 import AddNote from "./components/AddNote";
+import Loading from "./components/Loading";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -31,6 +32,7 @@ const App = () => {
 
   const MainApp = (
     <div className="containerAlpha">
+      <Loading />
       <Header
         setDisplayModal={setDisplayModal}
         setDisplayLogin={setDisplayLogin}

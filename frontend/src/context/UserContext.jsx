@@ -8,13 +8,13 @@ const UserProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [cards, setCards] = useState([]);
   const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [visitor, setVisitor] = useState({
     level: 1,
     xp: 0,
     cards: [],
     notes: [],
   });
-  console.log(visitor.notes);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -65,6 +65,8 @@ const UserProvider = ({ children }) => {
         setVisitor,
         setNotes,
         notes,
+        loading,
+        setLoading,
       }}
     >
       {children}

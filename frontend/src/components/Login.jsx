@@ -2,6 +2,7 @@ import { useContext, useRef, useState } from "react";
 import "../styes/login.css";
 import { UserContext } from "../context/UserContext";
 import google from "../images/google.png";
+import { NotificationContext } from "../context/NotificationContext";
 
 const Login = (props) => {
   const { displayLogin, setDisplayLogin, signIn, setSignIn } = props;
@@ -13,7 +14,9 @@ const Login = (props) => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const boxRef = useRef();
 
-  const { login } = useContext(UserContext);
+  const { login, setLoading } = useContext(UserContext);
+  const { successNotification, errorNotification } =
+    useContext(NotificationContext);
 
   const handleOverlayClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -41,29 +44,30 @@ const Login = (props) => {
 
     if (!signIn) {
       if (!name || !email || !password) {
-        alert("Fill all fields");
+        errorNotification("Fill all fields");
         return;
       }
       if (confirmEmail !== email) {
-        alert("Emails do not match");
+        errorNotification("Emails do not match");
         return;
       }
       if (password !== confirmPassword) {
-        alert("Passwords do not match");
+        errorNotification("Passwords do not match");
         return;
       }
       if (password.length < 8) {
-        alert("Password must have at least 8 digits");
+        errorNotification("Password must have at least 8 digits");
         return;
       }
       if (name.length > 20) {
-        alert("Name must have less than 20 digits");
+        errorNotification("Name must have less than 20 digits");
         return;
       }
     }
 
     try {
-      console.log("loading...");
+      setDisplayLogin("none");
+      setLoading(true);
       const res = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -79,20 +83,21 @@ const Login = (props) => {
 
       if (signIn) {
         login(data.user, data.token);
-        setDisplayLogin("none");
+        setLoading(false);
         return;
       }
 
       alert("Account created!");
       toggleMode();
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.error(err);
     }
   };
 
   const handleGoogleLogin = () => {
     window.location.href = "http://localhost:3000/auth/google";
-    console.log("googleeee");
   };
 
   return (

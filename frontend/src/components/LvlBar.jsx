@@ -107,7 +107,7 @@ const LvlBar = (props) => {
       </div>
 
       <div style={{ opacity: xpPopup ? 1 : 0 }} className="xpPopup">
-        +{120}xp
+        +{focusTime}xp
       </div>
 
       <div className="lvlBar">
