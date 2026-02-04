@@ -98,6 +98,10 @@
   justify-content: center;
   padding: 10px;
   cursor: pointer;
+  transition: 0.1s;
+}
+.planBoxH:hover {
+  color: rgb(168, 168, 168);
 }
 .selectedPlan {
   border-color: #2357dc;

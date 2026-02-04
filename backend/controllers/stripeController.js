@@ -53,7 +53,7 @@ export const stripeWebhookController = async (req, res) => {
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!endpointSecret) {
-    console.warn("STRIPE_WEBHOOK_SECRET nao definido, webhook desativado");
+    console.warn("STRIPE_WEBHOOK_SECRET not defined, webhook disabled");
   }
 
   try {

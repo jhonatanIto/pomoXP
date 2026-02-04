@@ -17,6 +17,6 @@ googleRoute.get(
   (req, res) => {
     const { token } = req.user;
 
-    res.redirect(`https://pomo-xp.vercel.app/login/success?token=${token}`);
+    res.redirect(`https://pomoxp.com/login/success?token=${token}`);
   },
 );

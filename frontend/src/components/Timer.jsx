@@ -5,7 +5,6 @@ import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 import clickSound from "../audio/clickDefault.mp3";
 import alarm from "../audio/alarm.mp3";
-import xpUp from "../audio/xpUp.mp3";
 import levelUp from "../audio/levelUp.mp3";
 import { convertToLevel } from "../../../backend/utils/level.js";
 
@@ -15,11 +14,6 @@ const playClick = () => {
 const alarmSound = () => {
   const audio = new Audio(alarm);
   audio.volume = 1;
-  audio.play();
-};
-const xpUpAudio = () => {
-  const audio = new Audio(xpUp);
-  audio.volume = 0.5;
   audio.play();
 };
 
@@ -45,7 +39,7 @@ const Timer = (props) => {
   const { token, user, setCards, fetchUserData, setVisitor } =
     useContext(UserContext);
 
-  const minutes = Number(7);
+  const minutes = Number(120);
   const now = new Date();
   const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
 
@@ -125,8 +119,6 @@ const Timer = (props) => {
             const percent = minutes / onePercent;
             return prev + percent * 4.9;
           });
-
-          xpUpAudio();
         }, 1100);
         setTimeout(() => {
           triggerXpPopup();
@@ -145,7 +137,6 @@ const Timer = (props) => {
               ],
             };
           });
-          xpUpAudio();
         }, 1100);
         setTimeout(() => {
           triggerXpPopup();

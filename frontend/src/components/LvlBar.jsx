@@ -1,6 +1,7 @@
 import "../styes/lvlBar.css";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import xpUp from "../audio/xpUp.mp3";
 
 const LvlBar = (props) => {
   const {
@@ -18,6 +19,12 @@ const LvlBar = (props) => {
   const [totalHours, setTotalHours] = useState(0);
   const [barPercent, setBarPercent] = useState(0);
   const [xpPopup, setXpPopup] = useState(false);
+
+  const xpUpAudio = () => {
+    const audio = new Audio(xpUp);
+    audio.volume = 0.5;
+    audio.play();
+  };
 
   useEffect(() => {
     if (popupTrigger === 0) return;
@@ -63,12 +70,16 @@ const LvlBar = (props) => {
 
   useEffect(() => {
     if (barPercent >= targetBar) return;
+
+    xpUpAudio();
+
     const barInterval = setInterval(() => {
       setBarPercent((prev) => {
         if (prev >= targetBar) {
           clearInterval(barInterval);
           return targetBar;
         }
+
         return prev + 1;
       });
     }, 5);

@@ -9,7 +9,7 @@ const Plans = (props) => {
   const { plansPage, setPlansPage } = props;
   const boxRef = useRef();
   const [selecPlan, setSelecPlan] = useState("monthly");
-  const { token } = useContext(UserContext);
+  const { token, setLoading } = useContext(UserContext);
 
   const closePlansPage = () => {
     setPlansPage(false);
@@ -23,22 +23,42 @@ const Plans = (props) => {
   };
 
   const handleCheckout = async (plan) => {
-    const res = await fetch(
-      "https://pomoxp-production.up.railway.app/api/stripe/create-checkout-session",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+    setLoading(true);
+    try {
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/stripe/create-checkout-session",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+
+          body: JSON.stringify({ plan }),
         },
+      );
 
-        body: JSON.stringify({ plan }),
-      },
-    );
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Stripe backend error:", errorText);
+        setLoading(false);
+        return;
+      }
 
-    const data = await res.json();
+      const data = await res.json();
 
-    window.location.href = data.url;
+      if (!data.url) {
+        console.error("Stripe response missing url:", data);
+        setLoading(false);
+        return;
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      console.error("Checkout error:", err);
+    } finally {
+      setLoading(false);
+    }
   };
   return (
     <div
@@ -80,7 +100,7 @@ const Plans = (props) => {
               onClick={() => {
                 setSelecPlan("monthly");
               }}
-              className={`planBox ${selecPlan === "monthly" ? "selectedPlan" : ""}`}
+              className={`planBox  ${selecPlan !== "monthly" ? "planBoxH" : ""} ${selecPlan === "monthly" ? "selectedPlan " : ""}`}
             >
               <div className="planBoxTitle">MONTHLY</div>
               <div
@@ -94,7 +114,7 @@ const Plans = (props) => {
               onClick={() => {
                 setSelecPlan("yearly");
               }}
-              className={`planBox ${selecPlan === "yearly" ? "selectedPlan" : ""}`}
+              className={`planBox  ${selecPlan !== "yearly" ? "planBoxH" : ""} ${selecPlan === "yearly" ? "selectedPlan" : ""}`}
             >
               <div className="planBoxTitle">YEARLY</div>
               <div
@@ -108,7 +128,7 @@ const Plans = (props) => {
               onClick={() => {
                 setSelecPlan("lifetime");
               }}
-              className={`planBox ${selecPlan === "lifetime" ? "selectedPlan" : ""}`}
+              className={`planBox  ${selecPlan !== "lifetime" ? "planBoxH" : ""} ${selecPlan === "lifetime" ? "selectedPlan" : ""}`}
             >
               <div className="planBoxTitle">LIFETIME</div>
               <div
@@ -136,3 +156,21 @@ const Plans = (props) => {
 };
 
 export default Plans;
+
+export function Success() {
+  return (
+    <div>
+      <h1>Payment confimed!</h1>
+      <p>Your subscription is activeted</p>
+    </div>
+  );
+}
+
+export function Cancel() {
+  return (
+    <div>
+      <h1>Payment cancelled</h1>
+      <p>You can try again</p>
+    </div>
+  );
+}

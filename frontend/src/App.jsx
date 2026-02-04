@@ -10,7 +10,7 @@ import LoginSuccess from "./utilities/LoginSuccess";
 import ProfileSetting from "./components/ProfileSetting";
 import AddNote from "./components/AddNote";
 import Loading from "./components/Loading";
-import Plans from "./components/Plans";
+import Plans, { Cancel, Success } from "./components/Plans";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -116,6 +116,8 @@ const App = () => {
     <Routes>
       <Route path="/" element={MainApp}></Route>
       <Route path="/login/success" element={<LoginSuccess />} />
+      <Route path="/payment/success" element={<Success />} />
+      <Route path="/payment/cancel" element={<Cancel />} />
     </Routes>
   );
 };
