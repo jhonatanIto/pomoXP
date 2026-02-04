@@ -10,20 +10,26 @@ const LoginSuccess = () => {
   useEffect(() => {
     const token = params.get("token");
 
-    if (!token) return;
+    if (!token) {
+      navigate("/");
+      return;
+    }
 
     fetch("https://pomoxp-production.up.railway.app/api/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) throw new Error("Invalid token");
+        return res.json();
+      })
       .then((user) => {
         login(user, token);
         navigate("/");
       })
       .catch(() => navigate("/"));
-  }, []);
+  }, [params, login, navigate]);
 
   return <p>Loggin in with Google...</p>;
 };
