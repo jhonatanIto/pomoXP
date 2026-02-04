@@ -123,7 +123,7 @@ const ProfileSetting = (props) => {
         </div>
 
         <div className="currentPlan">
-          Current Plan: <p className="userPlan">{user.plan}</p>{" "}
+          Current Plan: <p className="userPlan">{user?.plan}</p>{" "}
         </div>
         <div className="profileButtCont">
           <button
