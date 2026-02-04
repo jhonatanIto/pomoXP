@@ -45,7 +45,7 @@ const Timer = (props) => {
   const { token, user, setCards, fetchUserData, setVisitor } =
     useContext(UserContext);
 
-  const minutes = Number(focusTime);
+  const minutes = Number(7);
   const now = new Date();
   const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
 

@@ -11,7 +11,7 @@ const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [visitor, setVisitor] = useState({
     level: 1,
-    xp: 0,
+    xp: 6,
     cards: [],
     notes: [],
   });

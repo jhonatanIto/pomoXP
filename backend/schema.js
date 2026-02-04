@@ -15,7 +15,7 @@ export const users = pgTable("users", {
   googleId: text("google_id"),
   photo: text("photo"),
   level: integer("level").default(1).notNull(),
-  xp: integer("xp").default(0).notNull(),
+  xp: integer("xp").default(6).notNull(),
   created_at: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),

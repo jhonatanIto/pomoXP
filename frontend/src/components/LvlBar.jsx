@@ -51,7 +51,6 @@ const LvlBar = (props) => {
     setTargetBar(pixelPercent);
     setTotalHours(user.xp / 60);
   };
-  console.log();
 
   useEffect(() => {
     if (!user && !visitor) return;
