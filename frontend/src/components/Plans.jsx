@@ -131,11 +131,11 @@ const Plans = (props) => {
               onClick={() => {
                 setSelecPlan("threeYears");
               }}
-              className={`planBox  ${selecPlan !== "lifetime" ? "planBoxH" : ""} ${selecPlan === "lifetime" ? "selectedPlan" : ""}`}
+              className={`planBox  ${selecPlan !== "threeYears" ? "planBoxH" : ""} ${selecPlan === "threeYears" ? "selectedPlan" : ""}`}
             >
               <div className="planBoxTitle">3 YEARS</div>
               <div
-                className={`planValue ${selecPlan === "lifetime" ? "selecValue" : ""} `}
+                className={`planValue ${selecPlan === "threeYears" ? "selecValue" : ""} `}
               >
                 $74
               </div>

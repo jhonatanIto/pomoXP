@@ -9,4 +9,4 @@ export const stripeRoute = express.Router();
 
 stripeRoute.use(authMiddleware);
 stripeRoute.post("/create-checkout-session", stripeController);
-stripeRoute.post("webhook", stripeWebhookController);
+stripeRoute.post("/webhook", stripeWebhookController);

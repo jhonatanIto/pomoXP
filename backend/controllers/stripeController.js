@@ -41,7 +41,11 @@ export const stripeController = async (req, res) => {
 
     res.json({ url: session.url });
   } catch (error) {
-    console.error("Stripe error:", error);
+    console.error(
+      "Stripe error:",
+      error.raw ? error.raw.message : error.message,
+      error,
+    );
     res.status(500).json({ error: "Stripe session failed" });
   }
 };
@@ -77,7 +81,7 @@ export const stripeWebhookController = async (req, res) => {
 
     await db
       .update(users)
-      .set({ plan: "premium" })
+      .set({ plan: plan })
       .where(eq(users.id, Number(userId)));
 
     console.log("User upgraded to premium!");
