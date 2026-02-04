@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "../styes/plans.css";
 import premiumIcon from "../images/premium.png";
 import { SlCheck } from "react-icons/sl";
@@ -13,7 +13,16 @@ const Plans = (props) => {
 
   const closePlansPage = () => {
     setPlansPage(false);
-    setSelecPlan("monthly");
+    currentPlanDisplay();
+  };
+
+  useEffect(() => {
+    currentPlanDisplay();
+  }, [user]);
+
+  const currentPlanDisplay = () => {
+    if (!user) return;
+    setSelecPlan(user.plan);
   };
 
   const handleOverlayClick = (e) => {
@@ -102,7 +111,12 @@ const Plans = (props) => {
               }}
               className={`planBox  ${selecPlan !== "monthly" ? "planBoxH" : ""} ${selecPlan === "monthly" ? "selectedPlan " : ""}`}
             >
-              <div className="currentPlanUp">current plan</div>
+              <div
+                style={{ display: user?.plan === "monthly" ? "flex" : "none" }}
+                className="currentPlanUp"
+              >
+                current plan
+              </div>
               <div className="planBoxTitle">MONTHLY</div>
               <div
                 className={`planValue ${selecPlan === "monthly" ? "selecValue" : ""} `}
@@ -118,6 +132,12 @@ const Plans = (props) => {
               }}
               className={`planBox  ${selecPlan !== "yearly" ? "planBoxH" : ""} ${selecPlan === "yearly" ? "selectedPlan" : ""}`}
             >
+              <div
+                style={{ display: user?.plan === "yearly" ? "flex" : "none" }}
+                className="currentPlanUp"
+              >
+                current plan
+              </div>
               <div className="planBoxTitle">YEARLY</div>
               <div
                 className={`planValue ${selecPlan === "yearly" ? "selecValue" : ""} `}
@@ -133,6 +153,14 @@ const Plans = (props) => {
               }}
               className={`planBox  ${selecPlan !== "threeYears" ? "planBoxH" : ""} ${selecPlan === "threeYears" ? "selectedPlan" : ""}`}
             >
+              <div
+                style={{
+                  display: user?.plan === "threeYears" ? "flex" : "none",
+                }}
+                className="currentPlanUp"
+              >
+                current plan
+              </div>
               <div className="planBoxTitle">3 YEARS</div>
               <div
                 className={`planValue ${selecPlan === "threeYears" ? "selecValue" : ""} `}

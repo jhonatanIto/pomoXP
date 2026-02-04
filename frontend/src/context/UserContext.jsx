@@ -14,6 +14,7 @@ const UserProvider = ({ children }) => {
     xp: 6,
     cards: [],
     notes: [],
+    plan: "free",
   });
 
   useEffect(() => {

@@ -90,7 +90,7 @@ const Timer = (props) => {
 
       setTimeout(async () => {
         fetchUserData();
-      }, 1500);
+      }, 500);
 
       const updateCards = await getCards(token);
       setCards(updateCards);

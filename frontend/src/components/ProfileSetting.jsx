@@ -123,9 +123,12 @@ const ProfileSetting = (props) => {
         </div>
 
         <div className="currentPlan">
-          Current Plan: <p className="userPlan">{user?.plan}</p>{" "}
+          Current plan:{" "}
+          <p className="userPlan">
+            {user?.plan !== "free" ? "Premium" : "free"}
+          </p>{" "}
         </div>
-        <button className="changePlan">change plan</button>
+
         <div className="profileButtCont">
           <button
             onClick={() => {

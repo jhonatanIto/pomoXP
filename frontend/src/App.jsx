@@ -11,6 +11,7 @@ import ProfileSetting from "./components/ProfileSetting";
 import AddNote from "./components/AddNote";
 import Loading from "./components/Loading";
 import Plans, { Cancel, Success } from "./components/Plans";
+import Report from "./components/Report";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -33,6 +34,7 @@ const App = () => {
   const [selectedDay, setSelectedDay] = useState("");
 
   const [plansPage, setPlansPage] = useState(false);
+  const [reportPage, setReportPage] = useState(false);
   const triggerXpPopup = () => {
     setPopupTrigger((prev) => prev + 1);
   };
@@ -49,6 +51,7 @@ const App = () => {
         setNoteModal={setNoteModal}
         setSelectedDay={setSelectedDay}
         setPlansPage={setPlansPage}
+        setReportPage={setReportPage}
       />
       <div className="mainContainer">
         <History
@@ -110,6 +113,7 @@ const App = () => {
         profileEdit={profileEdit}
       />
       <Plans plansPage={plansPage} setPlansPage={setPlansPage} />
+      <Report reportPage={reportPage} setReportPage={setReportPage} />
     </div>
   );
   return (

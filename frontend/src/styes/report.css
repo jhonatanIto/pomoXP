@@ -1,0 +1,58 @@
+.reportBody {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  transition: 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.reportContainer {
+  margin-top: 100px;
+  background-color: white;
+  width: 700px;
+  height: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  padding: 30px;
+  color: #363636;
+  position: relative;
+}
+.reportTopCont {
+  display: flex;
+}
+.topBox {
+  background-color: #f4f4f4;
+  width: 200px;
+  height: 160px;
+  margin: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: space-around;
+  padding: 15px;
+}
+.reportBoxBot {
+  margin-top: 25px;
+}
+.reportTopNum {
+  font-size: 40px;
+}
+.reportClock {
+  font-size: 40px;
+}
+.reportFire {
+  color: rgb(255, 30, 30);
+}
