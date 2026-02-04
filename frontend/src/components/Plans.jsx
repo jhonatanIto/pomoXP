@@ -51,7 +51,7 @@ const Plans = (props) => {
             <img className="premiumIcon" src={premiumIcon} />
             Premium Plan
           </div>
-          <div className="xSquare">
+          <div onClick={closePlansPage} className="xSquare">
             <GoX className="planxButt" />
           </div>
         </div>
