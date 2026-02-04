@@ -8,7 +8,7 @@ import { UserContext } from "../context/UserContext";
 const ProfileSetting = (props) => {
   const { profileEdit, setProfileEdit } = props;
   const profileBoxRef = useRef(null);
-  const { user, token, fetchUserData } = useContext(UserContext);
+  const { user, token, fetchUserData, setLoading } = useContext(UserContext);
   const [editName, setEditName] = useState("");
   const [editUser, setEditUser] = useState(false);
   const [email, setEmail] = useState("");
@@ -53,6 +53,7 @@ const ProfileSetting = (props) => {
       if (editName.length > 20) {
         return alert("Name must be less than 20 characters");
       }
+      setLoading(true);
       const res = await fetch(
         "https://pomoxp-production.up.railway.app/api/users",
         {
@@ -69,6 +70,7 @@ const ProfileSetting = (props) => {
 
       const data = await res.json();
       console.log(data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -118,6 +120,10 @@ const ProfileSetting = (props) => {
 
             <input style={{ pointerEvents: "none" }} value={email} />
           </div>
+        </div>
+
+        <div className="currentPlan">
+          Current Plan: <p className="userPlan">{user.plan}</p>{" "}
         </div>
         <div className="profileButtCont">
           <button
