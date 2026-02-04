@@ -9,7 +9,7 @@ const Plans = (props) => {
   const { plansPage, setPlansPage } = props;
   const boxRef = useRef();
   const [selecPlan, setSelecPlan] = useState("monthly");
-  const { token, setLoading } = useContext(UserContext);
+  const { token, setLoading, user } = useContext(UserContext);
 
   const closePlansPage = () => {
     setPlansPage(false);
@@ -102,13 +102,15 @@ const Plans = (props) => {
               }}
               className={`planBox  ${selecPlan !== "monthly" ? "planBoxH" : ""} ${selecPlan === "monthly" ? "selectedPlan " : ""}`}
             >
+              <div className="currentPlanUp">current plan</div>
               <div className="planBoxTitle">MONTHLY</div>
               <div
                 className={`planValue ${selecPlan === "monthly" ? "selecValue" : ""} `}
               >
                 $3
               </div>
-              <div className="valueSmall">/month</div>
+              <div className="valueSmall">/per month</div>
+              <div className="saveMoney noopa">Save 34 dollars</div>
             </div>
             <div
               onClick={() => {
@@ -120,23 +122,25 @@ const Plans = (props) => {
               <div
                 className={`planValue ${selecPlan === "yearly" ? "selecValue" : ""} `}
               >
-                $25
+                $26
               </div>
-              <div className="valueSmall">/year</div>
+              <div className="valueSmall">/per year</div>
+              <div className="saveMoney">Save 10 dollars</div>
             </div>
             <div
               onClick={() => {
-                setSelecPlan("lifetime");
+                setSelecPlan("threeYears");
               }}
               className={`planBox  ${selecPlan !== "lifetime" ? "planBoxH" : ""} ${selecPlan === "lifetime" ? "selectedPlan" : ""}`}
             >
-              <div className="planBoxTitle">LIFETIME</div>
+              <div className="planBoxTitle">3 YEARS</div>
               <div
                 className={`planValue ${selecPlan === "lifetime" ? "selecValue" : ""} `}
               >
-                $75
+                $74
               </div>
-              <div className="valueSmall">/lifetime</div>
+              <div className="valueSmall">/every 3 years</div>
+              <div className="saveMoney">Save 34 dollars</div>
             </div>
           </div>
         </div>
@@ -144,12 +148,20 @@ const Plans = (props) => {
           * The subscription will be auto-renewed until you unsubscribe. <br />{" "}
           * You will be notified a week prior to the renewal date.
         </div>
-        <button
-          onClick={() => handleCheckout(selecPlan)}
-          className="planPurchase"
-        >
-          Purchase the Plan
-        </button>
+        <div className="planButtCont">
+          <button
+            style={{ display: user?.plan === "free" ? "none" : "flex" }}
+            className="planCancel"
+          >
+            Cancel plan
+          </button>
+          <button
+            onClick={() => handleCheckout(selecPlan)}
+            className="planPurchase"
+          >
+            {user?.plan === "free" ? "Purchase plan" : "Upgrade plan"}
+          </button>
+        </div>
       </div>
     </div>
   );

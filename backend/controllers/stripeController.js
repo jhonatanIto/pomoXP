@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const priceMap = {
   monthly: process.env.PRICE_MONTHLY,
   yearly: process.env.PRICE_YEARLY,
-  lifetime: process.env.PRICE_LIFETIME,
+  threeYears: process.env.PRICE_3YEARS,
 };
 
 export const stripeController = async (req, res) => {
@@ -21,7 +21,7 @@ export const stripeController = async (req, res) => {
 
     if (!priceId) return res.status(400).json({ error: "Invalid plan" });
 
-    const mode = plan === "lifetime" ? "payment" : "subscription";
+    const mode = "subscription";
 
     const session = await stripe.checkout.sessions.create({
       mode,
