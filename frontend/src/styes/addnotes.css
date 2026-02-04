@@ -151,9 +151,11 @@
   width: 360px;
   height: 100%;
   border-right: 1px solid rgb(192, 192, 192);
+}
+.sideButtCont {
   overflow: scroll;
 }
-.savedLeft::-webkit-scrollbar {
+.sideButtCont::-webkit-scrollbar {
   display: none;
 }
 .savedRight {

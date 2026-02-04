@@ -125,6 +125,7 @@ const ProfileSetting = (props) => {
         <div className="currentPlan">
           Current Plan: <p className="userPlan">{user?.plan}</p>{" "}
         </div>
+        <button className="changePlan">change plan</button>
         <div className="profileButtCont">
           <button
             onClick={() => {
@@ -138,7 +139,6 @@ const ProfileSetting = (props) => {
             onClick={async () => {
               await updateName();
               await fetchUserData();
-              setProfileEdit(false);
             }}
             className="saveProfile"
           >

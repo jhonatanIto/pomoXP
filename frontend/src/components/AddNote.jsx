@@ -40,7 +40,7 @@ const AddNote = (props) => {
   const [selecYear, setSelecYear] = useState(year);
   const [selecMonth, setSelecMonth] = useState("");
 
-  const { token, user, setNotes, notes, setVisitor, visitor } =
+  const { token, user, setNotes, notes, setVisitor, visitor, setLoading } =
     useContext(UserContext);
   const visitorNoteId = nanoid();
 
@@ -63,6 +63,7 @@ const AddNote = (props) => {
   };
 
   const postNotes = async () => {
+    setLoading(true);
     try {
       if (!noteTitle.trim() || !noteContent.trim()) {
         errorNotification("Must insert Title and Note");
@@ -94,10 +95,12 @@ const AddNote = (props) => {
       if (!res.ok) {
         throw new Error(data?.message || "Request failed");
       }
+      setLoading(false);
       closeNote();
       successNotification("Note Added!");
       return data;
     } catch (error) {
+      setLoading(false);
       console.error(error.message);
     }
   };
@@ -113,6 +116,7 @@ const AddNote = (props) => {
     }
   };
   const updateNotes = async () => {
+    setLoading(true);
     try {
       if (!id) return console.log("Id is missing");
 
@@ -135,14 +139,17 @@ const AddNote = (props) => {
 
       if (!res.ok) throw Error(data?.message || "Request failed");
 
+      setLoading(false);
       successNotification("Note Updated!");
       return data;
     } catch (error) {
+      setLoading(false);
       console.error(error.message);
     }
   };
 
   const deleteNote = async () => {
+    setLoading(true);
     try {
       if (!id) return console.log("Id is missing");
 
@@ -161,8 +168,10 @@ const AddNote = (props) => {
       if (!res.ok) throw Error(data?.message || "Request failed");
 
       successNotification("Note Deleted");
+      setLoading(false);
       return data;
     } catch (error) {
+      setLoading(false);
       console.error(error.message);
     }
   };
@@ -205,7 +214,7 @@ const AddNote = (props) => {
 
   const selecIndex = recent.findIndex((g) => g[0] === selectedDay);
   const blocked =
-    (user?.plan === "free" && selecIndex >= 7) || (!user && selecIndex >= 7);
+    (user?.plan === "free" && selecIndex >= 6) || (!user && selecIndex >= 6);
 
   useEffect(() => {
     if (groupedCards.length === 0) return;
