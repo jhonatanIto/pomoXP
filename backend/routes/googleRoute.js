@@ -17,8 +17,6 @@ googleRoute.get(
   (req, res) => {
     const { token } = req.user;
 
-    res.redirect(
-      `https://pomoxp-production.up.railway.app/login/success?token=${token}`,
-    );
+    res.redirect(`https://pomo-xp.vercel.app//login/success?token=${token}`);
   },
 );
