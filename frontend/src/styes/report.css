@@ -12,10 +12,6 @@
   opacity: 0;
   pointer-events: none;
 }
-.active {
-  opacity: 1;
-  pointer-events: auto;
-}
 
 .reportContainer {
   margin-top: 50px;
@@ -26,13 +22,26 @@
   flex-direction: column;
   align-items: center;
   border-radius: 20px;
-  padding: 30px;
+  padding: 20px;
   color: #7e7e7e;
   position: relative;
+  overflow: hidden;
 }
+.reportAllCont {
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
+.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 .reportTopCont {
   display: flex;
   padding-bottom: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
   border-bottom: 1px solid rgb(200, 200, 200);
 }
 .topBox {
@@ -41,6 +50,7 @@
   height: 150px;
   margin: 10px;
   border-radius: 15px;
+  border: 1px solid rgb(217, 217, 217);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-around;
@@ -72,8 +82,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  top: 10px;
-  top: -23px;
+  bottom: 87px;
 }
 .reportFilter {
   display: flex;
@@ -134,4 +143,31 @@
 .reportArrow:hover {
   background-color: #f0f0f0;
   cursor: pointer;
+}
+.reportRankCont {
+  display: flex;
+  background-color: #2c2c2c;
+  padding: 5px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  width: 200px;
+  border-radius: 10px;
+  justify-content: space-around;
+}
+.reportRankButton {
+  background-color: white;
+  padding: 4px;
+  border-radius: 8px;
+  width: 70px;
+  box-shadow: 0 4px 3px rgba(135, 135, 135, 0.2);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.reportSelected {
+  background-color: rgb(91, 165, 255);
+  color: white;
+}
+.rankingSelected {
+  background-color: rgb(255, 93, 93);
+  color: white;
 }

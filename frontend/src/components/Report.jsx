@@ -16,6 +16,8 @@ const Report = (props) => {
   const [totalHours, setTotalHours] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [rankedDisplay, setRankedDisplay] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
 
   const { cards } = useContext(UserContext);
 
@@ -29,6 +31,32 @@ const Report = (props) => {
     setReportPage(false);
     setSelecFilter("week");
   };
+
+  const getAllUsers = async () => {
+    try {
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/users/all",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+      );
+
+      const data = await res;
+
+      if (!res.ok) throw Error(data?.message || "Request failed");
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllUsers();
+  }, []);
 
   const today = new Date();
   const last7Days = new Date();
@@ -130,74 +158,91 @@ const Report = (props) => {
       className={`reportBody ${reportPage ? "active" : ""}`}
     >
       <div ref={boxRef} className="reportContainer">
-        <div className="reportTopCont">
-          <div className="topBox">
-            <SlClock className="reportClock" />
-            <div className="reportBoxBot">
-              <div className="reportTopNum">{totalHours}</div>
-              <div>hours focused</div>
-            </div>
-          </div>
-          <div className="topBox">
-            <SlCalender className="reportClock" />
-            <div className="reportBoxBot">
-              <div className="reportTopNum">{totalDays}</div>
-              <div>days accessed</div>
-            </div>
-          </div>
-          <div className="topBox">
-            <SlFire className="reportClock reportFire" />
-            <div className="reportBoxBot">
-              <div className="reportTopNum">{streak}</div>
-              <div>day streak</div>
-            </div>
-          </div>
+        <div className="reportRankCont">
+          <button
+            className={`reportRankButton ${!rankedDisplay ? "reportSelected" : ""}`}
+            onClick={() => setRankedDisplay(false)}
+          >
+            Report
+          </button>
+          <button
+            className={`reportRankButton ${rankedDisplay ? "rankingSelected" : ""}`}
+            onClick={() => setRankedDisplay(true)}
+          >
+            Ranking
+          </button>
         </div>
+        <div className={`reportAllCont ${!rankedDisplay ? "active" : ""}`}>
+          <div className={`reportTopCont`}>
+            <div className="topBox">
+              <SlClock className="reportClock" />
+              <div className="reportBoxBot">
+                <div className="reportTopNum">{totalHours}</div>
+                <div>hours focused</div>
+              </div>
+            </div>
+            <div className="topBox">
+              <SlCalender className="reportClock" />
+              <div className="reportBoxBot">
+                <div className="reportTopNum">{totalDays}</div>
+                <div>days accessed</div>
+              </div>
+            </div>
+            <div className="topBox">
+              <SlFire className="reportClock reportFire" />
+              <div className="reportBoxBot">
+                <div className="reportTopNum">{streak}</div>
+                <div>day streak</div>
+              </div>
+            </div>
+          </div>
 
-        <div className="reportBotCont">
-          <div className="focusHoursTitle">Focus Hours</div>
-          <div className="reportBotMiddle">
-            <div className="reportFilter">
-              <button
-                className={`reportFilterButt ${selecFilter === "week" ? "selecFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
-                onClick={() => {
-                  setSelecFilter("week");
-                  setSelecBar("This Week");
-                }}
-              >
-                Week
-              </button>
-              <button
-                className={`reportFilterButt ${selecFilter === "month" ? "selecFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
-                onClick={() => {
-                  setSelecFilter("month");
-                  setSelecBar("This Month");
-                }}
-              >
-                Month
-              </button>
-              <button
-                className={`reportFilterButt ${selecFilter === "year" ? "selecFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
-                onClick={() => {
-                  setSelecFilter("year");
-                  setSelecBar("This Year");
-                }}
-              >
-                Year
-              </button>
+          <div className="reportBotCont">
+            <div className="focusHoursTitle">Focus Hours</div>
+            <div className="reportBotMiddle">
+              <div className="reportFilter">
+                <button
+                  className={`reportFilterButt ${selecFilter === "week" ? "selecFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
+                  onClick={() => {
+                    setSelecFilter("week");
+                    setSelecBar("This Week");
+                  }}
+                >
+                  Week
+                </button>
+                <button
+                  className={`reportFilterButt ${selecFilter === "month" ? "selecFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
+                  onClick={() => {
+                    setSelecFilter("month");
+                    setSelecBar("This Month");
+                  }}
+                >
+                  Month
+                </button>
+                <button
+                  className={`reportFilterButt ${selecFilter === "year" ? "selecFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
+                  onClick={() => {
+                    setSelecFilter("year");
+                    setSelecBar("This Year");
+                  }}
+                >
+                  Year
+                </button>
+              </div>
+              <div className="reportThisWeek">
+                <button className="reportArrow">
+                  <SlArrowLeft />
+                </button>
+                <div>{selecBar}</div>
+                <button className="reportArrow">
+                  <SlArrowRight />
+                </button>
+              </div>
             </div>
-            <div className="reportThisWeek">
-              <button className="reportArrow">
-                <SlArrowLeft />
-              </button>
-              <div>{selecBar}</div>
-              <button className="reportArrow">
-                <SlArrowRight />
-              </button>
-            </div>
+            <div> </div>
           </div>
-          <div> </div>
         </div>
+        <div className={`reportAllCont ${rankedDisplay ? "active" : ""}`}></div>
       </div>
     </div>
   );
