@@ -4,11 +4,14 @@ import edit from "../images/edit.png";
 import x from "../images/x-button.png";
 import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../context/UserContext";
+import { NotificationContext } from "../context/NotificationContext";
 
 const ProfileSetting = (props) => {
   const { profileEdit, setProfileEdit } = props;
   const profileBoxRef = useRef(null);
   const { user, token, fetchUserData, setLoading } = useContext(UserContext);
+  const { successNotification, errorNotification } =
+    useContext(NotificationContext);
   const [editName, setEditName] = useState("");
   const [editUser, setEditUser] = useState(false);
   const [email, setEmail] = useState("");
@@ -70,9 +73,11 @@ const ProfileSetting = (props) => {
 
       const data = await res.json();
       console.log(data);
+      successNotification("Name updated!");
       setLoading(false);
     } catch (error) {
       console.log(error);
+      errorNotification("error");
     }
   }
 

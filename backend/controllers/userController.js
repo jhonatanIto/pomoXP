@@ -1,6 +1,6 @@
 import { db } from "../db.js";
 import { users } from "../schema.js";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 
 export const userData = async (req, res) => {
@@ -25,6 +25,27 @@ export const userData = async (req, res) => {
   } catch (error) {
     console.error("GET/ user data error", error);
     res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const allUsers = async (req, res) => {
+  try {
+    const usersData = await db
+      .select({
+        name: users.name,
+        level: users.level,
+        xp: users.xp,
+      })
+      .from(users)
+      .orderBy(desc(users.xp));
+
+    if (usersData.length === 0)
+      return res.status(404).json({ message: "No users found" });
+
+    res.status(200).json({ message: "users data", users: usersData });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ message: "Internal server error" });
   }
 };
 

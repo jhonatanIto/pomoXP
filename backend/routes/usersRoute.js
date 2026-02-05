@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  allUsers,
   deleteUser,
   editUser,
   userData,
@@ -10,5 +11,6 @@ export const usersRoute = express.Router();
 
 usersRoute.use(authMiddleware);
 usersRoute.get("/", userData);
+usersRoute.get("/all", allUsers);
 usersRoute.put("/", editUser);
 usersRoute.delete("/", deleteUser);
