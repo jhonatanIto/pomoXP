@@ -18,34 +18,37 @@
 }
 
 .reportContainer {
-  margin-top: 100px;
+  margin-top: 50px;
   background-color: white;
   width: 700px;
-  height: 700px;
+  height: 830px;
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 20px;
   padding: 30px;
-  color: #363636;
+  color: #7e7e7e;
   position: relative;
 }
 .reportTopCont {
   display: flex;
+  padding-bottom: 30px;
+  border-bottom: 1px solid rgb(200, 200, 200);
 }
 .topBox {
   background-color: #f4f4f4;
-  width: 200px;
-  height: 160px;
+  width: 180px;
+  height: 150px;
   margin: 10px;
   border-radius: 15px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   display: flex;
   justify-content: space-around;
   padding: 15px;
+  color: #363636;
 }
 .reportBoxBot {
-  margin-top: 25px;
+  margin-top: 30px;
 }
 .reportTopNum {
   font-size: 40px;
@@ -55,4 +58,80 @@
 }
 .reportFire {
   color: rgb(255, 30, 30);
+}
+.reportBotCont {
+  position: relative;
+  width: 100%;
+}
+.focusHoursTitle {
+  background-color: #ffffff;
+  font-size: 30px;
+  position: absolute;
+  right: 460px;
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  top: -23px;
+}
+.reportFilter {
+  display: flex;
+  background-color: #f0f0f0;
+  width: 240px;
+  height: 40px;
+  justify-content: space-around;
+  align-items: center;
+  padding: 4px;
+  border-radius: 10px;
+  color: #363636;
+}
+.reportBotMiddle {
+  display: flex;
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: end;
+}
+.reportFilterButt {
+  display: flex;
+  padding: 5px;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 70px;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #717171;
+}
+.hoverFilter:hover {
+  color: #363636;
+  background-color: rgb(243, 243, 243);
+}
+.selecFilter {
+  background-color: white;
+  box-shadow: 0 4px 3px rgba(135, 135, 135, 0.3);
+  color: #363636;
+}
+.reportThisWeek {
+  margin-top: 15px;
+  display: flex;
+  box-shadow: 0 4px 3px rgba(135, 135, 135, 0.3);
+  border: 1px solid rgb(204, 204, 204);
+  width: 200px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.reportArrow {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+.reportArrow:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
 }
