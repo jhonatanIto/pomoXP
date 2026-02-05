@@ -1,8 +1,14 @@
 import express from "express";
-import { editUser, userData } from "../controllers/userController.js";
+import {
+  deleteUser,
+  editUser,
+  userData,
+} from "../controllers/userController.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 
 export const usersRoute = express.Router();
 
-usersRoute.get("/", authMiddleware, userData);
-usersRoute.put("/", authMiddleware, editUser);
+usersRoute.use(authMiddleware);
+usersRoute.get("/", userData);
+usersRoute.put("/", editUser);
+usersRoute.delete("/", deleteUser);

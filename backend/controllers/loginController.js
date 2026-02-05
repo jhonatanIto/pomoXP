@@ -41,6 +41,7 @@ export const loginUser = async (req, res) => {
         photo: user.photo,
         level: user.level,
         xp: user.xp,
+        plan: user.plan,
       },
     });
   } catch (err) {

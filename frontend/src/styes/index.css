@@ -153,6 +153,70 @@ body {
   }
 }
 
+.deleteUserBody {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  transition: 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.deleteUserCont {
+  margin-top: 200px;
+  background-color: white;
+  width: 500px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 20px;
+  padding: 30px;
+  color: #363636;
+  position: relative;
+}
+.deleteText {
+  font-size: 20px;
+}
+.deleteInput {
+  border: 1px solid rgb(185, 185, 185);
+  margin-top: 15px;
+}
+.deleteButtCon {
+  display: flex;
+  margin-top: 20px;
+  width: 200px;
+  justify-content: space-around;
+}
+.deleteCancelButt {
+  color: rgb(37, 37, 37);
+  background-color: rgb(228, 228, 228);
+  padding: 5px;
+  border-radius: 10px;
+  width: 70px;
+  cursor: pointer;
+}
+.deleteUserButt {
+  color: white;
+  background-color: rgb(255, 65, 65);
+  padding: 5px;
+  border-radius: 10px;
+  width: 70px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.deleteUserButt:hover {
+  background-color: rgb(255, 119, 119);
+}
+.deleteCancelButt:hover {
+  background-color: #f1f1f1;
+}
 @media (max-width: 600px) {
   .buttContainer button {
     width: 50px;

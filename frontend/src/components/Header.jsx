@@ -5,6 +5,7 @@ import userW from "../images/userW.png";
 import crownPic from "../images/crown.png";
 import logoutPic from "../images/logout.png";
 import deletePic from "../images/delete.png";
+import { NotificationContext } from "../context/NotificationContext";
 
 const Header = (props) => {
   const {
@@ -22,7 +23,7 @@ const Header = (props) => {
   const [profileMenu, setProfileMenu] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
-
+  const [deleteModal, setDeleteModal] = useState(false);
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (
@@ -126,14 +127,96 @@ const Header = (props) => {
           <img className="menuPic" src={logoutPic} />
           Logout
         </button>
-        <button>
+        <button
+          onClick={() => {
+            setDeleteModal(true);
+            setProfileMenu(false);
+          }}
+        >
           {" "}
           <img className="menuPic" src={deletePic} />
           Delete Account
         </button>
       </div>
+      <DeleteUser deleteModal={deleteModal} setDeleteModal={setDeleteModal} />
     </div>
   );
 };
 
 export default Header;
+
+const DeleteUser = (props) => {
+  const { deleteModal, setDeleteModal } = props;
+  const boxRef = useRef();
+
+  const [password, setPassword] = useState();
+  const { token, logout } = useContext(UserContext);
+  const { errorNotification, successNotification } =
+    useContext(NotificationContext);
+
+  const closeDeleteModal = () => {
+    setDeleteModal(false);
+  };
+
+  const handleOverClick = (e) => {
+    if (!boxRef.current.contains(e.target)) {
+      closeDeleteModal();
+    }
+  };
+
+  const deleteUser = async () => {
+    if (!password) return errorNotification("Password needed");
+    try {
+      const res = fetch("https://pomoxp-production.up.railway.app/api/users", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          password: password,
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.message || "Request failed");
+      }
+
+      console.log(data);
+
+      closeDeleteModal();
+      logout();
+      return data;
+    } catch (error) {
+      console.error(error);
+      errorNotification("error");
+    }
+  };
+  return (
+    <div
+      onMouseDown={(e) => handleOverClick(e)}
+      className={`deleteUserBody ${deleteModal ? "active" : ""}`}
+    >
+      <div ref={boxRef} className="deleteUserCont">
+        <div className="deleteText">Digit your password to delete</div>
+        <input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          className="deleteInput"
+          type="password"
+          placeholder="password"
+        />
+        <div className="deleteButtCon">
+          <button className="deleteCancelButt" onClick={closeDeleteModal}>
+            cancel
+          </button>
+          <button className="deleteUserButt" onClick={deleteUser}>
+            confirm
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};

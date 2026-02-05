@@ -66,6 +66,7 @@ const AddNote = (props) => {
     setLoading(true);
     try {
       if (!noteTitle.trim() || !noteContent.trim()) {
+        setLoading(false);
         errorNotification("Must insert Title and Note");
         return;
       }
