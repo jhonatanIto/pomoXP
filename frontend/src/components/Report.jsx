@@ -63,19 +63,6 @@ const Report = (props) => {
     0,
   );
 
-  useEffect(() => {
-    if (selecFilter === "week") {
-      updateWeekTotal();
-      setTotalDays(calculateAccessed(last7Cards));
-    } else if (selecFilter === "month") {
-      updateMonthTotal();
-      setTotalDays(calculateAccessed(lastMonthCards));
-    } else if (selecFilter === "year") {
-      updateYearTotal();
-      setTotalDays(calculateAccessed(lastYearCards));
-    }
-  }, [cards, selecFilter]);
-
   const updateWeekTotal = () => {
     setTotalHours((last7Total / 60).toFixed(0));
   };
@@ -99,6 +86,43 @@ const Report = (props) => {
 
     return total;
   };
+
+  const calculateStreak = (cards) => {
+    if (!cards || cards.length === 0) return;
+
+    const daysSet = new Set(cards.map((c) => c.created_at.split("T")[0]));
+
+    let streak = 0;
+    const current = new Date();
+
+    while (true) {
+      const dateStudy = current.toISOString().split("T")[0];
+
+      if (daysSet.has(dateStudy)) {
+        streak++;
+        current.setDate(current.getDate() - 1);
+      } else {
+        break;
+      }
+    }
+    return streak;
+  };
+
+  useEffect(() => {
+    if (selecFilter === "week") {
+      updateWeekTotal();
+      setTotalDays(calculateAccessed(last7Cards));
+      setStreak(calculateStreak(cards));
+    } else if (selecFilter === "month") {
+      updateMonthTotal();
+      setTotalDays(calculateAccessed(lastMonthCards));
+      setStreak(calculateStreak(cards));
+    } else if (selecFilter === "year") {
+      updateYearTotal();
+      setTotalDays(calculateAccessed(lastYearCards));
+      setStreak(calculateStreak(cards));
+    }
+  }, [cards, selecFilter]);
 
   return (
     <div
@@ -172,6 +196,7 @@ const Report = (props) => {
               </button>
             </div>
           </div>
+          <div> </div>
         </div>
       </div>
     </div>
