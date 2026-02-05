@@ -42,7 +42,6 @@ const Header = (props) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-  console.log(notes);
 
   return (
     <div className="header">
@@ -150,12 +149,13 @@ const DeleteUser = (props) => {
   const boxRef = useRef();
 
   const [password, setPassword] = useState();
-  const { token, logout } = useContext(UserContext);
+  const { token, logout, setLoading } = useContext(UserContext);
   const { errorNotification, successNotification } =
     useContext(NotificationContext);
 
   const closeDeleteModal = () => {
     setDeleteModal(false);
+    setPassword("");
   };
 
   const handleOverClick = (e) => {
@@ -166,23 +166,34 @@ const DeleteUser = (props) => {
 
   const deleteUser = async () => {
     if (!password) return errorNotification("Password needed");
+    setLoading(true);
     try {
-      const res = fetch("https://pomoxp-production.up.railway.app/api/users", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/users",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            password: password,
+          }),
         },
-        body: JSON.stringify({
-          password: password,
-        }),
-      });
+      );
 
-      const data = await res.json();
+      let data = null;
+      try {
+        data = await res.json();
+      } catch {
+        data = null;
+      }
 
       if (!res.ok) {
         throw new Error(data?.message || "Request failed");
       }
+
+      successNotification("Account deleted");
 
       console.log(data);
 
@@ -192,6 +203,8 @@ const DeleteUser = (props) => {
     } catch (error) {
       console.error(error);
       errorNotification("error");
+    } finally {
+      setLoading(false);
     }
   };
   return (

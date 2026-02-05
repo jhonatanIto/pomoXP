@@ -96,7 +96,6 @@ const ProfileSetting = (props) => {
           <img
             className="profileSetPicture"
             src={user?.photo ? user?.photo : naruto}
-            alt=""
           />
           <div className="profileNameCont">
             <div className="nameContainer">

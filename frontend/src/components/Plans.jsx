@@ -22,7 +22,8 @@ const Plans = (props) => {
 
   const currentPlanDisplay = () => {
     if (!user) return;
-    setSelecPlan(user.plan);
+    const planSelec = user.plan !== "free" ? user.plan : "monthly";
+    setSelecPlan(planSelec);
   };
 
   const handleOverlayClick = (e) => {

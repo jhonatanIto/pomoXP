@@ -12,6 +12,7 @@ const Report = (props) => {
   const { reportPage, setReportPage } = props;
   const boxRef = useRef();
   const [selecFilter, setSelecFilter] = useState("week");
+  const [selecBar, setSelecBar] = useState("This Week");
   const [totalHours, setTotalHours] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -31,15 +32,22 @@ const Report = (props) => {
 
   const today = new Date();
   const last7Days = new Date();
-  last7Days.setDate(today.getDate() - 7);
+  last7Days.setDate(today.getDate() - 6);
 
   const lastMonth = new Date();
-  lastMonth.setDate(today.getDate() - 30);
+  lastMonth.setDate(today.getDate() - 29);
+
+  const lastYear = new Date();
+  lastYear.setDate(today.getDate() - 364);
 
   const last7Cards = cards?.filter((n) => new Date(n.created_at) >= last7Days);
 
   const lastMonthCards = cards?.filter(
     (n) => new Date(n.created_at) >= lastMonth,
+  );
+
+  const lastYearCards = cards?.filter(
+    (n) => new Date(n.created_at) >= lastYear,
   );
 
   const last7Total = last7Cards?.reduce(
@@ -50,12 +58,21 @@ const Report = (props) => {
     (acc, current) => acc + current.minutes,
     0,
   );
+  const lastYearTotal = lastYearCards?.reduce(
+    (acc, current) => acc + current.minutes,
+    0,
+  );
 
   useEffect(() => {
     if (selecFilter === "week") {
       updateWeekTotal();
+      setTotalDays(calculateAccessed(last7Cards));
     } else if (selecFilter === "month") {
       updateMonthTotal();
+      setTotalDays(calculateAccessed(lastMonthCards));
+    } else if (selecFilter === "year") {
+      updateYearTotal();
+      setTotalDays(calculateAccessed(lastYearCards));
     }
   }, [cards, selecFilter]);
 
@@ -64,6 +81,23 @@ const Report = (props) => {
   };
   const updateMonthTotal = () => {
     setTotalHours((lastMonthTotal / 60).toFixed(0));
+  };
+  const updateYearTotal = () => {
+    setTotalHours((lastYearTotal / 60).toFixed(0));
+  };
+
+  const calculateAccessed = (calc) => {
+    const days = {};
+
+    calc.map((l) => {
+      const date = l.created_at.split("T")[0];
+
+      days[date] = true;
+    });
+
+    const total = Object.entries(days).length;
+
+    return total;
   };
 
   return (
@@ -102,19 +136,28 @@ const Report = (props) => {
             <div className="reportFilter">
               <button
                 className={`reportFilterButt ${selecFilter === "week" ? "selecFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
-                onClick={() => setSelecFilter("week")}
+                onClick={() => {
+                  setSelecFilter("week");
+                  setSelecBar("This Week");
+                }}
               >
                 Week
               </button>
               <button
                 className={`reportFilterButt ${selecFilter === "month" ? "selecFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
-                onClick={() => setSelecFilter("month")}
+                onClick={() => {
+                  setSelecFilter("month");
+                  setSelecBar("This Month");
+                }}
               >
                 Month
               </button>
               <button
                 className={`reportFilterButt ${selecFilter === "year" ? "selecFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
-                onClick={() => setSelecFilter("year")}
+                onClick={() => {
+                  setSelecFilter("year");
+                  setSelecBar("This Year");
+                }}
               >
                 Year
               </button>
@@ -123,7 +166,7 @@ const Report = (props) => {
               <button className="reportArrow">
                 <SlArrowLeft />
               </button>
-              <div>This Week</div>
+              <div>{selecBar}</div>
               <button className="reportArrow">
                 <SlArrowRight />
               </button>
