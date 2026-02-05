@@ -41,6 +41,7 @@ const Header = (props) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  console.log(notes);
 
   return (
     <div className="header">

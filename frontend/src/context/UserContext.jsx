@@ -35,6 +35,8 @@ const UserProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setToken(null);
+    setNotes([]);
+    setCards([]);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
   };

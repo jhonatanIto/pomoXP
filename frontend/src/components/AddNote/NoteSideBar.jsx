@@ -29,6 +29,7 @@ const NoteSideBar = (props) => {
             setViewMode("recent");
             setSelecMonth(null);
             setSelectedDay(recent[0][0]);
+            console.log(viewMode);
           }}
           className={`filterButt ${viewMode === "recent" ? "selecFilter" : ""}`}
         >
