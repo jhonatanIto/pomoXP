@@ -72,6 +72,7 @@ const AddNote = (props) => {
       }
       if (!token) {
         console.error("No token found");
+        setLoading(false);
         return;
       }
 
