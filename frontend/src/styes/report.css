@@ -28,9 +28,13 @@
   overflow: hidden;
 }
 .rankingCont {
+  position: absolute;
+  top: 80px;
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
-  background-color: red;
+  flex-direction: column;
+  align-items: center;
 }
 .reportAllCont {
   opacity: 0;
@@ -176,4 +180,22 @@
 .rankingSelected {
   background-color: rgb(255, 93, 93);
   color: white;
+}
+.rankingTitle {
+  font-size: 23px;
+  background-color: white;
+  width: 260px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+
+  z-index: 999;
+}
+.rankingLine {
+  position: absolute;
+  width: 100%;
+  top: 14px;
+  border-bottom: 1px solid rgb(162, 162, 162);
 }

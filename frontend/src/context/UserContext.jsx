@@ -17,14 +17,6 @@ const UserProvider = ({ children }) => {
     plan: "free",
   });
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-
-    if (storedUser) setUser(JSON.parse(storedUser));
-    if (storedToken) setToken(storedToken);
-  }, []);
-
   const login = (userData, jwt) => {
     setUser(userData);
     setToken(jwt);
@@ -46,13 +38,25 @@ const UserProvider = ({ children }) => {
     try {
       const data = await refreshUser(token);
       setUser(data);
-      console.log(data);
 
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    const storedToken = localStorage.getItem("token");
+
+    if (storedToken) setToken(storedToken);
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  useEffect(() => {
+    if (!token) return;
+    fetchUserData();
+  }, [token]);
 
   return (
     <UserContext.Provider

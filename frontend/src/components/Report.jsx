@@ -244,8 +244,11 @@ const Report = (props) => {
             <div> </div>
           </div>
         </div>
-        <div className={`reportAllCont rankingCont ${rankedDisplay ? "" : ""}`}>
-          <div>Mais focado essa semana</div>
+        <div
+          className={`reportAllCont rankingCont ${rankedDisplay && reportPage ? "activeReport" : ""}`}
+        >
+          <div className="rankingTitle">Top Focused This Week</div>
+          <div className="rankingLine"></div>
         </div>
       </div>
     </div>
