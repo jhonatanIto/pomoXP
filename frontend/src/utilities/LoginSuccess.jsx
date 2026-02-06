@@ -33,7 +33,7 @@ const LoginSuccess = () => {
       .finally(() => console.log("false"));
   }, [params, login, navigate]);
 
-  return <></>;
+  return <div></div>;
 };
 
 export default LoginSuccess;

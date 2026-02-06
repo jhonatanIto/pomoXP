@@ -202,7 +202,6 @@ export default Plans;
 export function Success(props) {
   const { paySuccess, setPaySuccess } = props;
   const { user } = useContext(UserContext);
-
   const navigate = useNavigate();
 
   return (
@@ -210,11 +209,12 @@ export function Success(props) {
       <div className="paySuccessCont">
         <h1 className="payTitle">Congratulations, {user?.name} !</h1>
         <p>You Activeted the Premium plan ! </p>
+
         <p>
           Now you have unlimited access to all Notes, access to Yealy Bars and
           Filters.
-          <p>And of course, No more ads.</p>
         </p>
+        <p>And of course, No more ads.</p>
 
         <button
           onClick={() => {

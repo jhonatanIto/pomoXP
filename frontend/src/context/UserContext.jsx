@@ -50,12 +50,25 @@ const UserProvider = ({ children }) => {
     const storedToken = localStorage.getItem("token");
     const storedCards = localStorage.getItem(`pomoCards`);
 
-    if (storedToken) setToken(storedToken);
-    if (storedUser) {
-      const parsedUser = JSON.parse(storedUser);
-      setUser(parsedUser);
+    if (storedUser && storedUser !== "undefined") {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        console.error(e);
+        localStorage.removeItem("user");
+      }
     }
-    if (storedCards) setCards(JSON.parse(storedCards));
+    if (storedCards && storedCards !== "undefined") {
+      try {
+        setCards(JSON.parse(storedCards));
+      } catch (e) {
+        console.error(e);
+        localStorage.removeItem("pomoCards");
+      }
+    }
+    if (storedToken && storedToken !== "undefined") {
+      setToken(storedToken);
+    }
   }, []);
 
   useEffect(() => {

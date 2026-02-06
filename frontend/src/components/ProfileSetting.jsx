@@ -122,7 +122,7 @@ const ProfileSetting = (props) => {
               />
             </div>
 
-            <input style={{ pointerEvents: "none" }} value={email} />
+            <input readOnly style={{ pointerEvents: "none" }} value={email} />
           </div>
         </div>
 
