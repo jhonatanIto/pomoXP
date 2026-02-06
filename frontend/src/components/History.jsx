@@ -26,7 +26,7 @@ const History = (props) => {
       try {
         const data = await getCards(token);
         setCards(data);
-        localStorage.setItem("pomoCards", JSON.stringify(data));
+        localStorage.setItem(`pomoCards_${user.id}`, JSON.stringify(data));
       } catch (error) {
         console.error(error.message);
       }

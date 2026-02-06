@@ -18,6 +18,7 @@ const AddNote = (props) => {
     setSavedNote,
     selectedDay,
     setSelectedDay,
+    setPlansPage,
   } = props;
 
   const { successNotification, errorNotification } =
@@ -325,7 +326,9 @@ const AddNote = (props) => {
                       setEdit(false);
                       setId(f.id);
                     } else {
-                      alert("upgrade to premium user first");
+                      alert("Upgrade to Premium to access");
+                      setPlansPage(true);
+                      closeNote();
                     }
                   }}
                   className="rightSideTitles"
@@ -388,12 +391,7 @@ const AddNote = (props) => {
                       });
                     }
 
-                    setNoteModal(false);
-                    setNoteTitle("");
-                    setNoteContent("");
-                    setDisplayNote(false);
-                    setEdit(false);
-                    setId("");
+                    closeNote();
                   }}
                 >
                   delete

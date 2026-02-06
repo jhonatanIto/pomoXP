@@ -101,6 +101,7 @@ const App = () => {
             savedNote={savedNote}
             selectedDay={selectedDay}
             setSelectedDay={setSelectedDay}
+            setPlansPage={setPlansPage}
           />
         </div>
 

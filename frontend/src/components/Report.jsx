@@ -21,7 +21,7 @@ const Report = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
-  const { cards } = useContext(UserContext);
+  const { cards, user } = useContext(UserContext);
 
   const handleClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -58,7 +58,7 @@ const Report = (props) => {
     };
 
     userss();
-  }, []);
+  }, [user]);
 
   const today = new Date();
   const last7Days = new Date();
