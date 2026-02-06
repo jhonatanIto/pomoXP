@@ -39,7 +39,7 @@ const App = () => {
   const [reportPage, setReportPage] = useState(false);
 
   const [paySuccess, setPaySuccess] = useState(false);
-  const [payCancel, setPayCancel] = useState(true);
+  const [payCancel, setPayCancel] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
