@@ -52,7 +52,12 @@ const Report = (props) => {
   };
   const userss = async () => {
     const data = await fetchUsers();
-    setAllUsers(data.users);
+
+    if (data && data.users) {
+      setAllUsers(data.users);
+    } else {
+      setAllUsers([]);
+    }
   };
 
   useEffect(() => {

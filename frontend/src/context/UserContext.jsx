@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useCallback, useEffect, useState } from "react";
 import { refreshUser } from "../utilities/fetchData";
 
 export const UserContext = createContext(null);
@@ -31,33 +31,40 @@ const UserProvider = ({ children }) => {
     setCards([]);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
+    localStorage.removeItem("pomoCards");
   };
 
-  const fetchUserData = async () => {
+  const fetchUserData = useCallback(async () => {
     if (!token) return;
     try {
+      setLoading(true);
       const data = await refreshUser(token);
       setUser(data);
-
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
-    const storedCards = localStorage.getItem(`pomoCards_${storedUser?.id}`);
+    const storedCards = localStorage.getItem(`pomoCards`);
 
     if (storedToken) setToken(storedToken);
-    if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+    }
     if (storedCards) setCards(JSON.parse(storedCards));
   }, []);
 
   useEffect(() => {
-    if (!token) return;
-    fetchUserData();
+    if (token) {
+      fetchUserData();
+    }
   }, [token]);
 
   return (

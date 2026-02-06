@@ -43,41 +43,6 @@ export const stripeController = async (req, res) => {
   }
 };
 
-export const stripeWebhookController = async (req, res) => {
-  const sig = req.headers["stripe-signature"];
-  let event;
-
-  try {
-    event = stripe.webhooks.constructEvent(
-      req.body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET,
-    );
-  } catch (error) {
-    console.log("webhook signature failed:", error.message);
-    return res.status(400).send(`Webhook Error: ${error.message}`);
-  }
-
-  console.log("Stipe Event>:", event.type);
-
-  const handler = stripeEventHandlers[event.type];
-
-  if (handler) {
-    await handler(event.data.object);
-  } else {
-    console.log("Unhandled event:", event.type);
-  }
-
-  res.json({ received: true });
-};
-
-const stripeEventHandlers = {
-  "checkout.session.completed": handleCheckoutCompleted,
-  "invoice.payment_succeeded": handleInvoicePaymentSucceeded,
-  "invoice.payment_failed": handleInvoicePaymentFailed,
-  "customer.subscription.deleted": handleSubscriptionDeleted,
-};
-
 const handleCheckoutCompleted = async (session) => {
   if (session.payment_status !== "paid") return;
 
@@ -132,4 +97,39 @@ const handleSubscriptionDeleted = async (subscription) => {
     .where(eq(users.stripeCustomerId, customerId));
 
   console.log("Subscription canceled");
+};
+
+export const stripeWebhookController = async (req, res) => {
+  const sig = req.headers["stripe-signature"];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
+  } catch (error) {
+    console.log("webhook signature failed:", error.message);
+    return res.status(400).send(`Webhook Error: ${error.message}`);
+  }
+
+  console.log("Stipe Event>:", event.type);
+
+  const handler = stripeEventHandlers[event.type];
+
+  if (handler) {
+    await handler(event.data.object);
+  } else {
+    console.log("Unhandled event:", event.type);
+  }
+
+  res.json({ received: true });
+};
+
+const stripeEventHandlers = {
+  "checkout.session.completed": handleCheckoutCompleted,
+  "invoice.payment_succeeded": handleInvoicePaymentSucceeded,
+  "invoice.payment_failed": handleInvoicePaymentFailed,
+  "customer.subscription.deleted": handleSubscriptionDeleted,
 };
