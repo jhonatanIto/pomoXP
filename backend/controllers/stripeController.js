@@ -14,22 +14,15 @@ const priceMap = {
 export const stripeController = async (req, res) => {
   try {
     const userId = req.userId;
-
     const { plan } = req.body;
 
     const priceId = priceMap[plan];
-
     if (!priceId) return res.status(400).json({ error: "Invalid plan" });
 
-    const mode = "subscription";
-
     const session = await stripe.checkout.sessions.create({
-      mode,
-
+      mode: "subscription",
       payment_method_types: ["card"],
-
       line_items: [{ price: priceId, quantity: 1 }],
-
       metadata: {
         userId: String(userId),
         plan,
@@ -52,17 +45,14 @@ export const stripeController = async (req, res) => {
 
 export const stripeWebhookController = async (req, res) => {
   const sig = req.headers["stripe-signature"];
-
   let event;
 
-  const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  if (!endpointSecret) {
-    console.warn("STRIPE_WEBHOOK_SECRET not defined, webhook disabled");
-  }
-
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET,
+    );
   } catch (error) {
     console.log("webhook signature failed:", error.message);
     return res.status(400).send(`Webhook Error: ${error.message}`);
@@ -70,44 +60,76 @@ export const stripeWebhookController = async (req, res) => {
 
   console.log("Stipe Event>:", event.type);
 
-  if (
-    event.type === "checkout.session.completed" &&
-    session.payment_status === "paid"
-  ) {
-    const session = event.data.object;
+  const handler = stripeEventHandlers[event.type];
 
-    const userId = session.metadata.userId;
-    const plan = session.metadata.plan;
-    const customerId = session.customer;
-
-    console.log("Payment confirmed!");
-    console.log("User:", userId);
-    console.log("Plan:", plan);
-    console.log("Customer", customerId);
-
-    await db
-      .update(users)
-      .set({
-        plan,
-        payment_status: "active",
-        ...(customerId && { stripeCustomerId: customerId }),
-      })
-      .where(eq(users.id, Number(userId)));
-
-    console.log("User upgraded to premium!");
-  } else if (event.type === "checkout.session.failed") {
-    const session = event.data.object;
-
-    const userId = session.metadata.userId;
-    const customerId = session.customer;
-
-    await db
-      .update(users)
-      .set({
-        payment_status: "failed",
-        ...(customerId && { stripeCustomerId: customerId }),
-      })
-      .where(eq(users.id, Number(userId)));
+  if (handler) {
+    await handler(event.data.object);
+  } else {
+    console.log("Unhandled event:", event.type);
   }
+
   res.json({ received: true });
+};
+
+const stripeEventHandlers = {
+  "checkout.session.completed": handleCheckoutCompleted,
+  "invoice.payment_succeeded": handleInvoicePaymentSucceeded,
+  "invoice.payment_failed": handleInvoicePaymentFailed,
+  "customer.subscription.deleted": handleSubscriptionDeleted,
+};
+
+const handleCheckoutCompleted = async (session) => {
+  if (session.payment_status !== "paid") return;
+
+  const userId = session.metadata.userId;
+  if (!userId) return;
+
+  const plan = session.metadata.plan;
+  const customerId = session.customer;
+  const subscriptionId = session.subscription;
+
+  await db
+    .update(users)
+    .set({
+      plan,
+      payment_status: "active",
+      subscriptionId,
+      ...(customerId && { stripeCustomerId: customerId }),
+    })
+    .where(eq(users.id, Number(userId)));
+
+  console.log("User upgraded to premium");
+};
+
+const handleInvoicePaymentSucceeded = async (invoice) => {
+  const customerId = invoice.customer;
+
+  await db
+    .update(users)
+    .set({ payment_status: "active" })
+    .where(eq(users.stripeCustomerId, customerId));
+
+  console.log("Subscription renewed");
+};
+
+const handleInvoicePaymentFailed = async (invoice) => {
+  const customerId = invoice.customer;
+
+  await db
+    .update(users)
+    .set({ payment_status: "failed" })
+    .where(eq(users.stripeCustomerId, customerId));
+
+  console.log("Payment failed");
+};
+
+const handleSubscriptionDeleted = async (subscription) => {
+  const customerId = subscription.customer;
+
+  await db
+    .update(users)
+    .set({ plan: "free", payment_status: "canceled" })
+    .where(eq(users.stripeCustomerId, customerId));
+
+  console.log("Subscription canceled");
 };

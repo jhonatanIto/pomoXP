@@ -258,7 +258,7 @@ const Report = (props) => {
         <div
           className={`reportAllCont rankingCont ${rankedDisplay && reportPage ? "activeReport" : ""}`}
         >
-          <div className="rankingTitle">Top Focused All Time</div>
+          <div className="rankingTitle">Top Focused of All Time</div>
           <div className="rankingLine"></div>
           <div className="rankUsersCont">
             {allUsers?.map((a, index) => {

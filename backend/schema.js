@@ -20,6 +20,9 @@ export const users = pgTable("users", {
     .defaultNow()
     .notNull(),
   plan: text("plan").default("free").notNull(),
+  payment_status: text("payment_status").default("free").notNull(),
+  stripeCustomerId: text("stripe_customer_id"),
+  subscriptionId: text("subscription_id"),
 });
 
 export const cards = pgTable(
