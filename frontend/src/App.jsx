@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import History from "./components/History";
 import LvlBar from "./components/LvlBar";
@@ -12,6 +13,7 @@ import AddNote from "./components/AddNote";
 import Loading from "./components/Loading";
 import Plans, { Cancel, Success } from "./components/Plans";
 import Report from "./components/Report";
+import { NotificationContext } from "./context/NotificationContext";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -35,6 +37,31 @@ const App = () => {
 
   const [plansPage, setPlansPage] = useState(false);
   const [reportPage, setReportPage] = useState(false);
+
+  const [paySuccess, setPaySuccess] = useState(false);
+  const [payCancel, setPayCancel] = useState(true);
+
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const { successNotification, errorNotification } =
+    useContext(NotificationContext);
+
+  useEffect(() => {
+    if (location.pathname === "/payment/success") {
+      setPaySuccess(true);
+      successNotification("Payment confimed!");
+    }
+    if (location.pathname === "/payment/cancel") {
+      setPayCancel(true);
+      errorNotification("Payment cancelled");
+    }
+    if (location.pathname === "/login/success") {
+      successNotification("Login successful!");
+      navigate("/", { replace: true });
+    }
+  }, [location.pathname]);
+
   const triggerXpPopup = () => {
     setPopupTrigger((prev) => prev + 1);
   };
@@ -114,14 +141,13 @@ const App = () => {
       />
       <Plans plansPage={plansPage} setPlansPage={setPlansPage} />
       <Report reportPage={reportPage} setReportPage={setReportPage} />
+      <Success paySuccess={paySuccess} setPaySuccess={setPaySuccess} />
+      <Cancel payCancel={payCancel} setPayCancel={setPayCancel} />
     </div>
   );
   return (
     <Routes>
-      <Route path="/" element={MainApp}></Route>
-      <Route path="/login/success" element={<LoginSuccess />} />
-      <Route path="/payment/success" element={<Success />} />
-      <Route path="/payment/cancel" element={<Cancel />} />
+      <Route path="/*" element={MainApp} />
     </Routes>
   );
 };

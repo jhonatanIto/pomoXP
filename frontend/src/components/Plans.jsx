@@ -4,6 +4,7 @@ import premiumIcon from "../images/premium.png";
 import { SlCheck } from "react-icons/sl";
 import { GoX } from "react-icons/go";
 import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Plans = (props) => {
   const { plansPage, setPlansPage } = props;
@@ -198,20 +199,61 @@ const Plans = (props) => {
 
 export default Plans;
 
-export function Success() {
+export function Success(props) {
+  const { paySuccess, setPaySuccess } = props;
+  const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <h1>Payment confimed!</h1>
-      <p>Your subscription is activeted</p>
+    <div className={`paySuccessBody ${paySuccess ? "active" : ""}`}>
+      <div className="paySuccessCont">
+        <h1 className="payTitle">Congratulations, {user?.name} !</h1>
+        <p>You Activeted the Premium plan ! </p>
+        <p>
+          Now you have unlimited access to all Notes, access to Yealy Bars and
+          Filters.
+          <p>And of course, No more ads.</p>
+        </p>
+
+        <button
+          onClick={() => {
+            setPaySuccess(false);
+            navigate("/", { replace: true });
+          }}
+        >
+          ok
+        </button>
+      </div>
     </div>
   );
 }
 
-export function Cancel() {
+export function Cancel(props) {
+  const { payCancel, setPayCancel } = props;
+
+  const navigate = useNavigate();
+
   return (
-    <div>
-      <h1>Payment cancelled</h1>
-      <p>You can try again</p>
+    <div className={`paySuccessBody ${payCancel ? "active" : ""}`}>
+      <div className="paySuccessCont">
+        <h1 className="payTitle">Payment cancelled</h1>
+        <p>The payment process was not completed.</p>
+        <p>
+          {" "}
+          This can happen if you closed the checkout or your bank required
+          additional confirmation.
+        </p>
+
+        <button
+          onClick={() => {
+            setPayCancel(false);
+            navigate("/", { replace: true });
+          }}
+        >
+          ok
+        </button>
+      </div>
     </div>
   );
 }

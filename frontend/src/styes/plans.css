@@ -12,10 +12,6 @@
   pointer-events: none;
   transition: 0.2s;
 }
-.active {
-  opacity: 1;
-  pointer-events: auto;
-}
 .plansContainer {
   margin-top: 140px;
   background-color: white;
@@ -182,4 +178,52 @@
   position: absolute;
   bottom: 200px;
   font-size: 20px;
+}
+.paySuccessBody {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
+
+.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.paySuccessCont {
+  margin-top: 140px;
+  background-color: white;
+  width: 960px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 20px;
+  color: #363636;
+  font-size: 20px;
+}
+.payTitle {
+  font-size: 35px;
+  margin-bottom: 20px;
+}
+.paySuccessCont button {
+  margin-top: 30px;
+  background-color: #3770fe;
+  width: 120px;
+  color: white;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.paySuccessCont button:hover {
+  background-color: #6591ff;
 }

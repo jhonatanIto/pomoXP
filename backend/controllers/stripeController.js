@@ -35,8 +35,8 @@ export const stripeController = async (req, res) => {
         plan,
       },
 
-      success_url: "https://pomoxp.com",
-      cancel_url: "https://pomoxp.com/cancel",
+      success_url: "https://pomoxp.com/payment/success",
+      cancel_url: "https://pomoxp.com/payment/cancel",
     });
 
     res.json({ url: session.url });
