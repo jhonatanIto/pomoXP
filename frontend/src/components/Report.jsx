@@ -52,7 +52,7 @@ const Report = (props) => {
   useEffect(() => {
     const userss = async () => {
       const data = await fetchUsers();
-      setAllUsers(data);
+      setAllUsers(data.users);
     };
 
     userss();
@@ -134,6 +134,13 @@ const Report = (props) => {
       }
     }
     return streak;
+  };
+
+  const formatMinutes = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+
+    return `${hours}h ${minutes}m`;
   };
 
   useEffect(() => {
@@ -249,6 +256,21 @@ const Report = (props) => {
         >
           <div className="rankingTitle">Top Focused This Week</div>
           <div className="rankingLine"></div>
+          <div className="rankUsersCont">
+            {allUsers.map((a, index) => {
+              return (
+                <div key={index} className="rankUserCont">
+                  <div className="leftsideUser">
+                    <div className="numberUserRank">{index + 1}</div>
+                    <img src={a.photo} />
+                    <div>{a.name}</div>
+                  </div>
+
+                  <div>{formatMinutes(a.xp - 6)}</div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

@@ -35,6 +35,7 @@ export const allUsers = async (req, res) => {
         name: users.name,
         level: users.level,
         xp: users.xp,
+        photo: users.photo,
       })
       .from(users)
       .orderBy(desc(users.xp));
