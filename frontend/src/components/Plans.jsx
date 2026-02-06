@@ -45,7 +45,7 @@ const Plans = (props) => {
             Authorization: `Bearer ${token}`,
           },
 
-          body: JSON.stringify({ plan }),
+          body: JSON.stringify({ plan: plan }),
         },
       );
 

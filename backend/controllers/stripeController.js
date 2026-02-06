@@ -54,6 +54,7 @@ export const stripeWebhookController = async (req, res) => {
   const sig = req.headers["stripe-signature"];
 
   let event;
+
   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
   if (!endpointSecret) {

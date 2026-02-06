@@ -9,6 +9,7 @@ import passport from "passport";
 import "./config/passport.js";
 import { notesRouter } from "./routes/notesRoute.js";
 import { stripeRoute } from ".//routes/stripeRoute.js";
+import { stripeWebhookController } from "./controllers/stripeController.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,7 +20,11 @@ app.use(
   }),
 );
 
-app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
+app.post(
+  "/api/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  stripeWebhookController,
+);
 
 app.use(express.json());
 
