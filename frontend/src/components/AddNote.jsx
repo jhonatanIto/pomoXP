@@ -217,7 +217,7 @@ const AddNote = (props) => {
 
   const selecIndex = recent.findIndex((g) => g[0] === selectedDay);
   const blocked =
-    (user?.plan === "free" && selecIndex >= 6) || (!user && selecIndex >= 6);
+    (user?.plan === "free" && selecIndex >= 7) || (!user && selecIndex >= 7);
 
   useEffect(() => {
     if (groupedCards.length === 0) return;

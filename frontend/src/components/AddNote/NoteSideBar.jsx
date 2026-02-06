@@ -42,6 +42,8 @@ const NoteSideBar = (props) => {
               setViewMode("months");
               setSelectedDay(null);
               setSelecMonth(months[0][0]);
+            } else {
+              alert("Upgrade to Premium to access");
             }
           }}
           className={`filterButt ${viewMode === "months" ? "selecFilter" : ""}`}
@@ -62,6 +64,8 @@ const NoteSideBar = (props) => {
               setSelecMonth(null);
               setSelectedDay(null);
               setSelecYear(years[0][0]);
+            } else {
+              alert("Upgrade to Premium to access");
             }
           }}
           className={`filterButt ${viewMode === "years" ? "selecFilter" : ""}`}
@@ -138,7 +142,7 @@ const NoteSideBar = (props) => {
         {viewMode === "recent" &&
           recent?.map((g, index) => {
             const date = g[0];
-            const locked = user?.plan === "free" && index >= 6;
+            const locked = user?.plan === "free" && index >= 7;
 
             return (
               <button
