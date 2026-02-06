@@ -70,22 +70,44 @@ export const stripeWebhookController = async (req, res) => {
 
   console.log("Stipe Event>:", event.type);
 
-  if (event.type === "checkout.session.completed") {
+  if (
+    event.type === "checkout.session.completed" &&
+    session.payment_status === "paid"
+  ) {
     const session = event.data.object;
 
     const userId = session.metadata.userId;
     const plan = session.metadata.plan;
+    const customerId = session.customer;
 
     console.log("Payment confirmed!");
     console.log("User:", userId);
     console.log("Plan:", plan);
+    console.log("Customer", customerId);
 
     await db
       .update(users)
-      .set({ plan: plan })
+      .set({
+        plan,
+        payment_status: "active",
+        ...(customerId && { stripeCustomerId: customerId }),
+      })
       .where(eq(users.id, Number(userId)));
 
     console.log("User upgraded to premium!");
+  } else if (event.type === "checkout.session.failed") {
+    const session = event.data.object;
+
+    const userId = session.metadata.userId;
+    const customerId = session.customer;
+
+    await db
+      .update(users)
+      .set({
+        payment_status: "failed",
+        ...(customerId && { stripeCustomerId: customerId }),
+      })
+      .where(eq(users.id, Number(userId)));
   }
   res.json({ received: true });
 };

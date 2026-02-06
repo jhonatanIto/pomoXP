@@ -57,7 +57,6 @@ const App = () => {
       errorNotification("Payment cancelled");
     }
     if (location.pathname === "/login/success") {
-      successNotification("Login successful!");
       navigate("/", { replace: true });
     }
   }, [location.pathname]);
@@ -143,6 +142,7 @@ const App = () => {
       <Report reportPage={reportPage} setReportPage={setReportPage} />
       <Success paySuccess={paySuccess} setPaySuccess={setPaySuccess} />
       <Cancel payCancel={payCancel} setPayCancel={setPayCancel} />
+      <LoginSuccess />
     </div>
   );
   return (

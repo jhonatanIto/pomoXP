@@ -48,9 +48,11 @@ const UserProvider = ({ children }) => {
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
+    const storedCards = localStorage.getItem("pomoCards");
 
     if (storedToken) setToken(storedToken);
     if (storedUser) setUser(JSON.parse(storedUser));
+    if (storedCards) setCards(JSON.parse(storedCards));
   }, []);
 
   useEffect(() => {
