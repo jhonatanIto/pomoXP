@@ -21,7 +21,7 @@ const Report = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
-  const { cards, user } = useContext(UserContext);
+  const { cards } = useContext(UserContext);
 
   const handleClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -50,15 +50,14 @@ const Report = (props) => {
       console.log(error);
     }
   };
+  const userss = async () => {
+    const data = await fetchUsers();
+    setAllUsers(data.users);
+  };
 
   useEffect(() => {
-    const userss = async () => {
-      const data = await fetchUsers();
-      setAllUsers(data.users);
-    };
-
     userss();
-  }, [user]);
+  }, []);
 
   const today = new Date();
   const last7Days = new Date();
@@ -176,7 +175,10 @@ const Report = (props) => {
           </button>
           <button
             className={`reportRankButton ${rankedDisplay ? "rankingSelected" : ""}`}
-            onClick={() => setRankedDisplay(true)}
+            onClick={() => {
+              setRankedDisplay(true);
+              userss();
+            }}
           >
             Ranking
           </button>
