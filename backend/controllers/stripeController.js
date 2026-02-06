@@ -35,7 +35,7 @@ export const stripeController = async (req, res) => {
         plan,
       },
 
-      success_url: "https://pomoxp.com/success",
+      success_url: "https://pomoxp.com",
       cancel_url: "https://pomoxp.com/cancel",
     });
 
