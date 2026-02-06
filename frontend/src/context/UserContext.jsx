@@ -37,14 +37,11 @@ const UserProvider = ({ children }) => {
   const fetchUserData = useCallback(async () => {
     if (!token) return;
     try {
-      setLoading(true);
       const data = await refreshUser(token);
       setUser(data);
       localStorage.setItem("user", JSON.stringify(data));
     } catch (err) {
       console.error(err);
-    } finally {
-      setLoading(false);
     }
   }, [token]);
 
