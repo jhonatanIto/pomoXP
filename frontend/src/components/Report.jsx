@@ -19,6 +19,7 @@ const Report = (props) => {
   const [streak, setStreak] = useState(0);
   const [rankedDisplay, setRankedDisplay] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
+  // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
   const { cards } = useContext(UserContext);
 
@@ -269,8 +270,14 @@ const Report = (props) => {
                     />
                     <div>{a.name}</div>
                   </div>
+                  <div className="rankUserLevel">
+                    {" "}
+                    LVL: {String(a.level).padStart(2, 0)}
+                  </div>
 
-                  <div>{formatMinutes(a.xp - 6)}</div>
+                  <div className="rightSideUser">
+                    <div>{formatMinutes(a.xp - 6)}</div>
+                  </div>
                 </div>
               );
             })}

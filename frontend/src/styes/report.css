@@ -206,6 +206,8 @@
 }
 .leftsideUser {
   display: flex;
+  width: 300px;
+  align-items: center;
 }
 .numberUserRank {
   width: 40px;
@@ -225,4 +227,18 @@
   width: 42px;
   border-radius: 100px;
   margin-right: 20px;
+}
+.rightSideUser {
+  display: flex;
+
+  width: 130px;
+  justify-content: end;
+}
+.rankUserLevel {
+  color: rgb(255, 59, 59);
+
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
