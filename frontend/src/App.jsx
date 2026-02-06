@@ -56,9 +56,6 @@ const App = () => {
       setPayCancel(true);
       errorNotification("Payment cancelled");
     }
-    if (location.pathname === "/login/success") {
-      navigate("/", { replace: true });
-    }
   }, [location.pathname]);
 
   const triggerXpPopup = () => {

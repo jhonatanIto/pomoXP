@@ -5,13 +5,14 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const LoginSuccess = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+  const { login, setLoading } = useContext(UserContext);
 
   useEffect(() => {
     const token = params.get("token");
-
+    setLoading(true);
     if (!token) {
       navigate("/");
+      setLoading(false);
       return;
     }
 
@@ -28,10 +29,11 @@ const LoginSuccess = () => {
         login(user, token);
         navigate("/");
       })
-      .catch(() => navigate("/"));
+      .catch(() => navigate("/"))
+      .finally(() => setLoading(false));
   }, [params, login, navigate]);
 
-  return <p>Loggin in with Google...</p>;
+  return <p></p>;
 };
 
 export default LoginSuccess;
