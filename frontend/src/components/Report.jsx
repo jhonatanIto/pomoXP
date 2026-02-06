@@ -30,32 +30,32 @@ const Report = (props) => {
   const closeReportPage = () => {
     setReportPage(false);
     setSelecFilter("week");
+    setRankedDisplay(false);
   };
 
-  const getAllUsers = async () => {
+  const fetchUsers = async () => {
     try {
       const res = await fetch(
         "https://pomoxp-production.up.railway.app/api/users/all",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
       );
 
-      const data = await res;
+      const data = await res.json();
 
       if (!res.ok) throw Error(data?.message || "Request failed");
 
-      console.log(data);
+      return data;
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    getAllUsers();
+    const userss = async () => {
+      const data = await fetchUsers();
+      setAllUsers(data);
+    };
+
+    userss();
   }, []);
 
   const today = new Date();
@@ -155,7 +155,7 @@ const Report = (props) => {
   return (
     <div
       onMouseDown={(e) => handleClick(e)}
-      className={`reportBody ${reportPage ? "active" : ""}`}
+      className={`reportBody ${reportPage ? "activeReport" : ""}`}
     >
       <div ref={boxRef} className="reportContainer">
         <div className="reportRankCont">
@@ -172,7 +172,9 @@ const Report = (props) => {
             Ranking
           </button>
         </div>
-        <div className={`reportAllCont ${!rankedDisplay ? "active" : ""}`}>
+        <div
+          className={`reportAllCont ${!rankedDisplay && reportPage ? "activeReport" : ""}`}
+        >
           <div className={`reportTopCont`}>
             <div className="topBox">
               <SlClock className="reportClock" />
@@ -242,7 +244,9 @@ const Report = (props) => {
             <div> </div>
           </div>
         </div>
-        <div className={`reportAllCont ${rankedDisplay ? "active" : ""}`}></div>
+        <div className={`reportAllCont rankingCont ${rankedDisplay ? "" : ""}`}>
+          <div>Mais focado essa semana</div>
+        </div>
       </div>
     </div>
   );

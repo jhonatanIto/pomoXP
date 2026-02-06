@@ -27,12 +27,18 @@
   position: relative;
   overflow: hidden;
 }
+.rankingCont {
+  display: flex;
+  justify-content: center;
+  background-color: red;
+}
 .reportAllCont {
   opacity: 0;
   pointer-events: none;
   transition: 0.2s;
+  margin-top: 15px;
 }
-.active {
+.activeReport {
   opacity: 1;
   pointer-events: auto;
 }
