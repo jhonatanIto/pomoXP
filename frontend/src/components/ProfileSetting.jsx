@@ -1,5 +1,5 @@
 import "../styes/profileSet.css";
-import naruto from "../images/naruto.webp";
+import userPhoto from "../images/userPhoto.png";
 import edit from "../images/edit.png";
 import x from "../images/x-button.png";
 import { useContext, useEffect, useRef, useState } from "react";
@@ -100,7 +100,7 @@ const ProfileSetting = (props) => {
         <div className="profileCont">
           <img
             className="profileSetPicture"
-            src={user?.photo ? user?.photo : naruto}
+            src={user?.photo ? user.photo : userPhoto}
           />
           <div className="profileNameCont">
             <div className="nameContainer">

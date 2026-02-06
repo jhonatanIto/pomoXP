@@ -29,7 +29,7 @@
 }
 .rankingCont {
   position: absolute;
-  top: 80px;
+  top: 70px;
   width: 100%;
   height: 100%;
   display: flex;
@@ -209,12 +209,20 @@
 }
 .numberUserRank {
   width: 40px;
+  align-items: center;
+  display: flex;
 }
-.rankUserCont {
+.rankUserBox {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid rgb(163, 163, 163, 0.3);
-  padding: 20px;
+  padding: 13px;
   font-size: 20px;
   color: #2c2c2c;
+}
+.rankUserPhoto {
+  width: 42px;
+  border-radius: 100px;
+  margin-right: 20px;
 }

@@ -1,5 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import "../styes/report.css";
+import userPhoto from "../images/userPhoto.png";
 import { UserContext } from "../context/UserContext";
 import {
   SlArrowLeft,
@@ -254,15 +255,18 @@ const Report = (props) => {
         <div
           className={`reportAllCont rankingCont ${rankedDisplay && reportPage ? "activeReport" : ""}`}
         >
-          <div className="rankingTitle">Top Focused This Week</div>
+          <div className="rankingTitle">Top Focused All Time</div>
           <div className="rankingLine"></div>
           <div className="rankUsersCont">
-            {allUsers.map((a, index) => {
+            {allUsers?.map((a, index) => {
               return (
-                <div key={index} className="rankUserCont">
+                <div key={index} className="rankUserBox">
                   <div className="leftsideUser">
                     <div className="numberUserRank">{index + 1}</div>
-                    <img src={a.photo} />
+                    <img
+                      className="rankUserPhoto"
+                      src={a.photo ? a.photo : userPhoto}
+                    />
                     <div>{a.name}</div>
                   </div>
 
