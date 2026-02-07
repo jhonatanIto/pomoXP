@@ -321,7 +321,7 @@ const Report = (props) => {
                       </div>
 
                       <div className="rightSideUser">
-                        <div>{formatMinutes(a.xp - 6)}</div>
+                        <div>{formatMinutes(a.last7Days - 6)}</div>
                       </div>
                     </div>
                   );
