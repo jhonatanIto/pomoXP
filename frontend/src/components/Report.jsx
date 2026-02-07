@@ -21,7 +21,7 @@ const Report = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
-  const { cards } = useContext(UserContext);
+  const { cards, token } = useContext(UserContext);
 
   const handleClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -122,7 +122,7 @@ const Report = (props) => {
   };
 
   const calculateStreak = (cards) => {
-    if (!cards || cards.length === 0) return;
+    if (!cards || cards.length === 0) return 0;
 
     const daysSet = new Set(cards.map((c) => c.created_at.split("T")[0]));
 
@@ -147,6 +147,33 @@ const Report = (props) => {
     const minutes = totalMinutes % 60;
 
     return `${hours}h ${minutes}m`;
+  };
+
+  const updateUser7Days = async () => {
+    const total = updateWeekTotal();
+    try {
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/users",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ last7Days: total }),
+        },
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data?.message || "Request failed");
+      }
+
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

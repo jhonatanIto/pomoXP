@@ -7,6 +7,7 @@ import clickSound from "../audio/clickDefault.mp3";
 import alarm from "../audio/alarm.mp3";
 import levelUp from "../audio/levelUp.mp3";
 import { convertToLevel } from "../../../backend/utils/level.js";
+import { calc7Cards, updateUser7Days } from "../utilities/reportCalc.js";
 
 const playClick = () => {
   new Audio(clickSound).play();
@@ -113,6 +114,7 @@ const Timer = (props) => {
     if (selectedTab === "Pomodoro") {
       if (user) {
         postCard();
+        updateUser7Days(token);
         setTimeout(() => {
           setTargetXp((prev) => prev + minutes);
           setTargetBar((prev) => {

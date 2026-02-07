@@ -52,7 +52,7 @@ export const allUsers = async (req, res) => {
 
 export const editUser = async (req, res) => {
   try {
-    const { name, photo } = req.body;
+    const { name, photo, last7Days } = req.body;
     const userId = req.userId;
 
     if (!name && !photo) {
@@ -65,6 +65,7 @@ export const editUser = async (req, res) => {
       .set({
         ...(name && { name }),
         ...(photo && { photo }),
+        last7Days,
       })
       .where(eq(users.id, userId))
       .returning();

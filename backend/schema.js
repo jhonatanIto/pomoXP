@@ -23,6 +23,7 @@ export const users = pgTable("users", {
   payment_status: text("payment_status").default("free").notNull(),
   stripeCustomerId: text("stripe_customer_id"),
   subscriptionId: text("subscription_id"),
+  last7Days: integer("last7days").default(0).notNull(),
 });
 
 export const cards = pgTable(
