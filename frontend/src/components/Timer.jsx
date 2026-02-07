@@ -7,7 +7,7 @@ import clickSound from "../audio/clickDefault.mp3";
 import alarm from "../audio/alarm.mp3";
 import levelUp from "../audio/levelUp.mp3";
 import { convertToLevel } from "../../../backend/utils/level.js";
-import { calc7Cards, updateUser7Days } from "../utilities/reportCalc.js";
+import { updateUser7Days } from "../utilities/reportCalc.js";
 
 const playClick = () => {
   new Audio(clickSound).play();
@@ -37,7 +37,7 @@ const Timer = (props) => {
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
   const [selectedTab, setSelectedTab] = useState("Pomodoro");
-  const { token, user, setCards, fetchUserData, setVisitor } =
+  const { token, user, setCards, fetchUserData, setVisitor, cards } =
     useContext(UserContext);
 
   const minutes = Number(focusTime);
@@ -114,7 +114,7 @@ const Timer = (props) => {
     if (selectedTab === "Pomodoro") {
       if (user) {
         postCard();
-        updateUser7Days(token);
+        updateUser7Days(token, cards);
         setTimeout(() => {
           setTargetXp((prev) => prev + minutes);
           setTargetBar((prev) => {

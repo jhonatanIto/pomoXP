@@ -55,7 +55,7 @@ export const editUser = async (req, res) => {
     const { name, photo, last7Days } = req.body;
     const userId = req.userId;
 
-    if (!name && !photo) {
+    if (!name && !photo && !last7Days) {
       return res.status(400).json({
         message: "Nothing to update",
       });
