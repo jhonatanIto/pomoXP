@@ -19,9 +19,11 @@ const Report = (props) => {
   const [streak, setStreak] = useState(0);
   const [rankedDisplay, setRankedDisplay] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
+  const [weekAll, setWeekAll] = useState([]);
+  const [allTime, setAllTime] = useState(true);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
-  const { cards, token } = useContext(UserContext);
+  const { cards } = useContext(UserContext);
 
   const handleClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -55,8 +57,10 @@ const Report = (props) => {
 
     if (data && data.users) {
       setAllUsers(data.users);
+      setWeekAll(data.users);
     } else {
       setAllUsers([]);
+      setWeekAll([]);
     }
   };
 
@@ -147,33 +151,6 @@ const Report = (props) => {
     const minutes = totalMinutes % 60;
 
     return `${hours}h ${minutes}m`;
-  };
-
-  const updateUser7Days = async () => {
-    const total = updateWeekTotal();
-    try {
-      const res = await fetch(
-        "https://pomoxp-production.up.railway.app/api/users",
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ last7Days: total }),
-        },
-      );
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data?.message || "Request failed");
-      }
-
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   useEffect(() => {
@@ -290,31 +267,65 @@ const Report = (props) => {
         <div
           className={`reportAllCont rankingCont ${rankedDisplay && reportPage ? "activeReport" : ""}`}
         >
-          <div className="rankingTitle">Top Focused of All Time</div>
+          <div className="rankingTitle">
+            Top Focused of{" "}
+            <span
+              className="allTimeButt"
+              onClick={() => {
+                setAllTime((prev) => !prev);
+              }}
+            >
+              {" "}
+              {allTime ? " All Time" : "This week"}
+            </span>
+          </div>
           <div className="rankingLine"></div>
           <div className="rankUsersCont">
-            {allUsers?.map((a, index) => {
-              return (
-                <div key={index} className="rankUserBox">
-                  <div className="leftsideUser">
-                    <div className="numberUserRank">{index + 1}</div>
-                    <img
-                      className="rankUserPhoto"
-                      src={a.photo ? a.photo : userPhoto}
-                    />
-                    <div>{a.name}</div>
-                  </div>
-                  <div className="rankUserLevel">
-                    {" "}
-                    LVL: {String(a.level).padStart(2, 0)}
-                  </div>
+            {allTime
+              ? allUsers?.map((a, index) => {
+                  return (
+                    <div key={index} className="rankUserBox">
+                      <div className="leftsideUser">
+                        <div className="numberUserRank">{index + 1}</div>
+                        <img
+                          className="rankUserPhoto"
+                          src={a.photo ? a.photo : userPhoto}
+                        />
+                        <div>{a.name}</div>
+                      </div>
+                      <div className="rankUserLevel">
+                        {" "}
+                        LVL: {String(a.level).padStart(2, 0)}
+                      </div>
 
-                  <div className="rightSideUser">
-                    <div>{formatMinutes(a.xp - 6)}</div>
-                  </div>
-                </div>
-              );
-            })}
+                      <div className="rightSideUser">
+                        <div>{formatMinutes(a.xp - 6)}</div>
+                      </div>
+                    </div>
+                  );
+                })
+              : weekAll?.map((a, index) => {
+                  return (
+                    <div key={index} className="rankUserBox">
+                      <div className="leftsideUser">
+                        <div className="numberUserRank">{index + 1}</div>
+                        <img
+                          className="rankUserPhoto"
+                          src={a.photo ? a.photo : userPhoto}
+                        />
+                        <div>{a.name}</div>
+                      </div>
+                      <div className="rankUserLevel">
+                        {" "}
+                        LVL: {String(a.level).padStart(2, 0)}
+                      </div>
+
+                      <div className="rightSideUser">
+                        <div>{formatMinutes(a.xp - 6)}</div>
+                      </div>
+                    </div>
+                  );
+                })}
           </div>
         </div>
       </div>

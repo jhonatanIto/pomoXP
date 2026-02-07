@@ -17,7 +17,7 @@ export const calc7Cards = (cards) => {
 
 export const updateUser7Days = async (token, cards) => {
   const total = calc7Cards(cards);
-  console.log(total);
+
   try {
     const res = await fetch(
       "https://pomoxp-production.up.railway.app/api/users",

@@ -184,8 +184,7 @@
 .rankingTitle {
   font-size: 23px;
   background-color: white;
-  width: 260px;
-
+  width: 280px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -241,4 +240,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.allTimeButt {
+  background-color: rgb(71, 96, 221);
+  border-radius: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: 10px;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 115px;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.allTimeButt:hover {
+  background-color: #4f92ff;
 }
