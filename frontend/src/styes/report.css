@@ -97,7 +97,7 @@
 .reportFilter {
   display: flex;
   background-color: #f0f0f0;
-  width: 240px;
+  width: 260px;
   height: 40px;
   justify-content: space-around;
   align-items: center;
@@ -117,14 +117,14 @@
   justify-content: center;
   align-items: center;
   height: 30px;
-  width: 70px;
+  width: 75px;
   border-radius: 6px;
   cursor: pointer;
   color: #717171;
 }
 .hoverFilter:hover {
   color: #363636;
-  background-color: rgb(243, 243, 243);
+  background-color: rgb(227, 227, 227);
 }
 .selecFilter {
   background-color: white;
@@ -257,4 +257,14 @@
 }
 .allTimeButt:hover {
   background-color: #4f92ff;
+}
+.lockYearCont {
+  position: relative;
+}
+.lockYearButt {
+  position: absolute;
+  font-size: 13px;
+  color: #858585;
+  top: 9px;
+  left: 5px;
 }

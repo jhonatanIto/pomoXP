@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import "../styes/report.css";
 import userPhoto from "../images/userPhoto.png";
+import { FaLock } from "react-icons/fa6";
 import { UserContext } from "../context/UserContext";
 import {
   SlArrowLeft,
@@ -23,7 +24,7 @@ const Report = (props) => {
   const [allTime, setAllTime] = useState(true);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
-  const { cards } = useContext(UserContext);
+  const { cards, user } = useContext(UserContext);
 
   const handleClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -35,6 +36,7 @@ const Report = (props) => {
     setReportPage(false);
     setSelecFilter("week");
     setRankedDisplay(false);
+    setAllTime(true);
   };
 
   const fetchUsers = async () => {
@@ -169,6 +171,8 @@ const Report = (props) => {
     }
   }, [cards, selecFilter]);
 
+  const isFree = user?.plan === "free" || !user;
+
   return (
     <div
       onMouseDown={(e) => handleClick(e)}
@@ -241,15 +245,27 @@ const Report = (props) => {
                 >
                   Month
                 </button>
-                <button
-                  className={`reportFilterButt ${selecFilter === "year" ? "selecFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
-                  onClick={() => {
-                    setSelecFilter("year");
-                    setSelecBar("This Year");
-                  }}
-                >
-                  Year
-                </button>
+                <div className="lockYearCont">
+                  <button
+                    className={`reportFilterButt ${selecFilter === "year" ? "selecFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
+                    onClick={() => {
+                      if (!isFree) {
+                        setSelecFilter("year");
+                        setSelecBar("This Year");
+                      } else {
+                        alert("Upgrade to Premium to access");
+                      }
+                    }}
+                  >
+                    Year
+                  </button>
+                  <div
+                    style={{ display: isFree ? "flex" : "none" }}
+                    className="lockYearButt"
+                  >
+                    <FaLock />
+                  </div>
+                </div>
               </div>
               <div className="reportThisWeek">
                 <button className="reportArrow">

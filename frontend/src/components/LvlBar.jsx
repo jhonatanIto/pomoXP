@@ -56,7 +56,8 @@ const LvlBar = (props) => {
     setOnePercent(onePercent);
     setTargetXp(currProgress);
     setTargetBar(pixelPercent);
-    setTotalHours(user.xp / 60 - 6);
+
+    setTotalHours(user.xp > 6 ? user.xp / 60 : 0);
   };
 
   useEffect(() => {

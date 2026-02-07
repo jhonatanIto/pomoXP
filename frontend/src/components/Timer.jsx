@@ -4,18 +4,12 @@ import { FaArrowRight } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 import clickSound from "../audio/clickDefault.mp3";
-import alarm from "../audio/alarm.mp3";
 import levelUp from "../audio/levelUp.mp3";
 import { convertToLevel } from "../../../backend/utils/level.js";
 import { updateUser7Days } from "../utilities/reportCalc.js";
 
 const playClick = () => {
   new Audio(clickSound).play();
-};
-const alarmSound = () => {
-  const audio = new Audio(alarm);
-  audio.volume = 1;
-  audio.play();
 };
 
 const lvlUpSound = () => {
@@ -33,6 +27,7 @@ const Timer = (props) => {
     setTargetBar,
     onePercent,
     triggerXpPopup,
+    alarmSound,
   } = props;
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);

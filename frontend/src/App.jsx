@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import Header from "./components/Header";
 import History from "./components/History";
 import LvlBar from "./components/LvlBar";
@@ -14,6 +14,7 @@ import Loading from "./components/Loading";
 import Plans, { Cancel, Success } from "./components/Plans";
 import Report from "./components/Report";
 import { NotificationContext } from "./context/NotificationContext";
+import alarm from "./audio/alarm.mp3";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -40,9 +41,10 @@ const App = () => {
 
   const [paySuccess, setPaySuccess] = useState(false);
   const [payCancel, setPayCancel] = useState(false);
-
   const location = useLocation();
-  const navigate = useNavigate();
+
+  const audioRef = useRef(new Audio(alarm));
+  const [currentVolume, setCurrentVolume] = useState(1);
 
   const { successNotification, errorNotification } =
     useContext(NotificationContext);
@@ -60,6 +62,12 @@ const App = () => {
 
   const triggerXpPopup = () => {
     setPopupTrigger((prev) => prev + 1);
+  };
+
+  const alarmSound = () => {
+    audioRef.current.currentTime = 0;
+    audioRef.current.volume = currentVolume;
+    audioRef.current.play();
   };
 
   const MainApp = (
@@ -93,6 +101,7 @@ const App = () => {
             setTargetBar={setTargetBar}
             onePercent={onePercent}
             triggerXpPopup={triggerXpPopup}
+            alarmSound={alarmSound}
           />
           <AddNote
             noteModal={noteModal}
@@ -125,6 +134,9 @@ const App = () => {
         shortBreak={shortBreak}
         longBreak={longBreak}
         setLongBreak={setLongBreak}
+        setCurrentVolume={setCurrentVolume}
+        currentVolume={currentVolume}
+        alarmSound={alarmSound}
       />
       <Login
         signIn={signIn}

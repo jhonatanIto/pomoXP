@@ -41,8 +41,16 @@ const AddNote = (props) => {
   const [selecYear, setSelecYear] = useState(year);
   const [selecMonth, setSelecMonth] = useState("");
 
-  const { token, user, setNotes, notes, setVisitor, visitor, setLoading } =
-    useContext(UserContext);
+  const {
+    token,
+    user,
+    setNotes,
+    notes,
+    setVisitor,
+    visitor,
+    setLoading,
+    loading,
+  } = useContext(UserContext);
   const visitorNoteId = nanoid();
 
   const closeNote = () => {
@@ -98,8 +106,8 @@ const AddNote = (props) => {
       if (!res.ok) {
         throw new Error(data?.message || "Request failed");
       }
-      setLoading(false);
       closeNote();
+      setLoading(false);
       successNotification("Note Added!");
       return data;
     } catch (error) {
@@ -142,8 +150,8 @@ const AddNote = (props) => {
 
       if (!res.ok) throw Error(data?.message || "Request failed");
 
-      setLoading(false);
       successNotification("Note Updated!");
+      setLoading(false);
       return data;
     } catch (error) {
       setLoading(false);
@@ -288,6 +296,7 @@ const AddNote = (props) => {
                 }
               }}
               className="noteButt"
+              disabled={loading}
             >
               Save Note
             </button>
@@ -393,6 +402,7 @@ const AddNote = (props) => {
 
                     closeNote();
                   }}
+                  disabled={loading}
                 >
                   delete
                 </button>
@@ -424,6 +434,7 @@ const AddNote = (props) => {
                     }
                   }}
                   className="noteButt"
+                  disabled={loading}
                 >
                   {edit ? "save" : "edit"}
                 </button>

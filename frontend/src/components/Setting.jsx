@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import "../styes/setting.css";
 import { FaClock } from "react-icons/fa";
+import { IoVolumeHighOutline } from "react-icons/io5";
 const Setting = (props) => {
   const {
     displayModal,
@@ -11,6 +12,9 @@ const Setting = (props) => {
     shortBreak,
     longBreak,
     setLongBreak,
+    setCurrentVolume,
+    currentVolume,
+    alarmSound,
   } = props;
 
   useEffect(() => {
@@ -96,6 +100,24 @@ const Setting = (props) => {
             />
           </div>
         </div>
+        <div className="volumeBox">
+          <div className="volumeTitle">Alarm Volume</div>
+          <div className="volumeCont">
+            <IoVolumeHighOutline className="volumeIcon" />
+            <input
+              type="range"
+              className="volRange"
+              min="0"
+              max="100"
+              value={currentVolume * 100}
+              onInput={(e) => setCurrentVolume(e.target.value / 100)}
+            />
+            <button onClick={() => alarmSound()} className="alarmTest">
+              Play
+            </button>
+          </div>
+        </div>
+
         <button
           onClick={() => {
             setDisplayModal("none");
