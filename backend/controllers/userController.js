@@ -14,6 +14,8 @@ export const userData = async (req, res) => {
         xp: users.xp,
         level: users.level,
         plan: users.plan,
+        cancel_at_period_end: users.cancel_at_period_end,
+        subscription_end_date: users.subscription_end_date,
       })
       .from(users)
       .where(eq(users.id, req.userId));
