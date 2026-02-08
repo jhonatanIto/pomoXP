@@ -152,7 +152,7 @@ export const cancelSubscription = async (req, res) => {
       },
     );
 
-    const periodEnd = subscription.current_period_end;
+    const periodEnd = subscription.current_period_end ?? subscription.cancel_at;
 
     if (!periodEnd) {
       console.error(
