@@ -161,7 +161,17 @@ const Plans = (props) => {
                 style={{ display: user?.plan === "monthly" ? "flex" : "none" }}
                 className="currentPlanUp"
               >
-                current plan
+                <div
+                  style={{
+                    color: user?.cancel_at_period_end
+                      ? "rgb(250, 75, 75)"
+                      : "#2357dc",
+                  }}
+                >
+                  {user?.cancel_at_period_end
+                    ? "until " + user?.subscription_end_date.split("T")[0]
+                    : "current plan"}
+                </div>
               </div>
               <div className="planBoxTitle">MONTHLY</div>
               <div
@@ -182,7 +192,17 @@ const Plans = (props) => {
                 style={{ display: user?.plan === "yearly" ? "flex" : "none" }}
                 className="currentPlanUp"
               >
-                current plan
+                <div
+                  style={{
+                    color: user?.cancel_at_period_end
+                      ? "rgb(250, 75, 75)"
+                      : "#2357dc",
+                  }}
+                >
+                  {user?.cancel_at_period_end
+                    ? "until " + user?.subscription_end_date.split("T")[0]
+                    : "current plan"}
+                </div>
               </div>
               <div className="planBoxTitle">YEARLY</div>
               <div
@@ -205,7 +225,17 @@ const Plans = (props) => {
                 }}
                 className="currentPlanUp"
               >
-                current plan
+                <div
+                  style={{
+                    color: user?.cancel_at_period_end
+                      ? "rgb(250, 75, 75)"
+                      : "#2357dc",
+                  }}
+                >
+                  {user?.cancel_at_period_end
+                    ? "until " + user?.subscription_end_date.split("T")[0]
+                    : "current plan"}
+                </div>
               </div>
               <div className="planBoxTitle">3 YEARS</div>
               <div
@@ -224,7 +254,12 @@ const Plans = (props) => {
         </div>
         <div className="planButtCont">
           <button
-            style={{ display: user?.plan === "free" ? "none" : "flex" }}
+            style={{
+              display:
+                user?.plan === "free" || user?.cancel_at_period_end
+                  ? "none"
+                  : "flex",
+            }}
             className="planCancel"
             onClick={() => setCancelModal(true)}
           >
@@ -234,7 +269,7 @@ const Plans = (props) => {
             onClick={() => handleCheckout(selecPlan)}
             className="planPurchase"
           >
-            {user?.plan === "free" ? "Purchase plan" : "Upgrade plan"}
+            {user?.plan === "free" ? "Purchase plan" : "Change plan"}
           </button>
         </div>
       </div>
