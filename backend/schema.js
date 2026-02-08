@@ -1,3 +1,4 @@
+import { boolean } from "drizzle-orm/gel-core";
 import {
   timestamp,
   pgTable,
@@ -16,6 +17,7 @@ export const users = pgTable("users", {
   photo: text("photo"),
   level: integer("level").default(1).notNull(),
   xp: integer("xp").default(6).notNull(),
+  last7Days: integer("last7days").default(0).notNull(),
   created_at: timestamp("created_at", { withTimezone: true })
     .defaultNow()
     .notNull(),
@@ -23,7 +25,12 @@ export const users = pgTable("users", {
   payment_status: text("payment_status").default("free").notNull(),
   stripeCustomerId: text("stripe_customer_id"),
   subscriptionId: text("subscription_id"),
-  last7Days: integer("last7days").default(0).notNull(),
+  cancel_at_period_end: boolean("cancel_at_period_end")
+    .default(false)
+    .notNull(),
+  subscription_end_date: timestamp("subscription_end_date", {
+    withTimezone: true,
+  }),
 });
 
 export const cards = pgTable(

@@ -5,15 +5,21 @@ import { SlCheck } from "react-icons/sl";
 import { GoX } from "react-icons/go";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import { NotificationContext } from "../context/NotificationContext";
 
 const Plans = (props) => {
   const { plansPage, setPlansPage } = props;
   const boxRef = useRef();
+  const cancelRef = useRef();
   const [selecPlan, setSelecPlan] = useState("monthly");
+  const [cancelModal, setCancelModal] = useState(false);
   const { token, setLoading, user } = useContext(UserContext);
+  const { successNotification, errorNotification } =
+    useContext(NotificationContext);
 
   const closePlansPage = () => {
     setPlansPage(false);
+    setCancelModal(false);
     currentPlanDisplay();
   };
 
@@ -30,6 +36,12 @@ const Plans = (props) => {
   const handleOverlayClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
       closePlansPage();
+    }
+  };
+
+  const handleCancel = (e) => {
+    if (!cancelRef.current.contains(e.target)) {
+      setCancelModal(false);
     }
   };
 
@@ -67,6 +79,38 @@ const Plans = (props) => {
       window.location.href = data.url;
     } catch (err) {
       console.error("Checkout error:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCancelPlan = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/stripe/cancelSubscription",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("Stripe backend error:", errorText);
+        return;
+      }
+
+      const data = await res.json();
+
+      successNotification("Your plan was canceled");
+      console.log(data);
+    } catch (error) {
+      errorNotification("Error to cancel");
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -182,6 +226,7 @@ const Plans = (props) => {
           <button
             style={{ display: user?.plan === "free" ? "none" : "flex" }}
             className="planCancel"
+            onClick={() => setCancelModal(true)}
           >
             Cancel plan
           </button>
@@ -191,6 +236,45 @@ const Plans = (props) => {
           >
             {user?.plan === "free" ? "Purchase plan" : "Upgrade plan"}
           </button>
+        </div>
+      </div>
+      <div
+        onMouseDown={(e) => {
+          e.stopPropagation();
+          handleCancel(e);
+        }}
+        className={`cancelModal ${cancelModal ? "active" : ""}`}
+      >
+        <div
+          onMouseDown={(e) => e.stopPropagation()}
+          ref={cancelRef}
+          className="cancelCont"
+        >
+          <div className="cancelModalTitle">Are you sure?</div>
+          <p className="cancelSure">You will lose Premium features, such as:</p>
+          <ul className="listCancel">
+            <li>Unlimited access to all Notes</li>
+            <li>Filter by date features</li>
+            <li>Premium Report features</li>
+            <li>No ads</li>
+          </ul>
+          <div className="cancelPlanButts">
+            <button
+              onClick={() => setCancelModal(false)}
+              className="cancelCancelP"
+            >
+              cancel
+            </button>
+            <button
+              onClick={() => {
+                handleCancelPlan();
+                setCancelModal(false);
+              }}
+              className="confirmCancelP"
+            >
+              confirm
+            </button>
+          </div>
         </div>
       </div>
     </div>

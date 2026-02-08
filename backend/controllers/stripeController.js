@@ -133,3 +133,40 @@ const stripeEventHandlers = {
   "invoice.payment_failed": handleInvoicePaymentFailed,
   "customer.subscription.deleted": handleSubscriptionDeleted,
 };
+
+export const cancelSubscription = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const [user] = await db.select(users).where(eq(users.id, userId));
+
+    if (!user || !user.subscriptionId) {
+      return res.status(400).json({ error: "No active subscription" });
+    }
+
+    const subscription = await stripe.subscriptions.update(
+      user.subscriptionId,
+      {
+        cancel_at_period_end: true,
+      },
+    );
+
+    const endDate = new Date(subscription.current_period_end * 1000);
+
+    await db
+      .update(users)
+      .set({
+        cancel_at_period_end: true,
+        subscription_end_date: endDate,
+      })
+      .where(eq(users.id, userId));
+
+    return res.json({
+      success: true,
+      subscriptionEndDate: endDate,
+    });
+  } catch (error) {
+    console.error("Cancel subscription error:", error);
+    res.status(500).json({ error: "Failed to cancel subscription" });
+  }
+};

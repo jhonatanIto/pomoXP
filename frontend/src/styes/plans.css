@@ -152,7 +152,6 @@
 }
 .planButtCont {
   display: flex;
-
   justify-content: space-around;
   align-items: center;
   width: 500px;
@@ -194,10 +193,6 @@
   transition: 0.2s;
 }
 
-.active {
-  opacity: 1;
-  pointer-events: auto;
-}
 .paySuccessCont {
   margin-top: 140px;
   background-color: white;
@@ -226,4 +221,72 @@
 }
 .paySuccessCont button:hover {
   background-color: #6591ff;
+}
+.cancelModal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0px;
+  left: 0px;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.2s;
+}
+.cancelCont {
+  margin-top: 300px;
+  background-color: white;
+  width: 460px;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 20px;
+  color: #363636;
+  padding: 20px;
+}
+.cancelSure {
+  font-size: 18px;
+}
+.cancelModalTitle {
+  font-size: 30px;
+}
+.listCancel {
+  list-style-type: disc;
+}
+.cancelPlanButts {
+  margin-top: 20px;
+  width: 300px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.cancelPlanButts button {
+  padding: 3px;
+  width: 100px;
+  border-radius: 10px;
+  cursor: pointer;
+  height: 35px;
+  transition: 0.2s;
+}
+.confirmCancelP {
+  background-color: #245dec;
+  color: white;
+}
+.confirmCancelP:hover {
+  background-color: #4278ff;
+}
+.cancelCancelP {
+  background-color: #ebebeb;
+  color: rgb(136, 136, 136);
+}
+.cancelCancelP:hover {
+  background-color: #dbdbdb;
+}
+.active {
+  opacity: 1;
+  pointer-events: auto;
 }
