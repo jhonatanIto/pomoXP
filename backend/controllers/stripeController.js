@@ -138,7 +138,7 @@ export const cancelSubscription = async (req, res) => {
   try {
     const userId = req.userId;
 
-    const [user] = await db.select(users).where(eq(users.id, userId));
+    const [user] = await db.select().from(users).where(eq(users.id, userId));
 
     if (!user || !user.subscriptionId) {
       return res.status(400).json({ error: "No active subscription" });
