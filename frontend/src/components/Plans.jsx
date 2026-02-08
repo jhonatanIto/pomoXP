@@ -252,13 +252,15 @@ const Plans = (props) => {
           * The subscription will be auto-renewed until you unsubscribe. <br />{" "}
           * You will be notified a week prior to the renewal date.
         </div>
-        <div className="planButtCont">
+        <div
+          style={{
+            display: user?.cancel_at_period_end ? "none" : "flex",
+          }}
+          className="planButtCont"
+        >
           <button
             style={{
-              display:
-                user?.plan === "free" || user?.cancel_at_period_end
-                  ? "none"
-                  : "flex",
+              display: user?.plan === "free" ? "none" : "flex",
             }}
             className="planCancel"
             onClick={() => setCancelModal(true)}
@@ -266,10 +268,13 @@ const Plans = (props) => {
             Cancel plan
           </button>
           <button
+            style={{
+              display: user?.plan === "free" ? "flex" : "none",
+            }}
             onClick={() => handleCheckout(selecPlan)}
             className="planPurchase"
           >
-            {user?.plan === "free" ? "Purchase plan" : "Change plan"}
+            Purchase plan
           </button>
         </div>
       </div>

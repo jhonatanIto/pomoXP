@@ -2,7 +2,6 @@ import Stripe from "stripe";
 import { db } from "../db.js";
 import { users } from "../schema.js";
 import { eq } from "drizzle-orm";
-import { date } from "drizzle-orm/singlestore-core";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -20,10 +19,19 @@ export const stripeController = async (req, res) => {
     const priceId = priceMap[plan];
     if (!priceId) return res.status(400).json({ error: "Invalid plan" });
 
+    const [user] = await db
+      .select({ email: users.email })
+      .from(users)
+      .where(eq(users.id, userId));
+
+    if (!user || !user.email)
+      return res.status(400).json({ error: "User email not found" });
+
     const session = await stripe.checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
+      customer_email: user.email,
       metadata: {
         userId: String(userId),
         plan,
@@ -94,7 +102,11 @@ const handleSubscriptionDeleted = async (subscription) => {
 
   await db
     .update(users)
-    .set({ plan: "free", payment_status: "canceled" })
+    .set({
+      plan: "free",
+      payment_status: "canceled",
+      cancel_at_period_end: false,
+    })
     .where(eq(users.stripeCustomerId, customerId));
 
   console.log("Subscription canceled");
