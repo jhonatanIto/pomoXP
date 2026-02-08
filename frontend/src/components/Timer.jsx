@@ -51,9 +51,14 @@ const Timer = (props) => {
 
   const prevLevel = useRef(null);
   useEffect(() => {
-    if (!user) return;
+    if (!user?.level) return;
 
-    if (prevLevel.current !== null && user.level > prevLevel.current) {
+    if (prevLevel.current === null) {
+      prevLevel.current = user.level;
+      return;
+    }
+
+    if (user.level > prevLevel.current) {
       lvlUpSound();
     }
     prevLevel.current = user.level;

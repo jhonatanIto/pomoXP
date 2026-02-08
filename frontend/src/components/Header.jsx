@@ -6,6 +6,7 @@ import crownPic from "../images/crown.png";
 import logoutPic from "../images/logout.png";
 import deletePic from "../images/delete.png";
 import { NotificationContext } from "../context/NotificationContext";
+import { CiCircleInfo } from "react-icons/ci";
 
 const Header = (props) => {
   const {
@@ -126,6 +127,7 @@ const Header = (props) => {
           <img className="menuPic" src={logoutPic} />
           Logout
         </button>
+
         <button
           onClick={() => {
             setDeleteModal(true);

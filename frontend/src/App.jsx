@@ -15,6 +15,11 @@ import Plans, { Cancel, Success } from "./components/Plans";
 import Report from "./components/Report";
 import { NotificationContext } from "./context/NotificationContext";
 import alarm from "./audio/alarm.mp3";
+import Tokushoho from "./components/Tokushoho";
+import Footer from "./components/Footer";
+import Privacy from "./components/terms_privacy/Privacy";
+import Terms from "./components/terms_privacy/Terms";
+import Contact from "./components/terms_privacy/Contact";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -125,6 +130,7 @@ const App = () => {
           focusTime={focusTime}
         />
       </div>
+      <Footer />
       <Setting
         displayModal={displayModal}
         setDisplayModal={setDisplayModal}
@@ -158,6 +164,10 @@ const App = () => {
   return (
     <Routes>
       <Route path="/*" element={MainApp} />
+      <Route path="/tokushoho" element={<Tokushoho />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/contact" element={<Contact />} />
     </Routes>
   );
 };

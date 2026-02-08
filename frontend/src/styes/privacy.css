@@ -1,0 +1,29 @@
+.privacyCont {
+  margin-top: 30px;
+  background-color: white;
+  width: 1300px;
+  height: 900px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 30px;
+  color: #363636;
+  position: relative;
+  font-size: 17px;
+}
+.privacyTitle {
+  font-size: 40px;
+}
+.contactCont {
+  margin-top: 100px;
+  background-color: white;
+  width: 800px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  padding: 30px;
+  color: #363636;
+  position: relative;
+  font-size: 22px;
+}

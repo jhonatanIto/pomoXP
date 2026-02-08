@@ -139,7 +139,7 @@ const Plans = (props) => {
             </div>
             <div className="planListItems">
               <SlCheck className="planCheck" />
-              Report feature
+              Early Reports
             </div>
             <div className="planListItems">
               <SlCheck className="planCheck" />
