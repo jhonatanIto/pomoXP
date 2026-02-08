@@ -2,6 +2,7 @@ import Stripe from "stripe";
 import { db } from "../db.js";
 import { users } from "../schema.js";
 import { eq } from "drizzle-orm";
+import { date } from "drizzle-orm/singlestore-core";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -151,7 +152,19 @@ export const cancelSubscription = async (req, res) => {
       },
     );
 
-    const endDate = new Date(subscription.current_period_end * 1000);
+    const periodEnd = subscription.current_period_end;
+
+    if (!periodEnd) {
+      console.error(
+        "Stripe subscription missing current_period_end",
+        subscription,
+      );
+      return res
+        .status(500)
+        .json({ error: "Unable to determine subscription end date" });
+    }
+
+    const endDate = new Date(periodEnd * 1000);
 
     await db
       .update(users)
