@@ -11,6 +11,7 @@ import {
   SlClock,
   SlFire,
 } from "react-icons/sl";
+import Charts from "./Charts";
 const Report = (props) => {
   const { reportPage, setReportPage } = props;
   const boxRef = useRef();
@@ -227,7 +228,7 @@ const Report = (props) => {
               <SlFire className="reportClock reportFire" />
               <div className="reportBoxBot">
                 <div className="reportTopNum">{streak}</div>
-                <div>day streak</div>
+                <div>days streak</div>
               </div>
             </div>
           </div>
@@ -286,7 +287,10 @@ const Report = (props) => {
                 </button>
               </div>
             </div>
-            <div> </div>
+            <div>
+              {" "}
+              <Charts />{" "}
+            </div>
           </div>
         </div>
         <div

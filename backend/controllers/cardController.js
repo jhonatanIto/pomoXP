@@ -98,3 +98,42 @@ export const postCards = async (req, res) => {
     return res.status(500).json({ message: err.message });
   }
 };
+
+export const chart_data = async (req, res) => {
+  try {
+    const userId = req.userId;
+    if (!userId) return res.status(400).json({ message: "Unathorized" });
+
+    const cardss = await db
+      .select()
+      .from(cards)
+      .where(eq(cards.user_id, userId));
+
+    if (!cardss)
+      return res.status(400).json({ message: "nao esta achando o cards" });
+
+    let data = {};
+
+    cardss.map((c) => {
+      const date = c.created_at.toISOString().split("T")[0];
+
+      if (!data[date]) {
+        data[date] = [];
+      }
+      data[date].push({ date: date, xp: c.minutes });
+    });
+
+    const chartData = Object.entries(data).map((d) => {
+      const totalXp = d[1].reduce((acc, c) => {
+        return acc + c.xp;
+      }, 0);
+
+      return { date: d[0], total_xp: totalXp };
+    });
+
+    res.status(200).json(chartData);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};

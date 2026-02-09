@@ -255,6 +255,7 @@ const AddNote = (props) => {
             placeholder="Title"
           />
           <textarea
+            spellCheck={false}
             placeholder="Write your note..."
             onChange={(e) => {
               setNoteContent(e.target.value);
