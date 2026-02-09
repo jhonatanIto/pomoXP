@@ -1,7 +1,7 @@
 .reportBody {
   position: fixed;
   width: 100vw;
-  min-height: 100vh;
+  height: 100%;
   margin: 0;
   overflow-x: hidden;
   background: rgba(0, 0, 0, 0.5);
