@@ -7,6 +7,7 @@ import master from "../images/master.png";
 import { useContext, useEffect } from "react";
 import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
+import { GoX } from "react-icons/go";
 
 const History = (props) => {
   const {
@@ -108,6 +109,10 @@ const History = (props) => {
         })}
         {!user ? (
           <div className="registerBox">
+            <div className="xButtReg">
+              {" "}
+              <GoX />{" "}
+            </div>
             <div>Create an Account to save your Progress!</div>
             <div className="registerButtCont">
               <button

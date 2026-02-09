@@ -103,6 +103,18 @@
   display: flex;
   justify-content: space-around;
 }
+.xButtReg {
+  background-color: rgb(187, 187, 187);
+  border-radius: 10px;
+  width: fit-content;
+  padding: 3px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.xButtReg:hover {
+  background-color: rgb(67, 67, 67);
+  color: white;
+}
 @media (max-width: 600px) {
   .historyContainer {
     width: 97%;
