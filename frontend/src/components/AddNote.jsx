@@ -315,6 +315,7 @@ const AddNote = (props) => {
             years={years}
             recent={recent}
             blocked={blocked}
+            closeNote={closeNote}
           />
 
           <div className="savedRight">

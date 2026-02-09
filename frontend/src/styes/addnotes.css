@@ -296,12 +296,16 @@
   align-items: center;
   border-radius: 10px;
 }
+.notesBack {
+  display: none;
+}
 @media (max-width: 600px) {
   .noteBox {
     margin-top: 100px;
-    width: 97%;
+    width: 96%;
     height: 570px;
     padding: 10px;
+    position: relative;
   }
   .noteTitle {
     font-size: 25px;
@@ -314,13 +318,18 @@
     color: white;
   }
   .savedNotesCont {
-    margin-top: 70px;
-    width: 97%;
-    height: 630px;
+    margin-top: 35px;
+    width: 96%;
+    height: 75%;
     flex-direction: column;
   }
   .sideButtCont {
-    height: 170px;
+    height: 95%;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
   .savedRight {
   }
@@ -347,5 +356,12 @@
   }
   .noteButtCont {
     width: 350px;
+  }
+  .notesBack {
+    display: flex;
+    font-size: 40px;
+    position: absolute;
+    left: 5%;
+    top: 7%;
   }
 }

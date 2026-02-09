@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { groupByDay, groupByMonth } from "./utils";
 import lock from "../../images/lock.png";
 import { UserContext } from "../../context/UserContext";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const NoteSideBar = (props) => {
   const {
@@ -15,6 +16,7 @@ const NoteSideBar = (props) => {
     months,
     years,
     recent,
+    closeNote,
   } = props;
   const [viewMode, setViewMode] = useState("recent");
   const { user, notes } = useContext(UserContext);
@@ -24,6 +26,7 @@ const NoteSideBar = (props) => {
   return (
     <div className="savedLeft">
       <div className="filterButtCont">
+        <IoMdArrowRoundBack className="notesBack" onClick={closeNote} />
         <button
           onClick={() => {
             setViewMode("recent");
