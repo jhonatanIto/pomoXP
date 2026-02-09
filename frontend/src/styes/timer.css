@@ -81,8 +81,7 @@
   }
 
   .arrowButt {
-    position: relative;
-    left: 40px;
+    left: 80%;
     top: 3px;
   }
   .timerBot {

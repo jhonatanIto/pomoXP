@@ -325,13 +325,11 @@
   }
   .planMainCont {
     margin-top: 0px;
-
-    width: 370px;
+    width: 95%;
   }
   .planBox {
     height: 130px;
     width: 120px;
-    padding: 5px;
   }
   .planBoxTitle {
     font-size: 15px;
