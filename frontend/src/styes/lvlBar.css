@@ -93,4 +93,9 @@
     top: 13%;
     right: 3%;
   }
+  .totalHours {
+    font-size: 10px;
+    left: 130px;
+    width: 100px;
+  }
 }
