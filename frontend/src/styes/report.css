@@ -282,7 +282,7 @@
   }
   .topBox {
     width: 120px;
-    height: 150px;
+    height: 135px;
     margin: 5px;
     display: flex;
     justify-content: space-around;
@@ -335,5 +335,12 @@
   }
   .rankUsersCont {
     padding: 10px;
+  }
+  .rankingTitle {
+    font-size: 19px;
+    width: 300px;
+  }
+  .reportTopNum {
+    font-size: 30px;
   }
 }
