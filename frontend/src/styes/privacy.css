@@ -57,12 +57,13 @@
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  left: 170px;
+  left: -200px;
   top: 100px;
   font-size: 30px;
   width: 110px;
   cursor: pointer;
   transition: 0.2s;
+  color: white;
 }
 @media (max-width: 600px) {
   .privacyCont {
@@ -84,14 +85,19 @@
     width: 95%;
     height: max-content;
   }
-  .termsBack {
-    left: 130px;
-    top: 215%;
-    padding-bottom: 90px;
-  }
   .contactCont {
     width: 95%;
     height: 310px;
     padding: 20px;
+  }
+  .termsBackCont {
+    position: relative;
+  }
+
+  .termsBack {
+    position: absolute;
+    top: 60px;
+    left: 80px;
+    padding-bottom: 90px;
   }
 }

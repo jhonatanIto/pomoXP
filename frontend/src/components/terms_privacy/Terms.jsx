@@ -89,9 +89,11 @@ const Terms = () => {
         <p>
           Email: <strong>support@pomoxp.com</strong>
         </p>
-      </div>
-      <div className="termsBack" onClick={() => navigate("/")}>
-        <IoMdArrowRoundBack /> Back
+        <div className="termsBackCont" onClick={() => navigate("/")}>
+          <div className="termsBack">
+            <IoMdArrowRoundBack /> Back
+          </div>
+        </div>
       </div>
     </div>
   );
