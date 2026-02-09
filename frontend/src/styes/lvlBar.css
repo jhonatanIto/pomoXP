@@ -10,6 +10,7 @@
 .lvlTitle {
   font-size: 50px;
   cursor: default;
+  position: relative;
 }
 .lvlBar {
   position: relative;
@@ -38,8 +39,9 @@
 
 .totalHours {
   font-size: 15px;
-  left: 510px;
+  left: 180px;
   top: 0;
+  width: 130px;
   position: absolute;
   background-color: rgba(0, 0, 0, 0.5);
   padding: 10px;
