@@ -23,6 +23,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="madeByCont">Made by Jhonatan Ito</div>
+      <div className="allrights">© 2026 PomoXP. All rights reserved.</div>
     </div>
   );
 };

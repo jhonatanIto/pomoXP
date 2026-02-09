@@ -270,6 +270,13 @@ body {
   cursor: pointer;
   font-size: 18px;
 }
+.allrights {
+  font-size: 15px;
+  color: rgb(182, 182, 182);
+  font-family:
+    "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
 
 @media (max-width: 600px) {
   .buttContainer button {
