@@ -320,18 +320,19 @@
   .savedNotesCont {
     margin-top: 35px;
     width: 96%;
-    height: 75%;
+    height: 85%;
     flex-direction: column;
   }
   .sideButtCont {
-    height: 95%;
-    width: 80%;
+    height: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
   .savedRight {
+    height: 100%;
   }
   .noteDatesButt {
     font-size: 15px;
@@ -350,7 +351,7 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 70%;
+    height: 60%;
     border-right: none;
     border-bottom: 1px solid rgb(203, 203, 203);
   }
