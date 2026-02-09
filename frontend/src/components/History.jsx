@@ -4,7 +4,7 @@ import bronze from "../images/bronze2.png";
 import silver from "../images/prata2.png";
 import gold from "../images/ouro.png";
 import master from "../images/master.png";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { getCards } from "../utilities/fetchData.js";
 import { GoX } from "react-icons/go";
@@ -19,6 +19,8 @@ const History = (props) => {
   } = props;
   const { user, token, setCards, cards, visitor, notes } =
     useContext(UserContext);
+
+  const [regBox, setRegBox] = useState(true);
 
   useEffect(() => {
     if (!user) return;
@@ -108,8 +110,11 @@ const History = (props) => {
           );
         })}
         {!user ? (
-          <div className="registerBox">
-            <div className="xButtReg">
+          <div
+            style={{ display: regBox ? "block" : "none" }}
+            className="registerBox"
+          >
+            <div className="xButtReg" onClick={() => setRegBox(false)}>
               {" "}
               <GoX />{" "}
             </div>
