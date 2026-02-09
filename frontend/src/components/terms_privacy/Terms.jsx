@@ -5,10 +5,7 @@ const Terms = () => {
   const navigate = useNavigate();
   return (
     <div className="tokushohoBody">
-      <div className="tokuBack" onClick={() => navigate("/")}>
-        <IoMdArrowRoundBack /> Back
-      </div>
-      <div className="privacyCont">
+      <div className="termsCont">
         <h1 className="privacyTitle">Terms & Conditions</h1>
         <p className="terms-updated">Last updated: February 2026</p>
 
@@ -92,6 +89,9 @@ const Terms = () => {
         <p>
           Email: <strong>support@pomoxp.com</strong>
         </p>
+      </div>
+      <div className="termsBack" onClick={() => navigate("/")}>
+        <IoMdArrowRoundBack /> Back
       </div>
     </div>
   );

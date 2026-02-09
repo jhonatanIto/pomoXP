@@ -14,7 +14,7 @@ const Footer = () => {
         <div className="footerLink" onClick={() => navigate("/contact")}>
           Contact
         </div>
-        <div className="footerLink" onClick={() => navigate("/tokushoho")}>
+        <div className="footerLink jpjp" onClick={() => navigate("/tokushoho")}>
           特定商取引法に基づく表記
         </div>
       </div>

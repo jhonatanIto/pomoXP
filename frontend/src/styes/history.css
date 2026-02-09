@@ -105,7 +105,10 @@
 }
 @media (max-width: 600px) {
   .historyContainer {
-    margin-top: 350px;
+    width: 97%;
+    height: 220px;
+    position: absolute;
+    top: 46%;
   }
   .historyCard {
     font-size: 20px;
@@ -116,16 +119,23 @@
     margin-top: 20px;
     border-radius: 5px;
     padding: 10px;
-    min-width: 340px;
-    max-width: 340px;
-    height: 70px;
+    min-width: 370px;
+    max-width: 370px;
+    height: 50px;
   }
+  .historyCardContainer {
+    height: 220px;
+  }
+
   .medals {
     min-width: 53px;
     max-width: 53px;
   }
-  .historyContainer {
-    height: 280px;
-    width: 800px;
+  .registerBox {
+    font-size: 20px;
+    padding: 10px;
+    margin: 0px;
+    margin-top: 40px;
+    width: 97%;
   }
 }

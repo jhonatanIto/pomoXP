@@ -6,7 +6,6 @@ import crownPic from "../images/crown.png";
 import logoutPic from "../images/logout.png";
 import deletePic from "../images/delete.png";
 import { NotificationContext } from "../context/NotificationContext";
-import { CiCircleInfo } from "react-icons/ci";
 
 const Header = (props) => {
   const {
@@ -91,54 +90,55 @@ const Header = (props) => {
             Sign In
           </button>
         </div>
-      </div>
-      <div
-        ref={menuRef}
-        style={{ display: profileMenu ? "flex" : "none" }}
-        className="profileMenu"
-      >
-        <button
-          onClick={() => {
-            setProfileEdit(true);
-            setProfileMenu(false);
-          }}
+        <div
+          ref={menuRef}
+          style={{ display: profileMenu ? "flex" : "none" }}
+          className="profileMenu"
         >
-          {" "}
-          <img className="menuPic" src={userPic} />
-          Account
-        </button>
-        <button
-          onClick={() => {
-            setPlansPage(true);
-            setProfileMenu(false);
-          }}
-        >
-          {" "}
-          <img className="menuPic" src={crownPic} />
-          Premium
-        </button>
-        <button
-          onClick={() => {
-            logout();
-            setProfileMenu(false);
-          }}
-        >
-          {" "}
-          <img className="menuPic" src={logoutPic} />
-          Logout
-        </button>
+          <button
+            onClick={() => {
+              setProfileEdit(true);
+              setProfileMenu(false);
+            }}
+          >
+            {" "}
+            <img className="menuPic" src={userPic} />
+            Account
+          </button>
+          <button
+            onClick={() => {
+              setPlansPage(true);
+              setProfileMenu(false);
+            }}
+          >
+            {" "}
+            <img className="menuPic" src={crownPic} />
+            Premium
+          </button>
+          <button
+            onClick={() => {
+              logout();
+              setProfileMenu(false);
+            }}
+          >
+            {" "}
+            <img className="menuPic" src={logoutPic} />
+            Logout
+          </button>
 
-        <button
-          onClick={() => {
-            setDeleteModal(true);
-            setProfileMenu(false);
-          }}
-        >
-          {" "}
-          <img className="menuPic" src={deletePic} />
-          Delete Account
-        </button>
+          <button
+            onClick={() => {
+              setDeleteModal(true);
+              setProfileMenu(false);
+            }}
+          >
+            {" "}
+            <img className="menuPic" src={deletePic} />
+            Delete Account
+          </button>
+        </div>
       </div>
+
       <DeleteUser deleteModal={deleteModal} setDeleteModal={setDeleteModal} />
     </div>
   );

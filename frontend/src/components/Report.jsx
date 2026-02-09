@@ -228,7 +228,7 @@ const Report = (props) => {
             <div className="reportBotMiddle">
               <div className="reportFilter">
                 <button
-                  className={`reportFilterButt ${selecFilter === "week" ? "selecFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
+                  className={`reportFilterButt ${selecFilter === "week" ? "selecReportFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
                   onClick={() => {
                     setSelecFilter("week");
                     setSelecBar("This Week");
@@ -237,7 +237,7 @@ const Report = (props) => {
                   Week
                 </button>
                 <button
-                  className={`reportFilterButt ${selecFilter === "month" ? "selecFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
+                  className={`reportFilterButt ${selecFilter === "month" ? "selecReportFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
                   onClick={() => {
                     setSelecFilter("month");
                     setSelecBar("This Month");
@@ -247,7 +247,7 @@ const Report = (props) => {
                 </button>
                 <div className="lockYearCont">
                   <button
-                    className={`reportFilterButt ${selecFilter === "year" ? "selecFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
+                    className={`reportFilterButt ${selecFilter === "year" ? "selecReportFilter" : ""} ${selecFilter !== "year" ? "hoverFilter" : ""}`}
                     onClick={() => {
                       if (!isFree) {
                         setSelecFilter("year");

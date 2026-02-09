@@ -1,7 +1,9 @@
 .reportBody {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
   background: rgba(0, 0, 0, 0.5);
   top: 0px;
   left: 0px;
@@ -126,7 +128,7 @@
   color: #363636;
   background-color: rgb(227, 227, 227);
 }
-.selecFilter {
+.selecReportFilter {
   background-color: white;
   box-shadow: 0 4px 3px rgba(135, 135, 135, 0.3);
   color: #363636;
@@ -267,4 +269,53 @@
   color: #858585;
   top: 9px;
   left: 5px;
+}
+@media (max-width: 600px) {
+  .reportContainer {
+    margin-top: 30px;
+    width: 97%;
+    height: 780px;
+  }
+  .topBox {
+    width: 112px;
+    height: 150px;
+    margin: 5px;
+    display: flex;
+    justify-content: space-around;
+    padding: 5px;
+    color: #363636;
+  }
+  .reportFilter {
+    width: 260px;
+    height: 40px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 4px;
+    border-radius: 10px;
+    color: #363636;
+  }
+  .reportBotMiddle {
+    align-items: center;
+  }
+
+  .focusHoursTitle {
+    font-size: 20px;
+    right: 40px;
+    width: 130px;
+
+    bottom: 95px;
+    left: 26px;
+  }
+  .rankUserBox {
+    padding: 10px;
+    font-size: 12px;
+  }
+  .rankUserPhoto {
+    width: 30px;
+    border-radius: 100px;
+    margin-right: 20px;
+  }
+  .numberUserRank {
+    width: 20px;
+  }
 }

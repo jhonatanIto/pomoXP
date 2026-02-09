@@ -1,7 +1,9 @@
 .plansBody {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
   background: rgba(0, 0, 0, 0.5);
   top: 0px;
   left: 0px;
@@ -22,6 +24,7 @@
   flex-direction: column;
   border-radius: 20px;
   color: #363636;
+  position: relative;
 }
 .planHeader {
   display: flex;
@@ -185,7 +188,9 @@
 .paySuccessBody {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
   background: rgba(0, 0, 0, 0.5);
   top: 0px;
   left: 0px;
@@ -229,7 +234,9 @@
 .cancelModal {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
   background: rgba(0, 0, 0, 0.5);
   top: 0px;
   left: 0px;
@@ -293,4 +300,100 @@
 .active {
   opacity: 1;
   pointer-events: auto;
+}
+@media (max-width: 600px) {
+  .plansContainer {
+    margin-top: 100px;
+    width: 375px;
+    height: 540px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .planBoxesCont {
+    flex-direction: column;
+    align-items: center;
+    height: 450px;
+  }
+  .planTitle {
+    font-size: 20px;
+  }
+  .premiumIcon {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+  }
+  .planMainCont {
+    margin-top: 0px;
+
+    width: 370px;
+  }
+  .planBox {
+    height: 130px;
+    width: 120px;
+    padding: 5px;
+  }
+  .planBoxTitle {
+    font-size: 15px;
+  }
+  .planValue {
+    font-size: 40px;
+  }
+  .valueSmall {
+    font-size: 12px;
+  }
+  .saveMoney {
+    font-size: 10px;
+  }
+  .planListItems {
+    font-size: 17px;
+    margin-top: 7px;
+  }
+  .planCheck {
+    font-size: 20px;
+  }
+  .moreCont {
+    padding-left: 5px;
+    min-width: 190px;
+  }
+  .currentPlanUp {
+    bottom: 126px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .planWarning {
+    font-size: 12px;
+    width: 200px;
+    margin: 10px;
+    margin-right: 70px;
+    position: absolute;
+    bottom: 160px;
+    left: 0;
+  }
+  .planCancel {
+    width: 120px;
+  }
+  .planPurchase {
+    width: 120px;
+  }
+  .planButtCont {
+    width: 150px;
+    position: absolute;
+    bottom: 40px;
+    left: 30px;
+  }
+  .cancelCont {
+    margin-top: 230px;
+    background-color: white;
+    width: 365px;
+    height: 280px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+    color: #363636;
+    padding: 20px;
+  }
 }

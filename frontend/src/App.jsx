@@ -20,6 +20,7 @@ import Footer from "./components/Footer";
 import Privacy from "./components/terms_privacy/Privacy";
 import Terms from "./components/terms_privacy/Terms";
 import Contact from "./components/terms_privacy/Contact";
+import AddButt from "./components/AddNote/AddButt";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);
@@ -97,7 +98,7 @@ const App = () => {
           setSelectedDay={setSelectedDay}
           setNoteModal={setNoteModal}
         />
-        <div>
+        <div className="middleMid">
           <Timer
             focusTime={focusTime}
             shortBreak={shortBreak}
@@ -108,15 +109,7 @@ const App = () => {
             triggerXpPopup={triggerXpPopup}
             alarmSound={alarmSound}
           />
-          <AddNote
-            noteModal={noteModal}
-            setNoteModal={setNoteModal}
-            setSavedNote={setSavedNote}
-            savedNote={savedNote}
-            selectedDay={selectedDay}
-            setSelectedDay={setSelectedDay}
-            setPlansPage={setPlansPage}
-          />
+          <AddButt setNoteModal={setNoteModal} />
         </div>
 
         <LvlBar
@@ -130,7 +123,18 @@ const App = () => {
           focusTime={focusTime}
         />
       </div>
+
       <Footer />
+      <AddNote
+        noteModal={noteModal}
+        setNoteModal={setNoteModal}
+        setSavedNote={setSavedNote}
+        savedNote={savedNote}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        setPlansPage={setPlansPage}
+      />
+
       <Setting
         displayModal={displayModal}
         setDisplayModal={setDisplayModal}

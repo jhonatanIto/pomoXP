@@ -1,7 +1,9 @@
 .loginBody {
   position: fixed;
   width: 100vw;
-  height: 100vh;
+  min-height: 100%;
+  margin: 0;
+  overflow-x: hidden;
   background: rgba(0, 0, 0, 0.5);
   top: 0px;
   left: 0px;
@@ -97,4 +99,17 @@
   width: 30px;
   position: absolute;
   right: 260px;
+}
+@media (max-width: 600px) {
+  .loginBox {
+    margin-top: 200px;
+    background-color: rgb(39, 39, 39);
+    width: 95%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 20px;
+    padding: 30px;
+  }
 }

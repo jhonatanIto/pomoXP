@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Limelight&display=swap");
+
 .lvlBarContainer {
   width: 800px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: relative;
 }
 .lvlTitle {
   font-size: 50px;
@@ -73,18 +73,23 @@
 }
 @media (max-width: 600px) {
   .lvlBarContainer {
-    width: 340px;
-    margin-bottom: 40px;
+    width: 97%;
+    margin-top: 230px;
   }
   .lvlBar {
     position: relative;
     height: 40px;
-    width: 360px;
+    width: 97%;
     background-color: rgb(255, 255, 255);
     color: rgb(125, 125, 125);
     font-size: 20px;
     border-radius: 20px;
     overflow: hidden;
     border: 3px solid rgb(50, 50, 50);
+  }
+  .lvlTitle {
+    font-size: 35px;
+  }
+  .username {
   }
 }

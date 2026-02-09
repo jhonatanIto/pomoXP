@@ -5,7 +5,7 @@ const Privacy = () => {
   const navigate = useNavigate();
   return (
     <div className="tokushohoBody">
-      <div className="tokuBack" onClick={() => navigate("/")}>
+      <div className="priBack" onClick={() => navigate("/")}>
         <IoMdArrowRoundBack /> Back
       </div>
       <div className="privacyCont">

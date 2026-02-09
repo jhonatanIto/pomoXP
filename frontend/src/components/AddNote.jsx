@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import add from "../images/add.png";
 import back from "../images/return.png";
 import lock from "../images/lock.png";
 import "../styes/addnotes.css";
@@ -239,12 +238,7 @@ const AddNote = (props) => {
   }, [savedNote]);
 
   return (
-    <div className="addNoteContainer">
-      <div className="imgCont">
-        <img onClick={() => setNoteModal(true)} className="addImg" src={add} />
-        <div className="addAlert">Add new note</div>
-      </div>
-
+    <div className="cempor">
       <div
         onMouseDown={handleOverlayClick}
         className={`noteModalBody ${noteModal ? "active" : ""}`}

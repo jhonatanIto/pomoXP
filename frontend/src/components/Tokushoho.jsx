@@ -47,7 +47,7 @@ const Tokushoho = () => {
         </div>
         <div className="linhasDoToku">
           返品・キャンセルについて:
-          <div style={{ fontSize: "16px" }}>
+          <div className="jpLine">
             {" "}
             デジタルサービスの性質上、決済完了後の返金には対応しておりません。
             ただし、法令に基づく場合を除きます。
