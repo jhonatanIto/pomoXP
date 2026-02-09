@@ -204,6 +204,10 @@
   margin-top: 15px;
   width: 100%;
   height: 100%;
+  overflow-y: scroll;
+}
+.rankUsersCont::-webkit-scrollbar {
+  display: none;
 }
 .leftsideUser {
   display: flex;
@@ -273,7 +277,7 @@
   .reportContainer {
     margin-top: 30px;
     width: 97%;
-    height: 780px;
+    height: 680px;
     padding: 15px;
   }
   .topBox {
@@ -305,7 +309,7 @@
     left: 0px;
   }
   .rankUserBox {
-    padding: 0px;
+    padding: 5px;
     font-size: 12px;
   }
   .rankUserPhoto {
@@ -328,5 +332,8 @@
   .reportBoxBot {
     margin-top: 30px;
     width: 65px;
+  }
+  .rankUsersCont {
+    padding: 10px;
   }
 }
