@@ -5,6 +5,7 @@
   flex-direction: column;
   align-items: center;
   margin-top: 30px;
+  order: 1;
 }
 .historyCardContainer::-webkit-scrollbar {
   display: none;
@@ -119,24 +120,21 @@
   .historyContainer {
     width: 97%;
     height: 220px;
-    position: absolute;
-    top: 46%;
+    margin-top: 0;
+    order: 2;
   }
   .historyCard {
     font-size: 20px;
-    background-color: rgba(207, 207, 207, 0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     margin-top: 20px;
     border-radius: 5px;
     padding: 10px;
-    min-width: 370px;
-    max-width: 370px;
+    min-width: 98%;
+    max-width: 98%;
     height: 50px;
   }
   .historyCardContainer {
     height: 220px;
+    width: 100%;
   }
 
   .medals {
@@ -146,7 +144,7 @@
   .registerBox {
     font-size: 20px;
     padding: 10px;
-    margin: 0px;
+
     margin-top: 40px;
     width: 97%;
   }

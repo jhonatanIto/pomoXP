@@ -5,6 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  order: 3;
 }
 .lvlTitle {
   font-size: 50px;
@@ -74,7 +75,7 @@
 @media (max-width: 600px) {
   .lvlBarContainer {
     width: 97%;
-    margin-top: 230px;
+    margin-top: 30px;
   }
   .lvlBar {
     position: relative;
@@ -89,7 +90,5 @@
   }
   .lvlTitle {
     font-size: 35px;
-  }
-  .username {
   }
 }

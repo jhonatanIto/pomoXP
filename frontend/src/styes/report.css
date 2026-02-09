@@ -237,7 +237,6 @@
 }
 .rankUserLevel {
   color: rgb(255, 59, 59);
-
   width: 100px;
   display: flex;
   justify-content: center;
@@ -317,5 +316,11 @@
   }
   .numberUserRank {
     width: 20px;
+  }
+  .reportAllCont {
+    width: 100%;
+  }
+  .reportTopCont {
+    width: 100%;
   }
 }

@@ -1,11 +1,19 @@
 @import "tailwindcss";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body,
 #root {
-  width: 100vw;
+  width: 100%;
   height: 100%;
   margin: 0;
+  padding: 0;
   overflow-x: hidden;
+  box-sizing: border-box;
 }
 
 body {
@@ -19,11 +27,13 @@ body {
   flex-direction: column;
   align-items: center;
   height: 100%;
-  width: 100vw;
+  width: 100%;
   margin: 0;
   overflow-x: hidden;
 }
-
+.containerAlpha > * {
+  min-width: 0;
+}
 .header {
   display: flex;
   justify-content: center;
@@ -81,7 +91,7 @@ body {
 }
 .mainContainer {
   display: flex;
-  width: 100vw;
+  width: 100%;
   height: 100%;
   margin-top: 30px;
   justify-content: center;
@@ -90,6 +100,7 @@ body {
   width: 470px;
   display: flex;
   flex-direction: column;
+  order: 2;
 }
 .profileMenu {
   display: flex;
@@ -124,6 +135,7 @@ body {
   width: 100vw;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
   top: 0px;
   left: 0px;
   z-index: 2000;
@@ -175,6 +187,7 @@ body {
   position: fixed;
   width: 100vw;
   height: 100%;
+  box-sizing: border-box;
   background: rgba(0, 0, 0, 0.5);
   top: 0px;
   left: 0px;
@@ -277,12 +290,12 @@ body {
   }
   .middleMid {
     width: 95%;
+    order: 1;
   }
   .footerCont {
-    position: absolute;
-    height: 160px;
+    margin-top: 120px;
     width: 97%;
-    top: 880px;
+    padding-bottom: 0px;
   }
   .footerLinksCont {
     width: 380px;
