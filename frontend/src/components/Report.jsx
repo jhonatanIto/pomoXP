@@ -3,6 +3,7 @@ import "../styes/report.css";
 import userPhoto from "../images/userPhoto.png";
 import { FaLock } from "react-icons/fa6";
 import { UserContext } from "../context/UserContext";
+import { IoMdArrowRoundBack } from "react-icons/io";
 import {
   SlArrowLeft,
   SlArrowRight,
@@ -186,6 +187,7 @@ const Report = (props) => {
       className={`reportBody ${reportPage ? "activeReport" : ""}`}
     >
       <div ref={boxRef} className="reportContainer">
+        <IoMdArrowRoundBack className="reportBack" onClick={closeReportPage} />
         <div className="reportRankCont">
           <button
             className={`reportRankButton ${!rankedDisplay ? "reportSelected" : ""}`}

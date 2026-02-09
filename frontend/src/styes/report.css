@@ -273,11 +273,14 @@
   top: 9px;
   left: 5px;
 }
+.reportBack {
+  display: none;
+}
 @media (max-width: 600px) {
   .reportContainer {
     margin-top: 30px;
     width: 97%;
-    height: 680px;
+    height: 76%;
     padding: 15px;
   }
   .topBox {
@@ -342,5 +345,13 @@
   }
   .reportTopNum {
     font-size: 30px;
+  }
+  .reportBack {
+    position: absolute;
+    display: block;
+    font-size: 40px;
+    color: black;
+    left: 15px;
+    top: 18px;
   }
 }
