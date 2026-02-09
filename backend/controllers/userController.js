@@ -31,6 +31,13 @@ export const userData = async (req, res) => {
 };
 
 export const allUsers = async (req, res) => {
+  const { xpType } = req.body;
+  const orderMap = {
+    xp: users.xp,
+    last7Days: users.last7Days,
+  };
+  const orderColumn = orderMap[xpType] ?? users.xp;
+
   try {
     const usersData = await db
       .select({
@@ -41,7 +48,7 @@ export const allUsers = async (req, res) => {
         last7Days: users.last7Days,
       })
       .from(users)
-      .orderBy(desc(users.xp));
+      .orderBy(desc(orderColumn));
 
     if (usersData.length === 0)
       return res.status(404).json({ message: "No users found" });

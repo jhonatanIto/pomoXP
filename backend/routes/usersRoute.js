@@ -9,7 +9,7 @@ import { authMiddleware } from "../middleware/authMiddleware.js";
 
 export const usersRoute = express.Router();
 
-usersRoute.get("/all", allUsers);
+usersRoute.post("/all", allUsers);
 usersRoute.use(authMiddleware);
 usersRoute.get("/", userData);
 usersRoute.put("/", editUser);

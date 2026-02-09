@@ -39,10 +39,17 @@ const Report = (props) => {
     setAllTime(true);
   };
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (type) => {
     try {
       const res = await fetch(
         "https://pomoxp-production.up.railway.app/api/users/all",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ xpType: type }),
+        },
       );
 
       const data = await res.json();
@@ -55,7 +62,7 @@ const Report = (props) => {
     }
   };
   const userss = async () => {
-    const data = await fetchUsers();
+    const data = await fetchUsers(allTime ? "xp" : "last7Days");
 
     if (data && data.users) {
       setAllUsers(data.users);
@@ -68,7 +75,7 @@ const Report = (props) => {
 
   useEffect(() => {
     userss();
-  }, []);
+  }, [allTime]);
 
   const today = new Date();
   const last7Days = new Date();
