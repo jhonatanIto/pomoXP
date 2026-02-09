@@ -345,4 +345,7 @@
     border-right: none;
     border-bottom: 1px solid rgb(203, 203, 203);
   }
+  .noteButtCont {
+    width: 350px;
+  }
 }
