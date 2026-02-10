@@ -232,7 +232,9 @@ const Report = (props) => {
           </div>
 
           <div className="reportBotCont">
-            <div className="focusHoursTitle">Focus Hours</div>
+            <div className="focusHoursCont">
+              <div className="focusHoursTitle">Focus Hours</div>
+            </div>
             <div className="reportBotMiddle">
               <div className="reportFilter">
                 <button

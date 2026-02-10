@@ -89,7 +89,7 @@
   font-size: 30px;
   position: absolute;
   right: 495px;
-  top: 268px;
+  top: -45px;
   width: 200px;
   display: flex;
   justify-content: center;
@@ -278,11 +278,14 @@
 .chartCont {
   margin-top: 30px;
 }
+.focusHoursCont {
+  position: relative;
+}
 @media (max-width: 600px) {
   .reportContainer {
     margin-top: 10px;
     width: 97%;
-    height: 100%;
+    height: 96%;
     padding: 15px;
   }
   .topBox {
@@ -310,7 +313,7 @@
   .focusHoursTitle {
     font-size: 20px;
     width: 120px;
-    top: 26%;
+    bottom: 0px;
     left: 0px;
   }
   .rankUserBox {
