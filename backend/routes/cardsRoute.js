@@ -9,7 +9,6 @@ import {
 export const route = express.Router();
 
 route.use(authMiddleware);
-route.get("/chart_data", chart_data);
 route.get("/", getCard);
-
 route.post("/", postCards);
+route.post("/chart_data", chart_data);

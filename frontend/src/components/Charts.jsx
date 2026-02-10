@@ -9,19 +9,23 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const Charts = () => {
+const Charts = (props) => {
   const { token } = useContext(UserContext);
-  const [chartData, setChartData] = useState();
+  const [chartData, setChartData] = useState([]);
+  const { selecFilter } = props;
 
   const fetchChartData = async () => {
+    if (!selecFilter) return [];
     try {
       const res = await fetch(
         "https://pomoxp-production.up.railway.app/api/cards/chart_data",
         {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
+          body: JSON.stringify({ type: selecFilter }),
         },
       );
 
@@ -34,6 +38,7 @@ const Charts = () => {
       return data;
     } catch (error) {
       console.error(error);
+      return [];
     }
   };
 
@@ -52,16 +57,14 @@ const Charts = () => {
     setData();
   }, [token]);
 
-  console.log(chartData);
-
   return (
-    <div>
-      <ResponsiveContainer>
-        <BarChart>
-          <XAxis />
+    <div className="chartCont">
+      <ResponsiveContainer width="100%" height={300}>
+        <BarChart data={chartData}>
+          <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
-          <Bar />
+          <Bar dataKey="total_xp" fill="#4f46e5" radius={[6, 6, 0, 0]} />
         </BarChart>
       </ResponsiveContainer>
     </div>

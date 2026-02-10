@@ -289,7 +289,7 @@ const Report = (props) => {
             </div>
             <div>
               {" "}
-              <Charts />{" "}
+              <Charts selecFilter={selecFilter} />{" "}
             </div>
           </div>
         </div>

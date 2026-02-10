@@ -82,19 +82,18 @@
   color: rgb(255, 30, 30);
 }
 .reportBotCont {
-  position: relative;
   width: 100%;
 }
 .focusHoursTitle {
   background-color: #ffffff;
   font-size: 30px;
   position: absolute;
-  right: 460px;
+  right: 495px;
+  top: 268px;
   width: 200px;
   display: flex;
   justify-content: center;
   align-items: center;
-  bottom: 87px;
 }
 .reportFilter {
   display: flex;
@@ -275,6 +274,9 @@
 }
 .reportBack {
   display: none;
+}
+.chartCont {
+  margin-top: 30px;
 }
 @media (max-width: 600px) {
   .reportContainer {

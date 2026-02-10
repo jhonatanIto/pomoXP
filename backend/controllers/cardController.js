@@ -104,23 +104,28 @@ export const chart_data = async (req, res) => {
     const userId = req.userId;
     if (!userId) return res.status(400).json({ message: "Unathorized" });
 
+    const { type } = req.body;
+    if (!type) return res.status(400).json({ message: "type not specified" });
+
     const cardss = await db
       .select()
       .from(cards)
       .where(eq(cards.user_id, userId));
 
-    if (!cardss)
-      return res.status(400).json({ message: "nao esta achando o cards" });
+    if (cardss.length === 0)
+      return res.status(400).json({ message: "cards not found" });
 
     let data = {};
 
-    cardss.map((c) => {
+    cardss.forEach((c) => {
       const date = c.created_at.toISOString().split("T")[0];
+      const [year, month, day] = date.split("-");
+      const converted = `${month}-${day}`;
 
-      if (!data[date]) {
-        data[date] = [];
+      if (!data[converted]) {
+        data[converted] = [];
       }
-      data[date].push({ date: date, xp: c.minutes });
+      data[converted].push({ date: converted, xp: c.minutes });
     });
 
     const chartData = Object.entries(data).map((d) => {
