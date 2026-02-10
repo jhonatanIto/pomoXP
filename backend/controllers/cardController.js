@@ -114,9 +114,6 @@ export const chart_data = async (req, res) => {
       .from(cards)
       .where(eq(cards.user_id, userId));
 
-    if (cardss.length === 0)
-      return res.status(400).json({ message: "cards not found" });
-
     let data = {};
 
     const lastDays = () => {
