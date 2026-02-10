@@ -284,7 +284,8 @@ const Report = (props) => {
                   className={`reportFilterButt ${selecFilter === "week" ? "selecReportFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
                   onClick={() => {
                     setSelecFilter("week");
-                    setSelecBar("This Week");
+                    setData();
+                    //  setSelecBar("This Week");
                   }}
                 >
                   Week
@@ -293,7 +294,8 @@ const Report = (props) => {
                   className={`reportFilterButt ${selecFilter === "month" ? "selecReportFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
                   onClick={() => {
                     setSelecFilter("month");
-                    setSelecBar("This Month");
+                    setData();
+                    //   setSelecBar("This Month");
                   }}
                 >
                   Month
@@ -304,7 +306,7 @@ const Report = (props) => {
                     onClick={() => {
                       if (!isFree) {
                         setSelecFilter("year");
-                        setSelecBar("This Year");
+                        //setSelecBar("This Year");
                       } else {
                         alert("Upgrade to Premium to access");
                       }
