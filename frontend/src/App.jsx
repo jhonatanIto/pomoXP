@@ -21,6 +21,7 @@ import Privacy from "./components/terms_privacy/Privacy";
 import Terms from "./components/terms_privacy/Terms";
 import Contact from "./components/terms_privacy/Contact";
 import AddButt from "./components/AddNote/AddButt";
+import { UserContext } from "./context/UserContext";
 
 const App = () => {
   const [focusTime, setFocusTime] = useState(25);

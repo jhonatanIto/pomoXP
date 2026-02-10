@@ -20,7 +20,8 @@ const LvlBar = (props) => {
   const [barPercent, setBarPercent] = useState(0);
   const [xpPopup, setXpPopup] = useState(false);
   const prevTargetBar = useRef(null);
-
+  const showAds = !user || user.plan === "free";
+  console.log(showAds);
   const xpUpAudio = () => {
     const audio = new Audio(xpUp);
     audio.volume = 0.5;
@@ -146,6 +147,9 @@ const LvlBar = (props) => {
         {user?.name}
       </div>
       {/* <img className="avatar" src={avatar} /> */}
+      <div className="adCont">
+        {showAds && <div id="ezoic-pub-ad-placeholder-118"></div>}
+      </div>
     </div>
   );
 };
