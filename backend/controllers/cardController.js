@@ -155,7 +155,7 @@ export const chart_data = async (req, res) => {
         return { date: d[0], total_xp: totalXp };
       });
 
-    res.status(200).json(chartData);
+    res.status(200).json({ chartData, type });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });

@@ -24,7 +24,9 @@ const Report = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   const [weekAll, setWeekAll] = useState([]);
   const [allTime, setAllTime] = useState(true);
-  const [chartData, setChartData] = useState([]);
+  const [chartWeek, setChartWeek] = useState([]);
+  const [chartMonth, setChartMonth] = useState([]);
+  const [chartYear, setChartYear] = useState([]);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
   const { cards, user, token } = useContext(UserContext);
@@ -210,13 +212,17 @@ const Report = (props) => {
     const data = await fetchChartData();
     if (!data) return;
 
-    setChartData(data);
-    localStorage.setItem("chartData", JSON.stringify(data));
+    if (data.type === "week") setChartWeek(data.chartData);
+    if (data.type === "month") setChartMonth(data.chartData);
+    localStorage.setItem(`chart${data.type}`, JSON.stringify(data.chartData));
   };
 
   useEffect(() => {
-    const savedData = localStorage.getItem("chartData");
-    if (savedData) setChartData(JSON.parse(savedData));
+    const chartWeekS = localStorage.getItem("chartweek");
+    if (chartWeekS) setChartWeek(JSON.parse(chartWeekS));
+
+    const chartMonthS = localStorage.getItem("chartmonth");
+    if (chartMonthS) setChartMonth(JSON.parse(chartMonthS));
 
     setData();
   }, [token, selecFilter]);
@@ -332,9 +338,18 @@ const Report = (props) => {
                 </button>
               </div> */}
             </div>
-            <div>
+            <div className="chartCont">
               {" "}
-              <Charts selecFilter={selecFilter} chartData={chartData} />{" "}
+              <Charts
+                selecFilter={selecFilter}
+                chartData={
+                  selecFilter === "week"
+                    ? chartWeek
+                    : selecFilter === "month"
+                      ? chartMonth
+                      : chartYear
+                }
+              />{" "}
             </div>
           </div>
         </div>
