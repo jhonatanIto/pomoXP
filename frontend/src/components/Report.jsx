@@ -214,6 +214,7 @@ const Report = (props) => {
 
     if (data.type === "week") setChartWeek(data.chartData);
     if (data.type === "month") setChartMonth(data.chartData);
+    if (data.type === "year") setChartYear(data.chartData);
     localStorage.setItem(`chart${data.type}`, JSON.stringify(data.chartData));
   };
 
@@ -223,6 +224,9 @@ const Report = (props) => {
 
     const chartMonthS = localStorage.getItem("chartmonth");
     if (chartMonthS) setChartMonth(JSON.parse(chartMonthS));
+
+    const chartYearS = localStorage.getItem("chartyear");
+    if (chartYearS) setChartYear(JSON.parse(chartYearS));
 
     setData();
   }, [token, selecFilter]);

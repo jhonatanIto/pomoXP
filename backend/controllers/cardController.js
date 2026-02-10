@@ -107,7 +107,7 @@ export const chart_data = async (req, res) => {
     const { type } = req.body;
     if (!type) return res.status(400).json({ message: "type not specified" });
 
-    const days = type === "week" ? 7 : type === "month" ? 30 : 7;
+    const days = type === "week" ? 7 : type === "month" ? 30 : 365;
 
     const cardss = await db
       .select()
@@ -119,14 +119,14 @@ export const chart_data = async (req, res) => {
 
     let data = {};
 
-    const last7Days = () => {
+    const lastDays = () => {
       const today = new Date();
       for (let i = 0; i < days; i++) {
         const t = new Date(today);
         t.setDate(today.getDate() - i);
 
         const [y, m, d] = t.toLocaleDateString("sv-SE").split("-");
-        const date = `${m}-${d}`;
+        const date = type !== "year" ? `${m}-${d}` : `${y}-${m}`;
 
         if (!data[date]) {
           data[date] = [];
@@ -134,11 +134,11 @@ export const chart_data = async (req, res) => {
       }
     };
 
-    last7Days();
+    lastDays();
 
     cardss.forEach((c) => {
       const [y, m, d] = c.created_at.toLocaleDateString("sv-SE").split("-");
-      const converted = `${m}-${d}`;
+      const converted = type !== "year" ? `${m}-${d}` : `${y}-${m}`;
 
       if (data[converted]) {
         data[converted].push(c.minutes);
