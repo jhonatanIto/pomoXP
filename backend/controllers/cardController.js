@@ -117,24 +117,41 @@ export const chart_data = async (req, res) => {
 
     let data = {};
 
-    cardss.forEach((c) => {
-      const date = c.created_at.toISOString().split("T")[0];
-      const [year, month, day] = date.split("-");
-      const converted = `${month}-${day}`;
+    const last7Days = () => {
+      const today = new Date();
+      for (let i = 0; i < 7; i++) {
+        const t = new Date(today);
+        t.setDate(today.getDate() - i);
 
-      if (!data[converted]) {
-        data[converted] = [];
+        const [y, m, d] = t.toLocaleDateString("sv-SE").split("-");
+        const date = `${m}-${d}`;
+
+        if (!data[date]) {
+          data[date] = [];
+        }
       }
-      data[converted].push({ date: converted, xp: c.minutes });
+    };
+
+    last7Days();
+
+    cardss.forEach((c) => {
+      const [y, m, d] = c.created_at.toLocaleDateString("sv-SE").split("-");
+      const converted = `${m}-${d}`;
+
+      if (data[converted]) {
+        data[converted].push(c.minutes);
+      }
     });
 
-    const chartData = Object.entries(data).map((d) => {
-      const totalXp = d[1].reduce((acc, c) => {
-        return acc + c.xp;
-      }, 0);
+    const chartData = Object.entries(data)
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map((d) => {
+        const totalXp = d[1].reduce((acc, c) => {
+          return acc + c;
+        }, 0);
 
-      return { date: d[0], total_xp: totalXp };
-    });
+        return { date: d[0], total_xp: totalXp };
+      });
 
     res.status(200).json(chartData);
   } catch (error) {

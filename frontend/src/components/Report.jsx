@@ -81,23 +81,21 @@ const Report = (props) => {
 
   const today = new Date();
   const last7Days = new Date();
-  last7Days.setDate(today.getDate() - 6);
+  last7Days.setDate(today.getDate() - 7);
 
   const lastMonth = new Date();
-  lastMonth.setDate(today.getDate() - 29);
+  lastMonth.setDate(today.getDate() - 30);
 
   const lastYear = new Date();
-  lastYear.setDate(today.getDate() - 364);
+  lastYear.setDate(today.getDate() - 365);
 
-  const last7Cards = cards?.filter((n) => new Date(n.created_at) >= last7Days);
+  const last7Cards = cards?.filter((n) => new Date(n.created_at) > last7Days);
 
   const lastMonthCards = cards?.filter(
-    (n) => new Date(n.created_at) >= lastMonth,
+    (n) => new Date(n.created_at) > lastMonth,
   );
 
-  const lastYearCards = cards?.filter(
-    (n) => new Date(n.created_at) >= lastYear,
-  );
+  const lastYearCards = cards?.filter((n) => new Date(n.created_at) > lastYear);
 
   const last7Total = last7Cards?.reduce(
     (acc, current) => acc + current.minutes,
