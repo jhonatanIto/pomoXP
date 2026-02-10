@@ -280,9 +280,9 @@
 }
 @media (max-width: 600px) {
   .reportContainer {
-    margin-top: 30px;
+    margin-top: 10px;
     width: 97%;
-    height: 95%;
+    height: 100%;
     padding: 15px;
   }
   .topBox {
@@ -310,7 +310,7 @@
   .focusHoursTitle {
     font-size: 20px;
     width: 120px;
-    bottom: 95px;
+    top: 26%;
     left: 0px;
   }
   .rankUserBox {
