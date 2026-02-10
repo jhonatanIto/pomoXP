@@ -219,7 +219,7 @@ const Report = (props) => {
     if (savedData) setChartData(JSON.parse(savedData));
 
     setData();
-  }, [token]);
+  }, [token, selecFilter]);
 
   const isFree = user?.plan === "free" || !user;
 
@@ -284,7 +284,7 @@ const Report = (props) => {
                   className={`reportFilterButt ${selecFilter === "week" ? "selecReportFilter" : ""} ${selecFilter !== "week" ? "hoverFilter" : ""}`}
                   onClick={() => {
                     setSelecFilter("week");
-                    setData();
+
                     //  setSelecBar("This Week");
                   }}
                 >
@@ -294,7 +294,7 @@ const Report = (props) => {
                   className={`reportFilterButt ${selecFilter === "month" ? "selecReportFilter" : ""} ${selecFilter !== "month" ? "hoverFilter" : ""}`}
                   onClick={() => {
                     setSelecFilter("month");
-                    setData();
+
                     //   setSelecBar("This Month");
                   }}
                 >
