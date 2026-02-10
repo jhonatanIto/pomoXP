@@ -243,7 +243,7 @@ const Plans = (props) => {
               >
                 $66
               </div>
-              <div className="valueSmall">$1.8/per month</div>
+              <div className="valueSmall">$1.83/per month</div>
               <div className="saveMoney">Save 42 dollars</div>
             </div>
           </div>

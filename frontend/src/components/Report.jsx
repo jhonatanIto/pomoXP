@@ -16,7 +16,7 @@ const Report = (props) => {
   const { reportPage, setReportPage } = props;
   const boxRef = useRef();
   const [selecFilter, setSelecFilter] = useState("week");
-  const [selecBar, setSelecBar] = useState("This Week");
+  //const [selecBar, setSelecBar] = useState("This Week");
   const [totalHours, setTotalHours] = useState(0);
   const [totalDays, setTotalDays] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -24,9 +24,10 @@ const Report = (props) => {
   const [allUsers, setAllUsers] = useState([]);
   const [weekAll, setWeekAll] = useState([]);
   const [allTime, setAllTime] = useState(true);
+  const [chartData, setChartData] = useState([]);
   // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
-  const { cards, user } = useContext(UserContext);
+  const { cards, user, token } = useContext(UserContext);
 
   const handleClick = (e) => {
     if (!boxRef.current.contains(e.target)) {
@@ -178,6 +179,48 @@ const Report = (props) => {
     }
   }, [cards, selecFilter]);
 
+  const fetchChartData = async () => {
+    try {
+      const res = await fetch(
+        "https://pomoxp-production.up.railway.app/api/cards/chart_data",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ type: selecFilter }),
+        },
+      );
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw Error(err?.message || "Request failed");
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  };
+
+  const setData = async () => {
+    const data = await fetchChartData();
+    if (!data) return;
+
+    setChartData(data);
+    localStorage.setItem("chartData", JSON.stringify(data));
+  };
+
+  useEffect(() => {
+    const savedData = localStorage.getItem("chartData");
+    if (savedData) setChartData(JSON.parse(savedData));
+
+    setData();
+  }, [token]);
+
   const isFree = user?.plan === "free" || !user;
 
   return (
@@ -277,7 +320,7 @@ const Report = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="reportThisWeek">
+              {/* <div className="reportThisWeek">
                 <button className="reportArrow">
                   <SlArrowLeft />
                 </button>
@@ -285,11 +328,11 @@ const Report = (props) => {
                 <button className="reportArrow">
                   <SlArrowRight />
                 </button>
-              </div>
+              </div> */}
             </div>
             <div>
               {" "}
-              <Charts selecFilter={selecFilter} />{" "}
+              <Charts selecFilter={selecFilter} chartData={chartData} />{" "}
             </div>
           </div>
         </div>
