@@ -15,7 +15,6 @@ const Charts = (props) => {
   const { selecFilter } = props;
 
   const fetchChartData = async () => {
-    if (!selecFilter) return [];
     try {
       const res = await fetch(
         "https://pomoxp-production.up.railway.app/api/cards/chart_data",
