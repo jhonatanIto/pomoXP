@@ -359,4 +359,7 @@
     left: 15px;
     top: 18px;
   }
+  .chartCont {
+    margin-top: 10px;
+  }
 }

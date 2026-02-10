@@ -13,7 +13,7 @@ const Charts = (props) => {
 
   return (
     <div className="chartCont">
-      <ResponsiveContainer width="100%" height={380}>
+      <ResponsiveContainer width="100%" height={340}>
         <BarChart data={chartData}>
           <CartesianGrid />
           <XAxis dataKey="date" />
