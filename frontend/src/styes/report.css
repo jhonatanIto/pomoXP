@@ -363,3 +363,9 @@
     margin-top: 10px;
   }
 }
+
+@media (max-width: 1280px) {
+  .reportContainer {
+    height: 700px;
+  }
+}

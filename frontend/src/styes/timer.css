@@ -1,6 +1,8 @@
 .timerContainer {
   background-color: rgba(207, 207, 207, 0.2);
-  width: 470px;
+  width: 90%;
+  max-width: 470px;
+  min-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -27,7 +29,7 @@
   display: flex;
 }
 .clock {
-  font-size: 120px;
+  font-size: 7rem;
   cursor: default;
 }
 .timerBot {
@@ -61,7 +63,7 @@
   width: 20px;
   margin-left: 40px;
 }
-@media (max-width: 600px) {
+@media (max-width: 1150px) {
   .timerContainer {
     width: 100%;
     height: 280px;
@@ -89,5 +91,21 @@
     width: 100%;
     justify-content: center;
     position: relative;
+  }
+}
+@media (max-width: 1400px) {
+  .timerContainer {
+    height: 290px;
+    width: 90%;
+  }
+  .timerButt {
+    padding: 5px;
+  }
+  .clock {
+    font-size: 85px;
+  }
+  .pause {
+    padding: 0px;
+    width: 130px;
   }
 }

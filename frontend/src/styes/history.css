@@ -1,6 +1,5 @@
 .historyContainer {
-  height: 600px;
-  width: 800px;
+  width: 33%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,6 +15,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 650px;
 }
 .historyCard {
   font-size: 20px;
@@ -26,8 +27,7 @@
   margin-top: 20px;
   border-radius: 5px;
   padding: 10px;
-  min-width: 550px;
-  max-width: 550px;
+  width: 85%;
   height: 70px;
   cursor: default;
 }
@@ -116,7 +116,7 @@
   background-color: rgb(67, 67, 67);
   color: white;
 }
-@media (max-width: 600px) {
+@media (max-width: 1150px) {
   .historyContainer {
     width: 97%;
     height: 220px;
@@ -147,5 +147,10 @@
 
     margin-top: 40px;
     width: 97%;
+  }
+}
+@media (max-width: 1280px) {
+  .historyCardContainer {
+    height: 550px;
   }
 }
