@@ -120,8 +120,9 @@
   .historyContainer {
     width: 97%;
     height: 220px;
-    margin-top: 0;
+    margin-top: 15px;
     order: 2;
+    min-height: 0;
   }
   .historyCard {
     font-size: 20px;
