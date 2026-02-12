@@ -28,6 +28,9 @@ const Timer = (props) => {
     onePercent,
     triggerXpPopup,
     alarmSound,
+    pomoColor,
+    shortColor,
+    longColor,
   } = props;
   const [time, setTime] = useState(focusTime * 60);
   const [isRunning, setIsRunnig] = useState(false);
@@ -158,11 +161,11 @@ const Timer = (props) => {
 
   useEffect(() => {
     selectedTab === "Pomodoro"
-      ? (document.body.style.backgroundColor = "rgb(53 106 146)")
+      ? (document.body.style.backgroundColor = pomoColor)
       : selectedTab === "Short Break"
-        ? (document.body.style.backgroundColor = "rgb(47 124 129)")
-        : (document.body.style.backgroundColor = "rgb(79, 79, 79)");
-  }, [selectedTab]);
+        ? (document.body.style.backgroundColor = shortColor)
+        : (document.body.style.backgroundColor = longColor);
+  }, [selectedTab, pomoColor, shortColor, longColor]);
 
   useEffect(() => {
     let timer;
@@ -235,10 +238,10 @@ const Timer = (props) => {
           style={{
             color:
               selectedTab === "Pomodoro"
-                ? "rgb(53 106 146)"
+                ? pomoColor
                 : selectedTab === "Short Break"
-                  ? "rgb(47 124 129)"
-                  : "rgb(79, 79, 79)",
+                  ? shortColor
+                  : longColor,
           }}
         >
           {isRunning ? "PAUSE" : "START"}

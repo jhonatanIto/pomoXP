@@ -5,6 +5,8 @@ import bcrypt from "bcrypt";
 
 export const userData = async (req, res) => {
   try {
+    const userId = req.userId;
+
     const [user] = await db
       .select({
         id: users.id,
@@ -18,7 +20,7 @@ export const userData = async (req, res) => {
         subscription_end_date: users.subscription_end_date,
       })
       .from(users)
-      .where(eq(users.id, req.userId));
+      .where(eq(users.id, userId));
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });

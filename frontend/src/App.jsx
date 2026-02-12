@@ -53,6 +53,10 @@ const App = () => {
   const audioRef = useRef(new Audio(alarm));
   const [currentVolume, setCurrentVolume] = useState(1);
 
+  const [pomoColor, setPomoColor] = useState("rgb(53 106 146)");
+  const [shortColor, setShortColor] = useState("rgb(47 124 129)");
+  const [longColor, setLongColor] = useState("rgb(44, 44, 44)");
+
   const { successNotification, errorNotification } =
     useContext(NotificationContext);
 
@@ -109,6 +113,9 @@ const App = () => {
             onePercent={onePercent}
             triggerXpPopup={triggerXpPopup}
             alarmSound={alarmSound}
+            pomoColor={pomoColor}
+            shortColor={shortColor}
+            longColor={longColor}
           />
           <AddButt setNoteModal={setNoteModal} />
         </div>
@@ -137,6 +144,12 @@ const App = () => {
       />
 
       <Setting
+        longColor={longColor}
+        shortColor={shortColor}
+        pomoColor={pomoColor}
+        setPomoColor={setPomoColor}
+        setShortColor={setShortColor}
+        setLongColor={setLongColor}
         displayModal={displayModal}
         setDisplayModal={setDisplayModal}
         setFocusTime={setFocusTime}

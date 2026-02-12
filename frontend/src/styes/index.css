@@ -17,10 +17,10 @@ body,
 }
 
 body {
-  background-color: rgb(53 106 146);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   color: #fff;
   transition: 0.2s;
+  background-color: rgb(110, 110, 110);
 }
 .containerAlpha {
   display: flex;

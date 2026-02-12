@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "../styes/setting.css";
 import { FaClock } from "react-icons/fa";
 import { IoVolumeHighOutline } from "react-icons/io5";
@@ -15,7 +15,17 @@ const Setting = (props) => {
     setCurrentVolume,
     currentVolume,
     alarmSound,
+    setPomoColor,
+    setShortColor,
+    setLongColor,
+    pomoColor,
+    shortColor,
+    longColor,
   } = props;
+
+  const [selecChangeColor, setSelecChangeColor] = useState("pomo");
+  const [showColors, setShowColors] = useState(false);
+  const coloRef = useRef();
 
   useEffect(() => {
     if (localStorage.getItem("timeSetting")) {
@@ -39,6 +49,12 @@ const Setting = (props) => {
       setDisplayModal("none");
     }
   };
+  const closeColorBox = (e) => {
+    if (!coloRef.current.contains(e.target)) {
+      setShowColors(false);
+      setSelecChangeColor("");
+    }
+  };
   return (
     <div
       style={{ display: displayModal }}
@@ -48,7 +64,11 @@ const Setting = (props) => {
         saveTimeSettings();
       }}
     >
-      <div className="settingBox" ref={boxRef}>
+      <div
+        onMouseDown={(e) => closeColorBox(e)}
+        className="settingBox"
+        ref={boxRef}
+      >
         <div className="settingTitle">SETTING</div>
         <div className="settingTimerContainer">
           <FaClock className="settingClock" />
@@ -118,6 +138,45 @@ const Setting = (props) => {
           </div>
         </div>
 
+        <div className="themeColorCont">
+          <div className="volumeTitle">Themes</div>
+          <div className="colorBoxCont">
+            <div
+              style={{ backgroundColor: pomoColor }}
+              className={`colorBox ${selecChangeColor === "pomo" ? "colSelec" : ""} `}
+              onClick={() => {
+                setSelecChangeColor("pomo");
+                setShowColors(true);
+              }}
+            ></div>
+            <div
+              style={{ backgroundColor: shortColor }}
+              className={`colorBox ${selecChangeColor === "short" ? "colSelec" : ""} `}
+              onClick={() => {
+                setSelecChangeColor("short");
+                setShowColors(true);
+              }}
+            ></div>
+            <div
+              style={{ backgroundColor: longColor }}
+              className={`colorBox ${selecChangeColor === "long" ? "colSelec" : ""} `}
+              onClick={() => {
+                setSelecChangeColor("long");
+                setShowColors(true);
+              }}
+            ></div>
+          </div>
+          <ColorBox
+            selecChangeColor={selecChangeColor}
+            setPomoColor={setPomoColor}
+            setShortColor={setShortColor}
+            setLongColor={setLongColor}
+            showColors={showColors}
+            setShowColors={setShowColors}
+            coloRef={coloRef}
+          />
+        </div>
+
         <button
           onClick={() => {
             setDisplayModal("none");
@@ -133,3 +192,277 @@ const Setting = (props) => {
 };
 
 export default Setting;
+
+const ColorBox = (props) => {
+  const {
+    setPomoColor,
+    setShortColor,
+    setLongColor,
+    selecChangeColor,
+    showColors,
+    coloRef,
+  } = props;
+
+  useEffect(() => {}, []);
+
+  return (
+    <div
+      ref={coloRef}
+      style={{ display: showColors ? "flex" : "none" }}
+      className="colorBoxComp"
+    >
+      <div
+        style={{ backgroundColor: "rgb(175, 77, 77)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(175, 77, 77)");
+              break;
+            case "short":
+              setShortColor("rgb(175, 77, 77)");
+              break;
+            case "long":
+              setLongColor("rgb(175, 77, 77)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: " rgb(0, 116, 33)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor(" rgb(0, 116, 33)");
+              break;
+            case "short":
+              setShortColor(" rgb(0, 116, 33)");
+              break;
+            case "long":
+              setLongColor(" rgb(0, 116, 33)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(0, 94, 89)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(0, 94, 89)");
+              break;
+            case "short":
+              setShortColor("rgb(0, 94, 89)");
+              break;
+            case "long":
+              setLongColor("rgb(0, 94, 89)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(0, 56, 94)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(0, 56, 94)");
+              break;
+            case "short":
+              setShortColor("rgb(0, 56, 94)");
+              break;
+            case "long":
+              setLongColor("rgb(0, 56, 94)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: " rgb(5, 0, 94)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor(" rgb(5, 0, 94)");
+              break;
+            case "short":
+              setShortColor(" rgb(5, 0, 94)");
+              break;
+            case "long":
+              setLongColor(" rgb(5, 0, 94)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(44, 0, 94)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(44, 0, 94)");
+              break;
+            case "short":
+              setShortColor("rgb(44, 0, 94)");
+              break;
+            case "long":
+              setLongColor("rgb(44, 0, 94)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(127, 127, 127)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(127, 127, 127)");
+              break;
+            case "short":
+              setShortColor("rgb(127, 127, 127)");
+              break;
+            case "long":
+              setLongColor("rgb(127, 127, 127)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(116, 0, 116)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(116, 0, 116)");
+              break;
+            case "short":
+              setShortColor("rgb(116, 0, 116)");
+              break;
+            case "long":
+              setLongColor("rgb(116, 0, 116)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(53 106 146)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(53 106 146)");
+              break;
+            case "short":
+              setShortColor("rgb(53 106 146)");
+              break;
+            case "long":
+              setLongColor("rgb(53 106 146)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(47 124 129)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(47 124 129)");
+              break;
+            case "short":
+              setShortColor("rgb(47 124 129)");
+              break;
+            case "long":
+              setLongColor("rgb(47 124 129)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(44, 44, 44)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(44, 44, 44)");
+              break;
+            case "short":
+              setShortColor("rgb(44, 44, 44)");
+              break;
+            case "long":
+              setLongColor("rgb(44, 44, 44)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(0, 116, 85)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(0, 116, 85)");
+              break;
+            case "short":
+              setShortColor("rgb(0, 116, 85)");
+              break;
+            case "long":
+              setLongColor("rgb(0, 116, 85)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(181, 163, 0)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(181, 163, 0)");
+              break;
+            case "short":
+              setShortColor("rgb(181, 163, 0)");
+              break;
+            case "long":
+              setLongColor("rgb(181, 163, 0)");
+              break;
+          }
+        }}
+      ></div>
+      <div
+        style={{ backgroundColor: "rgb(150, 92, 0)" }}
+        className="colorBox"
+        onClick={() => {
+          setShortColor(false);
+          switch (selecChangeColor) {
+            case "pomo":
+              setPomoColor("rgb(150, 92, 0)");
+              break;
+            case "short":
+              setShortColor("rgb(150, 92, 0)");
+              break;
+            case "long":
+              setLongColor("rgb(150, 92, 0)");
+              break;
+          }
+        }}
+      ></div>
+    </div>
+  );
+};
