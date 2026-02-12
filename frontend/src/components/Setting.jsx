@@ -36,6 +36,16 @@ const Setting = (props) => {
     }
   }, []);
 
+  const colRef = useRef({
+    pomo: pomoColor,
+    short: shortColor,
+    long: longColor,
+  });
+  useEffect(() => {
+    colRef.current = { pomo: pomoColor, short: shortColor, long: longColor };
+    localStorage.setItem("themeColors", JSON.stringify(colRef.current));
+  }, [pomoColor, shortColor, longColor]);
+
   function saveTimeSettings() {
     localStorage.setItem(
       "timeSetting",
@@ -203,7 +213,15 @@ const ColorBox = (props) => {
     coloRef,
   } = props;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const savedColorsLocal = localStorage.getItem("themeColors");
+    if (savedColorsLocal) {
+      const allColors = JSON.parse(savedColorsLocal);
+      setPomoColor(allColors.pomo);
+      setShortColor(allColors.short);
+      setLongColor(allColors.long);
+    }
+  }, []);
 
   return (
     <div
