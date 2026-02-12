@@ -54,15 +54,17 @@ const Setting = (props) => {
   }
 
   const boxRef = useRef();
-  const handleOverlayClick = (e) => {
-    if (!boxRef.current.contains(e.target)) {
-      setDisplayModal("none");
-    }
-  };
+
   const closeColorBox = (e) => {
     if (!coloRef.current.contains(e.target)) {
       setShowColors(false);
       setSelecChangeColor("");
+    }
+  };
+  const handleOverlayClick = (e) => {
+    if (!boxRef.current.contains(e.target)) {
+      setDisplayModal("none");
+      closeColorBox(e);
     }
   };
   return (
