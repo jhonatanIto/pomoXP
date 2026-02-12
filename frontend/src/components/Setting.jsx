@@ -233,7 +233,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(175, 77, 77)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(175, 77, 77)");
@@ -251,7 +250,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: " rgb(0, 116, 33)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor(" rgb(0, 116, 33)");
@@ -269,7 +267,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(0, 94, 89)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(0, 94, 89)");
@@ -287,7 +284,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(0, 56, 94)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(0, 56, 94)");
@@ -305,7 +301,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: " rgb(5, 0, 94)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor(" rgb(5, 0, 94)");
@@ -323,7 +318,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(44, 0, 94)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(44, 0, 94)");
@@ -341,7 +335,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(127, 127, 127)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(127, 127, 127)");
@@ -359,7 +352,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(116, 0, 116)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(116, 0, 116)");
@@ -377,7 +369,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(53 106 146)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(53 106 146)");
@@ -395,7 +386,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(47 124 129)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(47 124 129)");
@@ -413,7 +403,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(44, 44, 44)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(44, 44, 44)");
@@ -431,7 +420,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(0, 116, 85)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(0, 116, 85)");
@@ -449,7 +437,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(181, 163, 0)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(181, 163, 0)");
@@ -467,7 +454,6 @@ const ColorBox = (props) => {
         style={{ backgroundColor: "rgb(150, 92, 0)" }}
         className="colorBox"
         onClick={() => {
-          setShortColor(false);
           switch (selecChangeColor) {
             case "pomo":
               setPomoColor("rgb(150, 92, 0)");
