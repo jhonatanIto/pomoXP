@@ -1,10 +1,10 @@
-const today = new Date();
-
-const last7Days = new Date();
-
-last7Days.setDate(today.getDate() - 7);
-
 export const calc7Cards = (cards) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  const last7Days = new Date(today);
+  last7Days.setDate(today.getDate() - 7);
+
   const last7Cards = cards?.filter((n) => new Date(n.created_at) > last7Days);
 
   const last7Total = last7Cards?.reduce(
