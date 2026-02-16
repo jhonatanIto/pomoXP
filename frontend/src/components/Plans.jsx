@@ -177,7 +177,7 @@ const Plans = (props) => {
               <div
                 className={`planValue ${selecPlan === "monthly" ? "selecValue" : ""} `}
               >
-                $3
+                $2
               </div>
               <div className="valueSmall">/per month</div>
               <div className="saveMoney noopa">Save 34 dollars</div>
@@ -208,10 +208,10 @@ const Plans = (props) => {
               <div
                 className={`planValue ${selecPlan === "yearly" ? "selecValue" : ""} `}
               >
-                $24
+                $18
               </div>
-              <div className="valueSmall">$2/per month</div>
-              <div className="saveMoney">Save 12 dollars</div>
+              <div className="valueSmall">$1.5/per month</div>
+              <div className="saveMoney">Save 6 dollars</div>
             </div>
             <div
               onClick={() => {
@@ -241,10 +241,10 @@ const Plans = (props) => {
               <div
                 className={`planValue ${selecPlan === "threeYears" ? "selecValue" : ""} `}
               >
-                $66
+                $44
               </div>
-              <div className="valueSmall">$1.83/per month</div>
-              <div className="saveMoney">Save 42 dollars</div>
+              <div className="valueSmall">$1.22/per month</div>
+              <div className="saveMoney">Save 28 dollars</div>
             </div>
           </div>
         </div>
