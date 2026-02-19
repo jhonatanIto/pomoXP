@@ -270,13 +270,13 @@ const AddNote = (props) => {
         >
           <div className="noteDate">{formattedDate}</div>
           <div className="flex absolute right-[20px] text-[20px] flex-col items-end ">
-            <div
+            <button
               ref={sizeRef}
               className="cursor-pointer text-zinc-500 hover:text-zinc-800"
               onClick={() => setShowSizes((prev) => !prev)}
             >
               font-size: {fontSize}
-            </div>
+            </button>
             {showSizes && (
               <div className="flex flex-col  border-2 bg-white border-zinc-400">
                 {sizes.map((s) => {
@@ -418,13 +418,13 @@ const AddNote = (props) => {
                 style={{ display: edit ? "flex" : "none" }}
                 className="flex absolute right-[20px] text-[20px] flex-col items-end"
               >
-                <div
+                <button
                   ref={sizeRef}
                   className="cursor-pointer text-zinc-500 hover:text-zinc-800"
                   onClick={() => setShowSizes((prev) => !prev)}
                 >
                   font-size: {fontSize}
-                </div>
+                </button>
                 {showSizes && (
                   <div className="flex flex-col  border-2 bg-white border-zinc-400">
                     {sizes.map((s) => {
