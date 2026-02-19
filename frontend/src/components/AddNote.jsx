@@ -370,7 +370,7 @@ const AddNote = (props) => {
             closeNote={closeNote}
           />
 
-          <div className="savedRight">
+          <div className="savedRight" onMouseDown={(e) => handleSizeClick(e)}>
             <div style={{ display: displayNote ? "none" : "block" }}>
               {filteredNotes.map((f) => (
                 <div
@@ -419,6 +419,7 @@ const AddNote = (props) => {
                 className="flex absolute right-[20px] text-[20px] flex-col items-end"
               >
                 <div
+                  ref={sizeRef}
                   className="cursor-pointer text-zinc-500 hover:text-zinc-800"
                   onClick={() => setShowSizes((prev) => !prev)}
                 >
