@@ -42,6 +42,7 @@ const AddNote = (props) => {
   const [fontSize, setFontSize] = useState(26);
   const [showSizes, setShowSizes] = useState(false);
   const sizes = [16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36];
+  const sizeRef = useRef();
 
   const {
     token,
@@ -72,6 +73,11 @@ const AddNote = (props) => {
       !savedRef.current.contains(e.target)
     ) {
       closeNote();
+    }
+  };
+  const handleSizeClick = (e) => {
+    if (!sizeRef.current.contains(e.target)) {
+      setShowSizes(false);
     }
   };
 
@@ -257,10 +263,15 @@ const AddNote = (props) => {
         onMouseDown={handleOverlayClick}
         className={`noteModalBody ${noteModal ? "active" : ""}`}
       >
-        <div ref={boxRef} className="noteBox">
+        <div
+          ref={boxRef}
+          onMouseDown={(e) => handleSizeClick(e)}
+          className="noteBox"
+        >
           <div className="noteDate">{formattedDate}</div>
-          <div className="flex absolute right-[20px] text-[20px] flex-col items-end">
+          <div className="flex absolute right-[20px] text-[20px] flex-col items-end ">
             <div
+              ref={sizeRef}
               className="cursor-pointer text-zinc-500 hover:text-zinc-800"
               onClick={() => setShowSizes((prev) => !prev)}
             >
@@ -275,7 +286,6 @@ const AddNote = (props) => {
                        hover:text-white hover:bg-blue-500 cursor-pointer flex
                      justify-center items-center w-[40px] h-[30px] "
                       onMouseEnter={() => setFontSize(s)}
-                      onClick={() => setShowSizes(false)}
                     >
                       {s}
                     </div>
