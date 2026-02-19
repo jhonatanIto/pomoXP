@@ -39,6 +39,7 @@ const AddNote = (props) => {
 
   const [selecYear, setSelecYear] = useState(year);
   const [selecMonth, setSelecMonth] = useState("");
+  const [fontSize, setFontSize] = useState(26);
 
   const {
     token,
@@ -103,6 +104,7 @@ const AddNote = (props) => {
             title: noteTitle,
             content: noteContent,
             created_at: formattedDate,
+            fontsize: fontSize,
           }),
         },
       );
@@ -148,6 +150,7 @@ const AddNote = (props) => {
           body: JSON.stringify({
             title: noteTitle,
             content: noteContent,
+            fontsize: fontSize,
           }),
         },
       );
@@ -243,6 +246,7 @@ const AddNote = (props) => {
       setSelectedDay(latest);
     }
   }, [savedNote]);
+  console.log(notes);
 
   return (
     <div className="cempor">
@@ -252,6 +256,27 @@ const AddNote = (props) => {
       >
         <div ref={boxRef} className="noteBox">
           <div className="noteDate">{formattedDate}</div>
+          <div className="flex absolute right-[20px] text-[20px] cursor-default">
+            <div>font-size</div>
+            <select
+              value={fontSize}
+              onChange={(e) => setFontSize(e.target.value)}
+              className="cursor-pointer"
+            >
+              <option value="16">16</option>
+              <option value="18">18</option>
+              <option value="20">20</option>
+              <option value="22">22</option>
+              <option value="24">24</option>
+              <option value="26">26</option>
+              <option value="28">28</option>
+              <option value="30">30</option>
+              <option value="32">32</option>
+              <option value="34">34</option>
+              <option value="36">36</option>
+            </select>
+          </div>
+
           <input
             onChange={(e) => {
               setNoteTitle(e.target.value);
@@ -262,6 +287,7 @@ const AddNote = (props) => {
             placeholder="Title"
           />
           <textarea
+            style={{ fontSize: `${fontSize}px` }}
             spellCheck={false}
             placeholder="Write your note..."
             onChange={(e) => {
@@ -334,6 +360,7 @@ const AddNote = (props) => {
                     if (!blocked) {
                       setNoteTitle(f.title);
                       setNoteContent(f.content);
+                      setFontSize(f.fontsize);
                       setDisplayNote(true);
                       setEdit(false);
                       setId(f.id);
@@ -368,6 +395,30 @@ const AddNote = (props) => {
                 className="back"
                 src={back}
               />
+              <div
+                style={{ display: edit ? "flex" : "none" }}
+                className="flex absolute right-[20px] text-[20px] cursor-default"
+              >
+                <div>font-size</div>
+                <select
+                  value={fontSize}
+                  onChange={(e) => setFontSize(e.target.value)}
+                  className="cursor-pointer"
+                >
+                  <option value="16">16</option>
+                  <option value="18">18</option>
+                  <option value="20">20</option>
+                  <option value="22">22</option>
+                  <option value="24">24</option>
+                  <option value="26">26</option>
+                  <option value="28">28</option>
+                  <option value="30">30</option>
+                  <option value="32">32</option>
+                  <option value="34">34</option>
+                  <option value="36">36</option>
+                </select>
+              </div>
+
               <input
                 style={{ pointerEvents: edit ? "auto" : "none" }}
                 value={noteTitle}
@@ -377,7 +428,10 @@ const AddNote = (props) => {
                 }}
               />
               <textarea
-                style={{ pointerEvents: edit ? "auto" : "none" }}
+                style={{
+                  pointerEvents: edit ? "auto" : "none",
+                  fontSize: `${fontSize}px`,
+                }}
                 className={`contenttt ${edit ? "editAll" : ""}`}
                 name="savedArea"
                 value={noteContent}

@@ -84,17 +84,18 @@ export const getNotes = async (req, res) => {
 
 export const postNotes = async (req, res) => {
   try {
-    const { title, content, created_at } = req.body;
+    const { title, content, created_at, fontsize } = req.body;
     const userId = req.userId;
 
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
-    if (!content || !title)
+    if (!content || !title || !fontsize)
       return res.status(400).json({ message: "Title or content missing" });
 
     const values = {
       user_id: userId,
       content,
       title,
+      fontsize,
       created_at: created_at ? new Date(created_at) : undefined,
     };
 
@@ -113,17 +114,18 @@ export const updateNotes = async (req, res) => {
 
     const { id } = req.params;
 
-    const { title, content } = req.body;
+    const { title, content, fontsize } = req.body;
 
     if (!userId) return res.status(401).json({ message: "Unauthorized" });
     if (!id) return res.status(400).json({ message: "Note id is required" });
-    if (!title && !content)
+    if (!title && !content && !fontsize)
       return res.status(400).json({ message: "Nothing to update" });
     const [updatedNote] = await db
       .update(notes)
       .set({
         ...(title && { title }),
         ...(content && { content }),
+        ...(fontsize && { fontsize }),
       })
       .where(and(eq(notes.id, id), eq(notes.user_id, userId)))
       .returning();
