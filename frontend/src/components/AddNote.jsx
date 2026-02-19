@@ -40,6 +40,8 @@ const AddNote = (props) => {
   const [selecYear, setSelecYear] = useState(year);
   const [selecMonth, setSelecMonth] = useState("");
   const [fontSize, setFontSize] = useState(26);
+  const [showSizes, setShowSizes] = useState(false);
+  const sizes = [16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36];
 
   const {
     token,
@@ -61,6 +63,8 @@ const AddNote = (props) => {
     setSavedNote(false);
     setEdit(false);
     setId("");
+    setShowSizes(false);
+    setFontSize(26);
   };
   const handleOverlayClick = (e) => {
     if (
@@ -246,7 +250,6 @@ const AddNote = (props) => {
       setSelectedDay(latest);
     }
   }, [savedNote]);
-  console.log(notes);
 
   return (
     <div className="cempor">
@@ -256,25 +259,30 @@ const AddNote = (props) => {
       >
         <div ref={boxRef} className="noteBox">
           <div className="noteDate">{formattedDate}</div>
-          <div className="flex absolute right-[20px] text-[20px] cursor-default">
-            <div>font-size</div>
-            <select
-              value={fontSize}
-              onChange={(e) => setFontSize(e.target.value)}
-              className="cursor-pointer"
+          <div className="flex absolute right-[20px] text-[20px] flex-col items-end">
+            <div
+              className="cursor-pointer text-zinc-500 hover:text-zinc-800"
+              onClick={() => setShowSizes((prev) => !prev)}
             >
-              <option value="16">16</option>
-              <option value="18">18</option>
-              <option value="20">20</option>
-              <option value="22">22</option>
-              <option value="24">24</option>
-              <option value="26">26</option>
-              <option value="28">28</option>
-              <option value="30">30</option>
-              <option value="32">32</option>
-              <option value="34">34</option>
-              <option value="36">36</option>
-            </select>
+              font-size: {fontSize}
+            </div>
+            {showSizes && (
+              <div className="flex flex-col  border-2 bg-white border-zinc-400">
+                {sizes.map((s) => {
+                  return (
+                    <div
+                      className="border-b border-zinc-400 text-zinc-500 
+                       hover:text-white hover:bg-blue-500 cursor-pointer flex
+                     justify-center items-center w-[40px] h-[30px] "
+                      onMouseEnter={() => setFontSize(s)}
+                      onClick={() => setShowSizes(false)}
+                    >
+                      {s}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <input
@@ -395,28 +403,34 @@ const AddNote = (props) => {
                 className="back"
                 src={back}
               />
+
               <div
                 style={{ display: edit ? "flex" : "none" }}
-                className="flex absolute right-[20px] text-[20px] cursor-default"
+                className="flex absolute right-[20px] text-[20px] flex-col items-end"
               >
-                <div>font-size</div>
-                <select
-                  value={fontSize}
-                  onChange={(e) => setFontSize(e.target.value)}
-                  className="cursor-pointer"
+                <div
+                  className="cursor-pointer text-zinc-500 hover:text-zinc-800"
+                  onClick={() => setShowSizes((prev) => !prev)}
                 >
-                  <option value="16">16</option>
-                  <option value="18">18</option>
-                  <option value="20">20</option>
-                  <option value="22">22</option>
-                  <option value="24">24</option>
-                  <option value="26">26</option>
-                  <option value="28">28</option>
-                  <option value="30">30</option>
-                  <option value="32">32</option>
-                  <option value="34">34</option>
-                  <option value="36">36</option>
-                </select>
+                  font-size: {fontSize}
+                </div>
+                {showSizes && (
+                  <div className="flex flex-col  border-2 bg-white border-zinc-400">
+                    {sizes.map((s) => {
+                      return (
+                        <div
+                          className="border-b border-zinc-400 text-zinc-500 
+                       hover:text-white hover:bg-blue-500 cursor-pointer flex
+                     justify-center items-center w-[40px] h-[30px] "
+                          onMouseEnter={() => setFontSize(s)}
+                          onClick={() => setShowSizes(false)}
+                        >
+                          {s}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               <input

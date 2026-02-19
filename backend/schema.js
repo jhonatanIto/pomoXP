@@ -64,7 +64,7 @@ export const notes = pgTable(
     created_at: timestamp("created_at", { withTimezone: true })
       .defaultNow()
       .notNull(),
-    fontsize: integer("fontsize").default(24).notNull(),
+    fontsize: integer("fontsize").default(26).notNull(),
   },
   (t) => [
     index("notes_user_id_idx").on(t.user_id),
