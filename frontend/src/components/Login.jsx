@@ -171,7 +171,7 @@ const Login = (props) => {
             Submit
           </button>
           <div className="loginWords">
-            Already have an account?
+            {signIn ? "Don't have an account?" : "Already have an account?"}
             <span onClick={() => toggleMode()}>
               {signIn === false ? "Sign In" : "Sign Up"}{" "}
             </span>{" "}
