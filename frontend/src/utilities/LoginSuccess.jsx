@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 const LoginSuccess = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
-  const { login } = useContext(UserContext);
+  const { login, setLoading } = useContext(UserContext);
 
   useEffect(() => {
     const token = params.get("token");
@@ -28,6 +28,7 @@ const LoginSuccess = () => {
       .then((user) => {
         login(user, token);
         navigate("/");
+        setLoading(false);
       })
       .catch(() => navigate("/"))
       .finally(() => console.log("false"));

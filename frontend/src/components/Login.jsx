@@ -98,6 +98,7 @@ const Login = (props) => {
   };
 
   const handleGoogleLogin = () => {
+    setLoading(true);
     window.location.href =
       "https://pomoxp-production.up.railway.app/auth/google";
   };
