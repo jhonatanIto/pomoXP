@@ -146,7 +146,7 @@ const Report = (props) => {
     const current = new Date();
 
     while (true) {
-      const dateStudy = current.toISOString().split("T")[0];
+      const dateStudy = current.toLocaleDateString("en-Ca");
 
       if (daysSet.has(dateStudy)) {
         streak++;
