@@ -140,9 +140,7 @@ const Report = (props) => {
   const calculateStreak = (cards) => {
     if (!cards || cards.length === 0) return 0;
 
-    const daysSet = new Set(
-      cards.map((c) => new Date(c.created_at.toLocaleDateString("en-Ca"))),
-    );
+    const daysSet = new Set(cards.map((c) => c.created_at.split("T")[0]));
 
     let streak = 0;
     const current = new Date();
