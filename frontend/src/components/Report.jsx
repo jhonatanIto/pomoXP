@@ -143,7 +143,7 @@ const Report = (props) => {
     const daysSet = new Set(cards.map((c) => c.created_at.split("T")[0]));
 
     let streak = 0;
-    const current = new Date() - 1;
+    const current = new Date();
 
     while (true) {
       const dateStudy = current.toISOString().split("T")[0];
