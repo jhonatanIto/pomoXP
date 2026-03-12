@@ -21,7 +21,7 @@ const History = (props) => {
     useContext(UserContext);
 
   const [regBox, setRegBox] = useState(true);
-
+  console.log(cards);
   useEffect(() => {
     if (!user) return;
 
@@ -42,7 +42,7 @@ const History = (props) => {
     const grouped = {};
 
     cardss.forEach((c) => {
-      const date = c.created_at.slice(0, 10);
+      const date = new Date(c.created_at).toLocaleDateString("en-CA");
 
       if (!grouped[date]) {
         grouped[date] = [];
@@ -58,13 +58,13 @@ const History = (props) => {
     if (minutes < 30) return bronze;
     if (minutes < 60) return silver;
     if (minutes < 90) return gold;
-    if (minutes > 90) return master;
+    if (minutes >= 90) return master;
     return wood;
   }
 
   const groupedCards = user
     ? dailyTotal(cards)
-    : dailyTotal(visitor.cards.reverse());
+    : dailyTotal([...visitor.cards].reverse());
 
   return (
     <div className="historyContainer">

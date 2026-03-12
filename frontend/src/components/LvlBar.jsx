@@ -21,7 +21,7 @@ const LvlBar = (props) => {
   const [xpPopup, setXpPopup] = useState(false);
   const prevTargetBar = useRef(null);
   const showAds = !user || user.plan === "free";
-  console.log(showAds);
+
   const xpUpAudio = () => {
     const audio = new Audio(xpUp);
     audio.volume = 0.5;
