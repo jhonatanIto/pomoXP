@@ -83,8 +83,10 @@ const Report = (props) => {
   }, [allTime]);
 
   const today = new Date();
-  const last7Days = new Date();
-  last7Days.setDate(today.getDate() - 7);
+  today.setHours(0, 0, 0, 0);
+
+  const last7Days = new Date(today);
+  last7Days.setDate(today.getDate() - 6);
 
   const lastMonth = new Date();
   lastMonth.setDate(today.getDate() - 30);
@@ -92,7 +94,7 @@ const Report = (props) => {
   const lastYear = new Date();
   lastYear.setDate(today.getDate() - 365);
 
-  const last7Cards = cards?.filter((n) => new Date(n.created_at) > last7Days);
+  const last7Cards = cards?.filter((n) => new Date(n.created_at) >= last7Days);
 
   const lastMonthCards = cards?.filter(
     (n) => new Date(n.created_at) > lastMonth,
@@ -126,7 +128,7 @@ const Report = (props) => {
   const calculateAccessed = (calc) => {
     const days = {};
 
-    calc.map((l) => {
+    calc.forEach((l) => {
       const date = l.created_at.split("T")[0];
 
       days[date] = true;
