@@ -43,12 +43,19 @@ export const postCards = async (req, res) => {
     const endTime = new Date(startTime.getTime() + minutes * 60000);
     const now = new Date();
     const tolerance = 5000;
+    const maxBackTime = 24 * 60 * 60 * 1000;
+
+    if (isNaN(startTime.getTime()))
+      return res.status(400).json({ message: "What are you doing" });
+
+    if (now.getTime() - startTime.getTime() > maxBackTime)
+      return res.status(400).json({ message: "What are you doing" });
 
     if (now.getTime() + tolerance < endTime.getTime())
       return res.status(400).json({ message: "What are you doing" });
 
     if (minutes > 720)
-      return res.status(400).json({ message: "what are you doing" });
+      return res.status(400).json({ message: "What are you doing" });
 
     const result = await db.transaction(async (trx) => {
       const [user] = await trx

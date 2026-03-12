@@ -39,8 +39,6 @@ const Timer = (props) => {
     useContext(UserContext);
 
   const minutes = Number(focusTime);
-  const now = new Date();
-  const localTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
 
   useEffect(() => {
     if (selectedTab === "Pomodoro") {
@@ -81,7 +79,7 @@ const Timer = (props) => {
           },
           body: JSON.stringify({
             minutes: minutes,
-            created_at: localTime,
+            created_at: new Date().toISOString(),
           }),
         },
       );
