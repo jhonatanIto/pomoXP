@@ -45,6 +45,13 @@ export const postCards = async (req, res) => {
     const tolerance = 5000;
     const maxBackTime = 24 * 60 * 60 * 1000;
 
+    console.log("created_at:", created_at);
+    console.log("startTime:", startTime);
+    console.log("endTime:", endTime);
+    console.log("now:", now);
+    console.log("diffNowStart:", now.getTime() - startTime.getTime());
+    console.log("diffEndNow:", endTime.getTime() - now.getTime());
+
     if (isNaN(startTime.getTime()))
       return res.status(400).json({ message: "What are you doing" });
 
