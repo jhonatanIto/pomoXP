@@ -12,6 +12,7 @@ import {
   SlFire,
 } from "react-icons/sl";
 import Charts from "./Charts";
+
 const Report = (props) => {
   const { reportPage, setReportPage } = props;
   const boxRef = useRef();
@@ -146,7 +147,7 @@ const Report = (props) => {
     const current = new Date();
 
     while (true) {
-      const dateStudy = current.toLocaleDateString("en-Ca");
+      const dateStudy = current.toISOString().split("T")[0];
 
       if (daysSet.has(dateStudy)) {
         streak++;
@@ -169,15 +170,12 @@ const Report = (props) => {
     if (selecFilter === "week") {
       updateWeekTotal();
       setTotalDays(calculateAccessed(last7Cards));
-      setStreak(calculateStreak(cards));
     } else if (selecFilter === "month") {
       updateMonthTotal();
       setTotalDays(calculateAccessed(lastMonthCards));
-      setStreak(calculateStreak(cards));
     } else if (selecFilter === "year") {
       updateYearTotal();
       setTotalDays(calculateAccessed(lastYearCards));
-      setStreak(calculateStreak(cards));
     }
   }, [cards, selecFilter]);
 
@@ -230,6 +228,10 @@ const Report = (props) => {
 
     setData();
   }, [token, selecFilter]);
+
+  useEffect(() => {
+    setStreak(calculateStreak(cards));
+  }, [cards]);
 
   const isFree = user?.plan === "free" || !user;
 
