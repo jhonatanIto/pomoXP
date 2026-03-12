@@ -34,6 +34,8 @@ export const postCards = async (req, res) => {
     if (!userId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
+    if (!created_at)
+      return res.status(401).json({ message: "Missing created_at" });
 
     if (typeof minutes !== "number" || minutes <= 0) {
       return res.status(400).json({ message: "Invalid data" });
@@ -42,7 +44,6 @@ export const postCards = async (req, res) => {
     const startTime = new Date(created_at);
     const endTime = new Date(startTime.getTime() + minutes * 60000);
     const now = new Date();
-    const tolerance = 5000;
     const maxBackTime = 24 * 60 * 60 * 1000;
 
     console.log("created_at:", created_at);
@@ -56,9 +57,6 @@ export const postCards = async (req, res) => {
       return res.status(400).json({ message: "What are you doing" });
 
     if (now.getTime() - startTime.getTime() > maxBackTime)
-      return res.status(400).json({ message: "What are you doing" });
-
-    if (now.getTime() + tolerance < endTime.getTime())
       return res.status(400).json({ message: "What are you doing" });
 
     if (minutes > 720)
