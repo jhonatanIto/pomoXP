@@ -28,7 +28,6 @@ const Report = (props) => {
   const [chartWeek, setChartWeek] = useState([]);
   const [chartMonth, setChartMonth] = useState([]);
   const [chartYear, setChartYear] = useState([]);
-  // const [allUsersWeek, setAllUsersWeek] = useState([]);
 
   const { cards, user, token } = useContext(UserContext);
 

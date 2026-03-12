@@ -39,6 +39,17 @@ export const postCards = async (req, res) => {
       return res.status(400).json({ message: "Invalid data" });
     }
 
+    const startTime = new Date(created_at);
+    const endTime = new Date(startTime.getTime() + minutes * 60000);
+    const now = new Date();
+    const tolerance = 5000;
+
+    if (now.getTime() + tolerance < endTime.getTime())
+      return res.status(400).json({ message: "What are you doing" });
+
+    if (minutes > 720)
+      return res.status(400).json({ message: "what are you doing" });
+
     const result = await db.transaction(async (trx) => {
       const [user] = await trx
         .select({ xp: users.xp })
