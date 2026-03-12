@@ -39,6 +39,7 @@ const Timer = (props) => {
     useContext(UserContext);
 
   const minutes = Number(focusTime);
+  const startTimeRef = useRef(null);
 
   useEffect(() => {
     if (selectedTab === "Pomodoro") {
@@ -79,7 +80,7 @@ const Timer = (props) => {
           },
           body: JSON.stringify({
             minutes: minutes,
-            created_at: new Date().toISOString(),
+            created_at: startTimeRef.current,
           }),
         },
       );
@@ -230,6 +231,10 @@ const Timer = (props) => {
         <button
           onClick={() => {
             setIsRunnig(!isRunning);
+            if (!isRunning) {
+              startTimeRef.current = new Date().toISOString();
+            }
+
             playClick();
           }}
           className="pause"
