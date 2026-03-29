@@ -42,24 +42,19 @@ export const postCards = async (req, res) => {
     }
 
     const startTime = new Date(created_at);
-    const endTime = new Date(startTime.getTime() + minutes * 60000);
     const now = new Date();
-    const maxBackTime = 24 * 60 * 60 * 1000;
 
-    console.log("created_at:", created_at);
-    console.log("startTime:", startTime);
-    console.log("endTime:", endTime);
-    console.log("now:", now);
-    console.log("diffNowStart:", now.getTime() - startTime.getTime());
-    console.log("diffEndNow:", endTime.getTime() - now.getTime());
+    const diff = now.getTime() - startTime.getTime();
+    const minutesInMs = minutes * 60000;
+
+    if (diff < minutesInMs) {
+      return res.status(400).json({ message: "Stop cheating" });
+    }
 
     if (isNaN(startTime.getTime()))
       return res.status(400).json({ message: "What are you doing" });
 
-    if (now.getTime() - startTime.getTime() > maxBackTime)
-      return res.status(400).json({ message: "What are you doing" });
-
-    if (minutes > 720)
+    if (minutes > 1600)
       return res.status(400).json({ message: "What are you doing" });
 
     const result = await db.transaction(async (trx) => {
