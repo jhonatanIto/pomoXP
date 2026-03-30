@@ -235,10 +235,10 @@ const Timer = (props) => {
       <div className="timerBot">
         <button
           onClick={() => {
-            setIsRunnig((prev) => !prev);
             if (!isRunning && !startTimeRef.current) {
               startTimeRef.current = new Date().toISOString();
             }
+            setIsRunnig((prev) => !prev);
 
             playClick();
           }}
