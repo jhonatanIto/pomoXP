@@ -98,6 +98,7 @@ const Timer = (props) => {
       const updateCards = await getCards(token);
       setCards(updateCards);
 
+      startTimeRef.current = null;
       return data;
     } catch (error) {
       console.error(error.message);
@@ -107,6 +108,7 @@ const Timer = (props) => {
     setIsRunnig(false);
     setTime(time * 60);
     setSelectedTab(tab);
+    startTimeRef.current = null;
   };
 
   const handleTimerEnd = () => {
@@ -137,7 +139,10 @@ const Timer = (props) => {
               xp: newXp,
               cards: [
                 ...prev.cards,
-                { minutes: minutes, created_at: localTime.toISOString() },
+                {
+                  minutes: minutes,
+                  created_at: startTimeRef.current || new Date().toISOString(),
+                },
               ],
             };
           });
@@ -230,8 +235,8 @@ const Timer = (props) => {
       <div className="timerBot">
         <button
           onClick={() => {
-            setIsRunnig(!isRunning);
-            if (!isRunning) {
+            setIsRunnig((prev) => !prev);
+            if (!isRunning && !startTimeRef.current) {
               startTimeRef.current = new Date().toISOString();
             }
 
